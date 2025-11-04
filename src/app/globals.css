@@ -1,0 +1,345 @@
+/* Updated: 2025-11-01T18:59:34.545Z */
+@import url('https://fonts.googleapis.com/css2?family=Manrope:wght@300;400;500;600;700;800;900&display=swap');
+@import "tailwindcss";
+@import "tw-animate-css";
+
+@custom-variant dark (&:is(.dark *));
+
+@theme inline {
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --font-sans: 'Manrope', var(--font-geist-sans);
+  --font-mono: var(--font-geist-mono);
+  
+  /* Custom Hypecia Colors */
+  --color-white: #FFFFFF;
+  --color-black: #0A0A0A;
+  --color-gray: #6B7280;
+  --color-blue: #2563EB;
+  --color-green: #10B981;
+  --color-light-gray: #F9FAFB;
+  --color-border-gray: #E5E7EB;
+  
+  --color-sidebar-ring: var(--sidebar-ring);
+  --color-sidebar-border: var(--sidebar-border);
+  --color-sidebar-accent-foreground: var(--sidebar-accent-foreground);
+  --color-sidebar-accent: var(--sidebar-accent);
+  --color-sidebar-primary-foreground: var(--sidebar-primary-foreground);
+  --color-sidebar-primary: var(--sidebar-primary);
+  --color-sidebar-foreground: var(--sidebar-foreground);
+  --color-sidebar: var(--sidebar);
+  --color-chart-5: var(--chart-5);
+  --color-chart-4: var(--chart-4);
+  --color-chart-3: var(--chart-3);
+  --color-chart-2: var(--chart-2);
+  --color-chart-1: var(--chart-1);
+  --color-ring: var(--ring);
+  --color-input: var(--input);
+  --color-border: var(--border);
+  --color-destructive: var(--destructive);
+  --color-accent-foreground: var(--accent-foreground);
+  --color-accent: var(--accent);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-muted: var(--muted);
+  --color-secondary-foreground: var(--secondary-foreground);
+  --color-secondary: var(--secondary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-primary: var(--primary);
+  --color-popover-foreground: var(--popover-foreground);
+  --color-popover: var(--popover);
+  --color-card-foreground: var(--card-foreground);
+  --color-card: var(--card);
+  --radius-sm: calc(var(--radius) - 4px);
+  --radius-md: calc(var(--radius) - 2px);
+  --radius-lg: var(--radius);
+  --radius-xl: calc(var(--radius) + 4px);
+}
+
+:root {
+  --radius: 0.625rem;
+  --background: #FFFFFF;
+  --foreground: #0A0A0A;
+  --card: #FFFFFF;
+  --card-foreground: #0A0A0A;
+  --popover: #FFFFFF;
+  --popover-foreground: #0A0A0A;
+  --primary: #2563EB;
+  --primary-foreground: #FFFFFF;
+  --secondary: #F9FAFB;
+  --secondary-foreground: #0A0A0A;
+  --muted: #F9FAFB;
+  --muted-foreground: #6B7280;
+  --accent: #10B981;
+  --accent-foreground: #FFFFFF;
+  --destructive: oklch(0.577 0.245 27.325);
+  --border: #E5E7EB;
+  --input: #E5E7EB;
+  --ring: #2563EB;
+  --chart-1: oklch(0.646 0.222 41.116);
+  --chart-2: oklch(0.6 0.118 184.704);
+  --chart-3: oklch(0.398 0.07 227.392);
+  --chart-4: oklch(0.828 0.189 84.429);
+  --chart-5: oklch(0.769 0.188 70.08);
+  --sidebar: #F9FAFB;
+  --sidebar-foreground: #0A0A0A;
+  --sidebar-primary: #2563EB;
+  --sidebar-primary-foreground: #FFFFFF;
+  --sidebar-accent: #F9FAFB;
+  --sidebar-accent-foreground: #0A0A0A;
+  --sidebar-border: #E5E7EB;
+  --sidebar-ring: #2563EB;
+}
+
+.dark {
+  --background: #0A0A0A;
+  --foreground: #FFFFFF;
+  --card: #1A1A1A;
+  --card-foreground: #FFFFFF;
+  --popover: #1A1A1A;
+  --popover-foreground: #FFFFFF;
+  --primary: #2563EB;
+  --primary-foreground: #FFFFFF;
+  --secondary: #1F1F1F;
+  --secondary-foreground: #FFFFFF;
+  --muted: #1F1F1F;
+  --muted-foreground: #9CA3AF;
+  --accent: #10B981;
+  --accent-foreground: #FFFFFF;
+  --destructive: oklch(0.704 0.191 22.216);
+  --border: #262626;
+  --input: #262626;
+  --ring: #2563EB;
+  --chart-1: oklch(0.488 0.243 264.376);
+  --chart-2: oklch(0.696 0.17 162.48);
+  --chart-3: oklch(0.769 0.188 70.08);
+  --chart-4: oklch(0.627 0.265 303.9);
+  --chart-5: oklch(0.645 0.246 16.439);
+  --sidebar: #1A1A1A;
+  --sidebar-foreground: #FFFFFF;
+  --sidebar-primary: #2563EB;
+  --sidebar-primary-foreground: #FFFFFF;
+  --sidebar-accent: #1F1F1F;
+  --sidebar-accent-foreground: #FFFFFF;
+  --sidebar-border: #262626;
+  --sidebar-ring: #2563EB;
+}
+
+@layer base {
+  * {
+    @apply border-border outline-ring/50;
+  }
+  
+  html {
+    scroll-behavior: smooth;
+  }
+  
+  body {
+    @apply bg-white text-black antialiased;
+    font-family: 'Manrope', -apple-system, BlinkMacSystemFont, sans-serif;
+  }
+  
+  h1, h2, h3, h4, h5, h6 {
+    @apply font-bold tracking-tight;
+  }
+  
+  h1 {
+    @apply text-5xl md:text-7xl lg:text-8xl leading-none;
+  }
+  
+  h2 {
+    @apply text-4xl md:text-5xl lg:text-6xl leading-tight;
+  }
+  
+  h3 {
+    @apply text-3xl md:text-4xl lg:text-5xl leading-tight;
+  }
+  
+  p {
+    @apply text-base md:text-lg leading-relaxed;
+  }
+  
+  .section-padding {
+    @apply py-16 md:py-16 lg:py-32;
+  }
+  
+  .container-custom {
+    @apply mx-auto px-4 md:px-8 lg:px-8;
+  }
+  
+  .text-huge {
+    @apply text-6xl md:text-8xl lg:text-9xl font-black tracking-tighter;
+  }
+  
+  .text-display {
+    @apply text-4xl md:text-6xl lg:text-7xl font-bold tracking-tight;
+  }
+  
+  .text-gray {
+    color: #6B7280;
+  }
+  
+  .bg-light-gray {
+    background-color: #F9FAFB;
+  }
+  
+  .border-gray {
+    border-color: #E5E7EB;
+  }
+
+  nav {
+    font-family: 'Manrope', sans-serif;
+    letter-spacing: -0.01em;
+  }
+  
+  button, a {
+    transition: all 0.25s ease;
+  }
+  
+  .backdrop-blur-xl {
+    backdrop-filter: blur(20px);
+  }
+
+  .header-card {
+    --padding: .5em;
+    --header-fill: rgba(255, 255, 255, .15);
+    width: 100%;
+    max-width: 80%; /* adjust to match your desired width */
+    margin: 0 auto;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 2em;
+    pointer-events: auto;
+    background: var(--header-fill);
+    padding: var(--padding) 1.25em;
+    border-radius: clamp(1em, calc((var(--padding) * 2 + 3.5em) / 2), 2.25em);
+    -webkit-backdrop-filter: blur(8px);
+    backdrop-filter: blur(8px);
+    box-shadow: 
+      0 0 1em .25em rgba(255, 255, 255, 0.15) inset,
+      0 .125em .25em -.125em rgba(0, 0, 0, 0.3);
+    transition: 
+      box-shadow .25s ease-out,
+      gap .25s ease-out,
+      padding .25s ease-out,
+      border-radius .25s ease-out,
+      background .25s ease-out,
+      backdrop-filter .5s ease-out;
+  }
+  
+  .header-card:hover {
+    background: rgba(255, 255, 255, 0.2);
+    box-shadow:
+      0 0 1em .3em rgba(255, 255, 255, 0.25) inset,
+      0 .25em .5em rgba(0, 0, 0, 0.3);
+  }
+  
+  .header-logo svg,
+  .header-logo span {
+    transition: opacity 0.25s ease;
+  }
+
+  .book-call-btn {
+    box-shadow:
+      0 0 3px 2px #fff3 inset,
+      0 0 12px 4px #ffffff20 inset,
+      0 4px 3px -4px #00000080;
+    transition: box-shadow 0.3s ease, transform 0.2s ease;
+  }
+  
+  .book-call-btn:hover {
+    box-shadow:
+      0 0 4px 2px #fff6 inset,
+      0 0 14px 6px #ffffff30 inset,
+      0 6px 5px -4px #00000090;
+    transform: translateY(-1px);
+  }
+
+  .book-call-btn {
+    box-shadow:
+      0 0 3px 2px #fff3 inset,
+      0 0 12px 4px #ffffff20 inset,
+      0 4px 3px -4px #00000080;
+    transition: box-shadow 0.3s ease, transform 0.2s ease;
+  }
+
+  .contact-btn {
+    box-shadow:
+      0 0 3px 2px #0003 inset,
+      0 0 12px 4px #00000020 inset,
+      0 4px 3px -4px #00000080;
+    transition: box-shadow 0.3s ease, transform 0.2s ease;
+  }
+
+  .contact-btn:hover {
+    box-shadow:
+      0 0 4px 2px #fff6 inset,
+      0 0 14px 6px #ffffff30 inset,
+      0 6px 5px -4px #00000090;
+    transform: translateY(-1px);
+  }
+  
+  .book-call-btn:hover {
+    box-shadow:
+      0 0 4px 2px #fff6 inset,
+      0 0 14px 6px #ffffff30 inset,
+      0 6px 5px -4px #00000090;
+    transform: translateY(-1px);
+  }
+  
+  
+  .headline-display {
+    font-weight: 500;
+    line-height: 1;
+    font-family: PP Neue Montreal, sans-serif;
+    font-size: clamp(2rem, 1rem + 4vw, 5rem);
+    letter-spacing: -.02em;
+  }
+
+  .text-gradient {
+    color: transparent;
+    background-image: url(/noise-BYEt95xr.webp);
+    background-size: 200% auto;
+    background-position: 0 50%;
+    background-repeat: repeat;
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+    padding-bottom: .25em;
+    margin-bottom: -.25em;
+  }
+
+  .text-gradient-v2 {
+    color: transparent;
+    background-image: url(/noise-DFQ31xr.webp);
+    background-size: 200% auto;
+    background-position: 0 50%;
+    background-repeat: repeat;
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+    padding-bottom: .25em;
+    margin-bottom: -.25em;
+  }
+
+  .body-text-bold {
+    font-weight: 500;
+    line-height: 130%;
+    font-family: PP Neue Montreal, sans-serif;
+    font-size: clamp(1rem, .9375rem + .3125vw, 1.25rem);
+    letter-spacing: -.02em;
+  }
+
+  
+  
+  .text-balance {
+    text-wrap: balance;
+  }
+  
+  
+
+}
+
+nextjs-portal {
+  display: none !important;
+}
