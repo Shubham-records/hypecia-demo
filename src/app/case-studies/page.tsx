@@ -141,7 +141,7 @@ export default function CaseStudiesPage() {
               <div className="aspect-video bg-gradient-to-br from-indigo-500 to-purple-600 rounded-2xl mb-6 flex items-center justify-center overflow-hidden relative">
                 <Image
                     src="/Industrial Automation.jpg"
-                    alt="Green Energy Icon"
+                    alt="Industrial Automation"
                     fill
                     className="object-cover"
                   />
@@ -159,8 +159,8 @@ export default function CaseStudiesPage() {
             <div className="bg-white border-2 border-gray-200 rounded-3xl p-8 hover:shadow-xl transition-all">
               <div className="aspect-video bg-gradient-to-br from-blue-500 to-cyan-500 rounded-2xl mb-6 flex items-center justify-center overflow-hidden relative">
               <Image
-                  src="/Telecom & IT Infrastructure.jpg"
-                  alt="Green Energy Icon"
+                  src="/Telecom_IT_Infrastructure.png"
+                  alt="Telecom & IT Infrastructure"
                   fill
                   className="object-cover"
                 />
@@ -178,8 +178,8 @@ export default function CaseStudiesPage() {
             <div className="bg-white border-2 border-gray-200 rounded-3xl p-8 hover:shadow-xl transition-all">
               <div className="aspect-video bg-gradient-to-br from-red-500 to-orange-500 rounded-2xl mb-6 flex items-center justify-center overflow-hidden relative">
                 <Image
-                    src="/Security & Surveillance.jpg"
-                    alt="Green Energy Icon"
+                    src="/Security_Surveillance.png"
+                    alt="Security & Surveillance"
                     fill
                     className="object-cover"
                   />
@@ -198,7 +198,7 @@ export default function CaseStudiesPage() {
               <div className="aspect-video bg-gradient-to-br from-amber-500 to-yellow-500 rounded-2xl mb-6 flex items-center justify-center overflow-hidden relative">
                 <Image
                     src="/Earthing Solutions.png"
-                    alt="Green Energy Icon"
+                    alt="Earthing Solutions"
                     fill
                     className="object-cover"
                   />
@@ -217,7 +217,7 @@ export default function CaseStudiesPage() {
               <div className="aspect-video bg-gradient-to-br from-teal-500 to-green-600 rounded-2xl mb-6 flex items-center justify-center overflow-hidden relative">
               <Image
                   src="/Maintenance Services.png"
-                  alt="Green Energy Icon"
+                  alt="Maintenance Services"
                   fill
                   className="object-cover"
                 />

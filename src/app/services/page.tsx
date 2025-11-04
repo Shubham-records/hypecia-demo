@@ -146,7 +146,7 @@ export default function ServicesPage() {
             </div>
             <div className="aspect-square bg-gradient-to-br from-purple-400 to-purple-600 rounded-3xl overflow-hidden relative">
               <Image
-                  src="/Telecom & IT Infrastructure.jpg"
+                  src="/Telecom_IT_Infrastructure.png"
                   alt="Telecom & IT Infrastructure"
                   fill
                   className="object-cover"
@@ -158,7 +158,7 @@ export default function ServicesPage() {
           <div className="grid lg:grid-cols-2 gap-16 items-center">
             <div className="order-2 lg:order-1 aspect-square bg-gradient-to-br from-red-400 to-red-600 rounded-3xl overflow-hidden relative">
             <Image
-                  src="/Security & Surveillance.jpg"
+                  src="/Security_Surveillance.png"
                   alt="Security & Surveillance"
                   fill
                   className="object-cover"
