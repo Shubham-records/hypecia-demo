@@ -178,8 +178,8 @@ export default function Home() {
                   className="mb-6 leading-[0.9]"
                   style={{ opacity: 0 }}
                 >
-                  THE INFRASTRUCTURE YOU CAN TRUST<br />
-                  <span>THE RESULTS YOU DEMAND</span>
+                  The Infrastructure You Can Trust<br />
+                  <span>The Results You Demand</span>
                 </h2>
                 <p 
                   ref={heroDescRef}
