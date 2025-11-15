@@ -44,6 +44,165 @@ function AnimatedCounter({ target, duration = 2000 }: { target: number; duration
   return <div ref={ref}>{count}</div>
 }
 
+// Add this BEFORE the Home() component
+function CircularGalleryServices() {
+  const containerRef = useRef<HTMLDivElement | null>(null);
+  const scrollRef = useRef({ ease: 0.05, current: 0, target: 0, last: 0 });
+  const rafRef = useRef<number | null>(null);
+  const [services] = useState([
+    {
+      title: "Green Energy Solutions",
+      description: "Solar integration, energy monitoring, and sustainable design practices",
+      icon: "⚡",
+      color: "from-green-400 to-green-600",
+    },
+    {
+      title: "Industrial Automation",
+      description: "Scalable automation systems for operational optimization",
+      icon: "🤖",
+      color: "from-blue-400 to-blue-600",
+    },
+    {
+      title: "Telecom & IT Infrastructure",
+      description: "Robust, scalable, future-ready digital infrastructure",
+      icon: "🌐",
+      color: "from-purple-400 to-purple-600",
+    },
+    {
+      title: "Security & Surveillance",
+      description: "AI-enabled CCTV systems with real-time monitoring",
+      icon: "🛡️",
+      color: "from-red-400 to-red-600",
+    },
+    {
+      title: "MEP Engineering",
+      description: "Electrical, DG upgradation, HT/LT work, transformer solutions",
+      icon: "🔧",
+      color: "from-orange-400 to-orange-600",
+    },
+    {
+      title: "Civil & Earthing Works",
+      description: "Complete civil engineering and advanced earthing solutions",
+      icon: "⚒️",
+      color: "from-gray-400 to-gray-600",
+    },
+    {
+      title: "Manpower & Facility Services",
+      description: "Comprehensive facility management, security, and technical staffing with 24/7 operational support.",
+      icon: "🧑‍🔧",
+      color: "from-yellow-400 to-yellow-600",
+    },
+  ]);
+
+  const cardsRef = useRef<(HTMLDivElement | null)[]>([]);
+
+  useEffect(() => {
+    const container = containerRef.current;
+    if (!container) return;
+
+    const updatePositions = () => {
+      const scroll = scrollRef.current;
+      scroll.current = scroll.current + (scroll.target - scroll.current) * scroll.ease;
+
+      const containerWidth = container.offsetWidth;
+      const cardWidth = 320;
+      const totalWidth = (cardWidth + 32) * services.length;
+
+      cardsRef.current.forEach((card, index) => {
+        if (!card) return;
+
+        const baseX = index * (cardWidth + 32);
+        let x = baseX - scroll.current;
+
+        while (x < -cardWidth) x += totalWidth;
+        while (x > containerWidth + cardWidth) x -= totalWidth;
+
+        const centerX = containerWidth / 2;
+        const distanceFromCenter = x + cardWidth / 2 - centerX;
+        const maxDistance = containerWidth / 2;
+        const normalizedDistance = distanceFromCenter / maxDistance;
+
+        const bendAmount = 80;
+        const y = Math.abs(normalizedDistance) * bendAmount;
+        const rotation = normalizedDistance * 8;
+        const scale = 1 - Math.abs(normalizedDistance) * 0.2;
+        const opacity = 1 - Math.abs(normalizedDistance) * 0.5;
+
+        card.style.transform = `translateX(${x}px) translateY(${y}px) rotateY(${rotation}deg) scale(${Math.max(scale, 0.7)})`;
+        card.style.opacity = Math.max(opacity, 0.3).toString();
+        card.style.zIndex = Math.round((1 - Math.abs(normalizedDistance)) * 100).toString();
+      });
+
+      rafRef.current = requestAnimationFrame(updatePositions);
+    };
+
+    updatePositions();
+    return () => {
+      if (rafRef.current !== null) {
+        cancelAnimationFrame(rafRef.current);
+      }
+    };
+  }, [services.length]);
+
+  useEffect(() => {
+    const container = containerRef.current;
+    if (!container) return;
+    const totalDistance = services.length * 600;
+    const scrollTrigger = ScrollTrigger.create({
+      trigger: "#services-pin-wrapper",
+      start: "top -10%",
+      end: `+=${totalDistance}`,
+      pin: true,
+      pinSpacing: true,
+      scrub: 1,
+      onUpdate: (self) => {
+        const progress = self.progress;
+        const maxScroll = services.length * 352;
+        scrollRef.current.target = progress * maxScroll;
+      },
+    });
+
+    return () => {
+      scrollTrigger.kill();
+    };
+  }, [services.length]);
+
+  return (
+    <div
+      ref={containerRef}
+      className="relative w-full h-[500px] overflow-hidden cursor-grab active:cursor-grabbing select-none"
+      style={{ perspective: "1000px" }}
+    >
+      <div className="absolute inset-0 flex items-center"></div>
+      {services.map((service, index) => (
+        <div
+          key={index}
+          ref={(el) => {
+            cardsRef.current[index] = el;
+          }}
+          className="absolute left-0 bg-white rounded-2xl border border-gray-200 shadow-xl transition-shadow hover:shadow-2xl"
+          style={{
+            width: "320px",
+            height: "300px",
+            transformStyle: "preserve-3d",
+            willChange: "transform, opacity",
+          }}
+        >
+          <div className="p-8 h-full flex flex-col">
+            <div
+              className={`w-16 h-16 bg-gradient-to-br ${service.color} rounded-2xl flex items-center justify-center mb-6 text-3xl`}
+            >
+              {service.icon}
+            </div>
+            <h3 className="text-2xl font-bold mb-4 text-gray-900">{service.title}</h3>
+            <p className="text-gray-600 leading-relaxed">{service.description}</p>
+          </div>
+        </div>
+      ))}
+    </div>
+  );
+}
+
 export default function Home() {
   const [showLoader, setShowLoader] = useState(true)
   const [startFadeIn, setStartFadeIn] = useState(false)
@@ -375,109 +534,33 @@ export default function Home() {
           </section>
 
           {/* SECTION 4: SERVICES */}
-          <section className="section-padding bg-light-gray relative overflow-hidden">
+          <section id="services-pin-wrapper" className="section-padding bg-light-gray relative overflow-hidden" style={{ minHeight: '1200px' }}>
             <div className="container-custom">
-              <div className="relative flex flex-col w-full items-center items-stretch mb-[-5%]" style={{ mask: 'linear-gradient(black, transparent)' }}>
-                <svg
-                  width="100%"
-                  height="100%"
-                  viewBox="0 0 1163 325"
-                  fill="none"
-                  xmlns="http://www.w3.org/2000/svg"
-                  className="relative mb-[-5%]"
-                >
-                  <defs>
-                    <clipPath id="services-clip">
-                    <text
-                      x="50%"
-                      y="70%"
-                      textAnchor="middle"
-                      fontFamily="Manrope, sans-serif"
-                      fontWeight="800"
-                      fontSize="14.8rem"
-                      letterSpacing="-0.03em"
-                    >SERVICES</text>
-                    </clipPath>
-                    <linearGradient id="services-gradient" x1="0" y1="0" x2="0" y2="1">
-                      <stop offset="0%" stopColor="#D8D8D8" />
-                      <stop offset="100%" stopColor="#F5F5F5" />
-                    </linearGradient>
-                  </defs>
-                  <rect
-                    x="0"
-                    y="0"
+              <div className="relative">
+                <div className="relative flex flex-col w-full items-center items-stretch mb-[-2%]" style={{ mask: 'linear-gradient(black, transparent)' }}>
+                  <svg
                     width="100%"
                     height="100%"
-                    clipPath="url(#services-clip)"
-                    fill="url(#services-gradient)"
-                  />
-                </svg>
-              </div>
-              <div className="container-custom relative z-10">
-                <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-8">
-                  <div className="bg-white p-8 rounded-2xl border border-gray-200 hover:shadow-xl transition-all">
-                    <div className="w-14 h-14 bg-green-100 rounded-full flex items-center justify-center mb-6">
-                      <Zap className="text-green-600" size={28} />
-                    </div>
-                    <h3 className="text-2xl font-bold mb-4">Green Energy Solutions</h3>
-                    <p className="text-gray-600">
-                      Solar integration, energy monitoring, and sustainable design practices
-                    </p>
-                  </div>
-                  <div className="bg-white p-8 rounded-2xl border border-gray-200 hover:shadow-xl transition-all">
-                    <div className="w-14 h-14 bg-blue-100 rounded-full flex items-center justify-center mb-6">
-                      <Cpu className="text-blue-600" size={28} />
-                    </div>
-                    <h3 className="text-2xl font-bold mb-4">Industrial Automation</h3>
-                    <p className="text-gray-600">
-                      Scalable automation systems for operational optimization
-                    </p>
-                  </div>
-                  <div className="bg-white p-8 rounded-2xl border border-gray-200 hover:shadow-xl transition-all">
-                    <div className="w-14 h-14 bg-purple-100 rounded-full flex items-center justify-center mb-6">
-                      <Network className="text-purple-600" size={28} />
-                    </div>
-                    <h3 className="text-2xl font-bold mb-4">Telecom & IT Infrastructure</h3>
-                    <p className="text-gray-600">
-                      Robust, scalable, future-ready digital infrastructure
-                    </p>
-                  </div>
-                  <div className="bg-white p-8 rounded-2xl border border-gray-200 hover:shadow-xl transition-all">
-                    <div className="w-14 h-14 bg-red-100 rounded-full flex items-center justify-center mb-6">
-                      <Shield className="text-red-600" size={28} />
-                    </div>
-                    <h3 className="text-2xl font-bold mb-4">Security & Surveillance</h3>
-                    <p className="text-gray-600">
-                      AI-enabled CCTV systems with real-time monitoring
-                    </p>
-                  </div>
-                  <div className="bg-white p-8 rounded-2xl border border-gray-200 hover:shadow-xl transition-all">
-                    <div className="w-14 h-14 bg-orange-100 rounded-full flex items-center justify-center mb-6">
-                      <Wrench className="text-orange-600" size={28} />
-                    </div>
-                    <h3 className="text-2xl font-bold mb-4">MEP Engineering</h3>
-                    <p className="text-gray-600">
-                      Electrical, DG upgradation, HT/LT work, transformer solutions, data center MEP
-                    </p>
-                  </div>
-                  <div className="bg-white p-8 rounded-2xl border border-gray-200 hover:shadow-xl transition-all">
-                    <div className="w-14 h-14 bg-gray-100 rounded-full flex items-center justify-center mb-6">
-                      <HardHat className="text-gray-600" size={28} />
-                    </div>
-                    <h3 className="text-2xl font-bold mb-4">Civil & Earthing Works</h3>
-                    <p className="text-gray-600">
-                      Complete civil engineering and advanced earthing solutions for industrial safety
-                    </p>
-                  </div>
-                  <div className="bg-white p-8 rounded-2xl border border-gray-200 hover:shadow-xl transition-all">
-                    <div className="w-14 h-14 bg-yellow-100 rounded-full flex items-center justify-center mb-6">
-                      <Users className="text-yellow-600" size={28} />
-                    </div>
-                    <h3 className="text-2xl font-bold mb-4">Manpower Services</h3>
-                    <p className="text-gray-600">
-                      Security, maintenance, housekeeping comprehensive facility management
-                    </p>
-                  </div>
+                    viewBox="0 0 1163 325"
+                    fill="none"
+                    xmlns="http://www.w3.org/2000/svg"
+                    className="relative mb-[-5%]"
+                  >
+                    <defs>
+                      <clipPath id="services-clip">
+                        <text x="50%" y="70%" textAnchor="middle" fontFamily="Manrope, sans-serif" fontWeight="800" fontSize="14.8rem" letterSpacing="-0.03em">SERVICES</text>
+                      </clipPath>
+                      <linearGradient id="services-gradient" x1="0" y1="0" x2="0" y2="1">
+                        <stop offset="0%" stopColor="#D8D8D8" />
+                        <stop offset="100%" stopColor="#F5F5F5" />
+                      </linearGradient>
+                    </defs>
+                    <rect x="0" y="0" width="100%" height="100%" clipPath="url(#services-clip)" fill="url(#services-gradient)" />
+                  </svg>
+                </div>
+                
+                <div className="relative z-10">
+                  <CircularGalleryServices />
                 </div>
               </div>
             </div>
