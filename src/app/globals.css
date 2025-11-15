@@ -299,7 +299,7 @@
   .text-gradient {
     color: transparent;
     background-image: url(/noise-BYEt95xr.webp);
-    background-size: 200% auto;
+    background-size: 400% auto;
     background-position: 0 50%;
     background-repeat: repeat;
     -webkit-background-clip: text;
@@ -328,6 +328,18 @@
     font-family: PP Neue Montreal, sans-serif;
     font-size: clamp(1rem, .9375rem + .3125vw, 1.25rem);
     letter-spacing: -.02em;
+  }
+
+  .sr-only {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    margin: -1px;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    white-space: nowrap;
+    border-width: 0;
   }
 
   

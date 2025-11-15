@@ -1,4 +1,3 @@
-
 "use client"
 
 import HypeciaLoader from '@/components/logo_animation'
@@ -9,53 +8,38 @@ import { ArrowRight, Zap, Cpu, Network, Shield, TrendingUp, CheckCircle, Clock, 
 import { useEffect, useRef, useState } from 'react'
 import { gsap } from 'gsap'
 import { SplitText } from 'gsap/SplitText'
+import { ScrollTrigger } from 'gsap/ScrollTrigger'
 
-gsap.registerPlugin(SplitText)
+gsap.registerPlugin(SplitText, ScrollTrigger)
 
 function AnimatedCounter({ target, duration = 2000 }: { target: number; duration?: number }) {
   const [count, setCount] = useState(0)
-  const [isVisible, setIsVisible] = useState(false)
   const ref = useRef<HTMLDivElement>(null)
+  const counterRef = useRef({ value: 0 })
 
   useEffect(() => {
-    const observer = new IntersectionObserver(
-      ([entry]) => {
-        if (entry.isIntersecting) {
-          setIsVisible(true)
-        }
+    if (!ref.current) return
+
+    gsap.to(counterRef.current, {
+      value: target,
+      duration: 1,
+      ease: 'power2.out',
+      onUpdate: () => {
+        setCount(Math.floor(counterRef.current.value))
       },
-      { threshold: 0.5 }
-    )
-
-    if (ref.current) {
-      observer.observe(ref.current)
-    }
-
-    return () => observer.disconnect()
-  }, [])
-
-  useEffect(() => {
-    if (!isVisible) return
-
-    const startTime = Date.now()
-    const endTime = startTime + duration
-
-    const timer = setInterval(() => {
-      const now = Date.now()
-      const remaining = Math.max(0, endTime - now)
-      const progress = 1 - remaining / duration
-      
-      if (progress >= 1) {
-        setCount(target)
-        clearInterval(timer)
-      } else {
-        const easeOutQuad = 1 - Math.pow(1 - progress, 3)
-        setCount(Math.floor(target * easeOutQuad))
+      scrollTrigger: {
+        trigger: ref.current,
+        start: 'top 60%',
+        end: 'top 40%',
+        toggleActions: 'play reverse play reverse',
+        scrub: 1,
+        onLeaveBack: () => {
+          counterRef.current.value = 0
+          setCount(0)
+        }
       }
-    }, 16)
-
-    return () => clearInterval(timer)
-  }, [isVisible, target, duration])
+    })
+  }, [target])
 
   return <div ref={ref}>{count}</div>
 }
@@ -67,6 +51,9 @@ export default function Home() {
   const heroBoxRef = useRef<HTMLDivElement>(null)
   const heroTitleRef = useRef<HTMLHeadingElement>(null)
   const heroDescRef = useRef<HTMLParagraphElement>(null)
+  const statsRef = useRef<HTMLDivElement>(null)
+  const aboutLeftRef = useRef<HTMLDivElement>(null)
+  const aboutRightRef = useRef<HTMLDivElement>(null)
   
   const handleLoaderComplete = () => {
     setStartFadeIn(true)
@@ -139,6 +126,110 @@ export default function Home() {
           '-=0.5'
         )
       }
+
+      // Stats Section Animation
+      if (statsRef.current) {
+        const statItems = statsRef.current.querySelectorAll('.stat-item')
+        
+        gsap.set(statItems, { opacity: 0, y: 50 })
+        
+        gsap.to(statItems, {
+          opacity: 1,
+          y: 0,
+          duration: 2,
+          ease: 'power3.out',
+          stagger: {
+            each: 0.2,
+            from: 'start'
+          },
+          scrollTrigger: {
+            trigger: statsRef.current,
+            start: 'top 50%',
+            end: 'top 10%',
+            toggleActions: 'play reverse play reverse',
+            scrub: 1.5
+          }
+        })
+      }
+
+      // About Section - Left Side Animation (preserve gradient background)
+      if (aboutLeftRef.current) {
+        const leftText = aboutLeftRef.current.querySelector('.about-text')
+        if (leftText) {
+          const textSplit = new SplitText(leftText, { type: 'words', wordsClass: 'split-word' })
+          
+          // Apply gradient to each word wrapper
+          gsap.set(textSplit.words, { 
+            opacity: 0, 
+            y: 40,
+            display: 'inline-block',
+            backgroundImage: 'inherit',
+            backgroundSize: 'inherit',
+            backgroundPosition: 'inherit',
+            backgroundRepeat: 'inherit',
+            WebkitBackgroundClip: 'text',
+            backgroundClip: 'text',
+            WebkitTextFillColor: 'transparent'
+          })
+          
+          gsap.to(textSplit.words, {
+            opacity: 1,
+            y: 0,
+            duration: 1.8,
+            ease: 'power2.out',
+            stagger: {
+              each: 0.05,
+              from: 'start'
+            },
+            scrollTrigger: {
+              trigger: aboutLeftRef.current,
+              start: 'top 90%',
+              end: 'top 20%',
+              toggleActions: 'play reverse play reverse',
+              scrub: 1.5
+            }
+          })
+        }
+      }
+
+      // About Section - Right Side Animation
+      if (aboutRightRef.current) {
+        const rightItems = aboutRightRef.current.querySelectorAll('.about-item')
+        
+        gsap.set(rightItems, { opacity: 0, x: 100 })
+        
+        rightItems.forEach((item, index) => {
+          const header = item.querySelector('h3')
+          const text = item.querySelector('p')
+          
+          gsap.set([header, text], { opacity: 0, y: 20 })
+          
+          const tl = gsap.timeline({
+            scrollTrigger: {
+              trigger: aboutRightRef.current,
+              start: 'top 60%',
+              end: 'top 20%',
+              toggleActions: 'play reverse play reverse',
+              scrub: 1
+            }
+          })
+          
+          tl.to(item, {
+            opacity: 1,
+            x: 0,
+            duration: 0.6,
+            ease: 'power2.out',
+            delay: index * 0.15
+          })
+          .to([header, text], {
+            opacity: 1,
+            y: 0,
+            duration: 0.5,
+            stagger: 0.1,
+            ease: 'power2.out'
+          }, '-=0.3')
+        })
+      }
     })
 
     return () => ctx.revert()
@@ -195,10 +286,10 @@ export default function Home() {
         </section>
 
           {/* STATS SECTION */}
-          <section className="section-padding py-12 bg-light-gray">
+          <section ref={statsRef} className="section-padding py-12 bg-light-gray">
             <div className="container-custom">
               <div className="flex flex-wrap items-center justify-center gap-8 md:gap-12 text-center">
-                <div className="flex items-center gap-3">
+                <div className="stat-item flex items-center gap-3">
                   <span className="text-4xl md:text-5xl font-bold text-black flex items-baseline gap-1">
                     <AnimatedCounter target={157} />
                     <span>+</span>
@@ -208,7 +299,7 @@ export default function Home() {
                 
                 <div className="hidden md:block w-px h-12 bg-gray-300" />
                 
-                <div className="flex items-center gap-3">
+                <div className="stat-item flex items-center gap-3">
                   <span className="text-4xl md:text-5xl font-bold text-black flex items-baseline gap-1">
                     <AnimatedCounter target={2400} />
                     <span>+</span>
@@ -218,7 +309,7 @@ export default function Home() {
                 
                 <div className="hidden md:block w-px h-12 bg-gray-300" />
                 
-                <div className="flex items-center gap-3">
+                <div className="stat-item flex items-center gap-3">
                   <span className="text-4xl md:text-5xl font-bold text-black flex items-baseline gap-1">
                     <AnimatedCounter target={95} />
                     <span>%</span>
@@ -228,7 +319,7 @@ export default function Home() {
                 
                 <div className="hidden md:block w-px h-12 bg-gray-300" />
                 
-                <div className="flex items-center gap-3">
+                <div className="stat-item flex items-center gap-3">
                   <span className="text-lg md:text-xl text-gray-600">Trusted by</span>
                   <span className="text-4xl md:text-5xl font-bold text-black">Airtel</span>
                 </div>
@@ -237,41 +328,41 @@ export default function Home() {
           </section>
 
           {/* SECTION 3: ABOUT US */}
-          <section className="section-padding bg-light-gray">
+          <section className="section-padding bg-light-gray" style={{ height: '170vh', alignContent: 'center' }}>
             <div className="container-custom">
               <div className="grid lg:grid-cols-[3fr_2fr] gap-16 items-center">
-                <div>
-                  <h4 className="headline-display text-balance text-gradient" style={{ fontSize: '4.2rem' }}>
+                <div ref={aboutLeftRef}>
+                  <h4 className="about-text headline-display text-balance text-gradient" style={{ fontSize: '4.2rem' }}>
                     Your trusted partner for mission-critical infrastructure. Delivering carrier-grade 
-                    networks, AI-powered <br />
-                    <span className="text-gradient opacity-40">security, and industrial automation. 
+                    networks, <br />
+                    <span className="text-gradient opacity-40">AI- powered security, and industrial automation. 
                     Proven at scale. Executed with precision.</span>
                   </h4>
                 </div>
                 
-                <div className="space-y-6">
-                  <div className="flex items-start gap-4">
+                <div ref={aboutRightRef} className="space-y-6">
+                  <div className="about-item flex items-start gap-4">
                     <CheckCircle className="text-green-500 flex-shrink-0 mt-1" size={22} />
                     <div>
                       <h3 className="font-bold text-xl mb-2">157+ Sites. Zero Compromise</h3>
                       <p className="text-gray-600">Successfully deployed across Airtel's MSC and TNG infrastructure</p>
                     </div>
                   </div>
-                  <div className="flex items-start gap-4">
+                  <div className="about-item flex items-start gap-4">
                     <CheckCircle className="text-green-500 flex-shrink-0 mt-1" size={22} />
                     <div>
                       <h3 className="font-bold text-xl mb-2">AI-Powered Security Solutions</h3>
                       <p className="text-gray-600">2,400+ cameras with intelligent analytics, facial recognition, and real-time threat detection</p>
                     </div>
                   </div>
-                  <div className="flex items-start gap-4">
+                  <div className="about-item flex items-start gap-4">
                     <CheckCircle className="text-green-500 flex-shrink-0 mt-1" size={22} />
                     <div>
                       <h3 className="font-bold text-xl mb-2">40% Security Enhancement</h3>
                       <p className="text-gray-600">Proven reduction in site vulnerabilities with 95% uptime across all installations</p>
                     </div>
                   </div>
-                  <div className="flex items-start gap-4">
+                  <div className="about-item flex items-start gap-4">
                     <CheckCircle className="text-green-500 flex-shrink-0 mt-1" size={22} />
                     <div>
                       <h3 className="font-bold text-xl mb-2">End-to-End Lifecycle Support</h3>
@@ -446,7 +537,7 @@ export default function Home() {
           {/* SECTION 6: PROJECT SHOWCASE */}
           <section className="section-padding bg-light-gray relative overflow-hidden">
             <div className="container-custom">
-              {/* Background large text “PROJECTS” */}
+              {/* Background large text "PROJECTS" */}
               <div
                 className="relative flex flex-col w-full items-center mb-[-5%]"
                 style={{ mask: "linear-gradient(black, transparent)" }}
