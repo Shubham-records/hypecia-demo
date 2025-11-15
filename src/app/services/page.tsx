@@ -4,7 +4,7 @@ import Navigation from '@/components/Navigation'
 import Footer from '@/components/Footer'
 import Link from 'next/link'
 import Image from "next/image"
-import { Zap, Cpu, Network, Shield, TrendingUp, ArrowRight, CheckCircle } from 'lucide-react'
+import { Zap, Cpu, Network, Shield, TrendingUp, ArrowRight, CheckCircle,  Wrench, HardHat, Users } from 'lucide-react'
 import HypeciaLoader from '@/components/logo_animation'
 import {useState } from 'react'
 
@@ -207,6 +207,134 @@ export default function ServicesPage() {
                 <Link href="/contact" className="bg-red-600 book-call-btn text-white px-6 py-3 rounded-full font-semibold hover:bg-red-700 transition-all inline-flex items-center gap-2">
                   Get Started <ArrowRight size={18} />
                 </Link>
+              </div>
+            </div>
+
+            {/* MEP Engineering */}
+            <div className="grid lg:grid-cols-2 gap-16 items-center">
+              <div>
+                <div className="w-16 h-16 bg-orange-100 rounded-full flex items-center justify-center mb-6">
+                  <Wrench className="text-orange-600" size={32} />
+                </div>
+                <h2 className="text-display mb-6">MEP Engineering</h2>
+                <p className="text-xl text-gray-600 mb-8">
+                  Complete mechanical, electrical, and plumbing solutions for mission-critical facilities—from data centers to industrial complexes.
+                </p>
+                <ul className="space-y-4 mb-8">
+                  <li className="flex items-start gap-3">
+                    <CheckCircle className="text-orange-500 flex-shrink-0 mt-1" size={20} />
+                    <span className="text-gray-700">Electrical Systems & Infrastructure</span>
+                  </li>
+                  <li className="flex items-start gap-3">
+                    <CheckCircle className="text-orange-500 flex-shrink-0 mt-1" size={20} />
+                    <span className="text-gray-700">DG Upgradation & Power Solutions</span>
+                  </li>
+                  <li className="flex items-start gap-3">
+                    <CheckCircle className="text-orange-500 flex-shrink-0 mt-1" size={20} />
+                    <span className="text-gray-700">Data Center MEP Work</span>
+                  </li>
+                  <li className="flex items-start gap-3">
+                    <CheckCircle className="text-orange-500 flex-shrink-0 mt-1" size={20} />
+                    <span className="text-gray-700">Transformer & HT/LT Work</span>
+                  </li>
+                  <li className="flex items-start gap-3">
+                    <CheckCircle className="text-orange-500 flex-shrink-0 mt-1" size={20} />
+                    <span className="text-gray-700">Complete Electrical Engineering</span>
+                  </li>
+                </ul>
+                <Link href="/contact" className="bg-orange-600 book-call-btn text-white px-6 py-3 rounded-full font-semibold hover:bg-orange-700 transition-all inline-flex items-center gap-2">
+                  Get Started <ArrowRight size={18} />
+                </Link>
+              </div>
+              <div className="aspect-square bg-gradient-to-br from-orange-400 to-orange-600 rounded-3xl overflow-hidden flex items-center justify-center">
+                <Wrench className="text-white" size={180} />
+              </div>
+            </div>
+
+            {/* Civil & Earthing Works */}
+            <div className="grid lg:grid-cols-2 gap-16 items-center">
+              <div className="order-2 lg:order-1 aspect-square bg-gradient-to-br from-gray-400 to-gray-600 rounded-3xl overflow-hidden relative">
+                <Image
+                    src="/Earthing Solutions.png"
+                    alt="Civil & Earthing Works"
+                    fill
+                    className="object-cover"
+                  />
+              </div>
+              <div className="order-1 lg:order-2">
+                <div className="w-16 h-16 bg-gray-100 rounded-full flex items-center justify-center mb-6">
+                  <HardHat className="text-gray-600" size={32} />
+                </div>
+                <h2 className="text-display mb-6">Civil & Earthing Works</h2>
+                <p className="text-xl text-gray-600 mb-8">
+                  Comprehensive civil engineering and advanced earthing solutions ensuring structural integrity and electrical safety.
+                </p>
+                <ul className="space-y-4 mb-8">
+                  <li className="flex items-start gap-3">
+                    <CheckCircle className="text-gray-500 flex-shrink-0 mt-1" size={20} />
+                    <span className="text-gray-700">Complete Civil Engineering Services</span>
+                  </li>
+                  <li className="flex items-start gap-3">
+                    <CheckCircle className="text-gray-500 flex-shrink-0 mt-1" size={20} />
+                    <span className="text-gray-700">Industrial Plant Earthing Systems</span>
+                  </li>
+                  <li className="flex items-start gap-3">
+                    <CheckCircle className="text-gray-500 flex-shrink-0 mt-1" size={20} />
+                    <span className="text-gray-700">Smart Grid Grounding Solutions</span>
+                  </li>
+                  <li className="flex items-start gap-3">
+                    <CheckCircle className="text-gray-500 flex-shrink-0 mt-1" size={20} />
+                    <span className="text-gray-700">Safety Compliance & Protection</span>
+                  </li>
+                  <li className="flex items-start gap-3">
+                    <CheckCircle className="text-gray-500 flex-shrink-0 mt-1" size={20} />
+                    <span className="text-gray-700">Infrastructure Development</span>
+                  </li>
+                </ul>
+                <Link href="/contact" className="bg-gray-600 book-call-btn text-white px-6 py-3 rounded-full font-semibold hover:bg-gray-700 transition-all inline-flex items-center gap-2">
+                  Get Started <ArrowRight size={18} />
+                </Link>
+              </div>
+            </div>
+
+            {/* Manpower Services */}
+            <div className="grid lg:grid-cols-2 gap-16 items-center">
+              <div>
+                <div className="w-16 h-16 bg-yellow-100 rounded-full flex items-center justify-center mb-6">
+                  <Users className="text-yellow-600" size={32} />
+                </div>
+                <h2 className="text-display mb-6">Manpower Services</h2>
+                <p className="text-xl text-gray-600 mb-8">
+                  Comprehensive facility management with trained professionals ensuring 24/7 operational excellence and security.
+                </p>
+                <ul className="space-y-4 mb-8">
+                  <li className="flex items-start gap-3">
+                    <CheckCircle className="text-yellow-500 flex-shrink-0 mt-1" size={20} />
+                    <span className="text-gray-700">Professional Security Services</span>
+                  </li>
+                  <li className="flex items-start gap-3">
+                    <CheckCircle className="text-yellow-500 flex-shrink-0 mt-1" size={20} />
+                    <span className="text-gray-700">Technical Maintenance Services</span>
+                  </li>
+                  <li className="flex items-start gap-3">
+                    <CheckCircle className="text-yellow-500 flex-shrink-0 mt-1" size={20} />
+                    <span className="text-gray-700">Housekeeping & Facility Management</span>
+                  </li>
+                  <li className="flex items-start gap-3">
+                    <CheckCircle className="text-yellow-500 flex-shrink-0 mt-1" size={20} />
+                    <span className="text-gray-700">Manpower Development Programs</span>
+                  </li>
+                  <li className="flex items-start gap-3">
+                    <CheckCircle className="text-yellow-500 flex-shrink-0 mt-1" size={20} />
+                    <span className="text-gray-700">24/7 Operational Support</span>
+                  </li>
+                </ul>
+                <Link href="/contact" className="bg-yellow-600 book-call-btn text-white px-6 py-3 rounded-full font-semibold hover:bg-yellow-700 transition-all inline-flex items-center gap-2">
+                  Get Started <ArrowRight size={18} />
+                </Link>
+              </div>
+              <div className="aspect-square bg-gradient-to-br from-yellow-400 to-yellow-600 rounded-3xl overflow-hidden flex items-center justify-center">
+                <Users className="text-white" size={180} />
               </div>
             </div>
 

@@ -5,7 +5,7 @@ import HypeciaLoader from '@/components/logo_animation'
 import Navigation from '@/components/Navigation'
 import Footer from '@/components/Footer'
 import Link from 'next/link'
-import { ArrowRight, Zap, Cpu, Network, Shield, TrendingUp, CheckCircle, Clock, Users } from 'lucide-react'
+import { ArrowRight, Zap, Cpu, Network, Shield, TrendingUp, CheckCircle, Clock, Users, HardHat, Wrench } from 'lucide-react'
 import { useEffect, useRef, useState } from 'react'
 import { gsap } from 'gsap'
 import { SplitText } from 'gsap/SplitText'
@@ -178,15 +178,16 @@ export default function Home() {
                   className="mb-6 leading-[0.9]"
                   style={{ opacity: 0 }}
                 >
-                  We Design The Infrastructure<br />
-                  <span>That Powers Tomorrow</span>
+                  THE INFRASTRUCTURE YOU CAN TRUST<br />
+                  <span>THE RESULTS YOU DEMAND</span>
                 </h2>
                 <p 
                   ref={heroDescRef}
                   className="text-lg md:text-xl text-white/90 max-w-3xl"
                   style={{ opacity: 0 }}
                 >
-                  End-to-end technology solutions in green energy, industrial automation, and digital infrastructure for modern industries.
+                  Carrier-grade networks. AI-powered security. Industrial automation.<br />
+                  Trusted by tier-1 operators for mission-critical deployments.
                 </p>
               </div>
             </div>
@@ -198,8 +199,9 @@ export default function Home() {
             <div className="container-custom">
               <div className="flex flex-wrap items-center justify-center gap-8 md:gap-12 text-center">
                 <div className="flex items-center gap-3">
-                  <span className="text-4xl md:text-5xl font-bold text-black">
+                  <span className="text-4xl md:text-5xl font-bold text-black flex items-baseline gap-1">
                     <AnimatedCounter target={157} />
+                    <span>+</span>
                   </span>
                   <span className="text-lg md:text-xl text-gray-600">Sites Secured</span>
                 </div>
@@ -207,19 +209,21 @@ export default function Home() {
                 <div className="hidden md:block w-px h-12 bg-gray-300" />
                 
                 <div className="flex items-center gap-3">
-                  <span className="text-4xl md:text-5xl font-bold text-black">
-                    <AnimatedCounter target={16} />
+                  <span className="text-4xl md:text-5xl font-bold text-black flex items-baseline gap-1">
+                    <AnimatedCounter target={2400} />
+                    <span>+</span>
                   </span>
-                  <span className="text-lg md:text-xl text-gray-600">MSCs Deployed</span>
+                  <span className="text-lg md:text-xl text-gray-600">CCTV Systems</span>
                 </div>
                 
                 <div className="hidden md:block w-px h-12 bg-gray-300" />
                 
                 <div className="flex items-center gap-3">
-                  <span className="text-4xl md:text-5xl font-bold text-black">
-                    <AnimatedCounter target={141} />
+                  <span className="text-4xl md:text-5xl font-bold text-black flex items-baseline gap-1">
+                    <AnimatedCounter target={95} />
+                    <span>%</span>
                   </span>
-                  <span className="text-lg md:text-xl text-gray-600">TNGs Connected</span>
+                  <span className="text-lg md:text-xl text-gray-600">Uptime Delivered</span>
                 </div>
                 
                 <div className="hidden md:block w-px h-12 bg-gray-300" />
@@ -237,38 +241,41 @@ export default function Home() {
             <div className="container-custom">
               <div className="grid lg:grid-cols-[3fr_2fr] gap-16 items-center">
                 <div>
-                  <h2 className="headline-display text-balance text-gradient">
-                    Your partner for sustainable infrastructure transformation.<br />
-                    <span className="text-gradient opacity-40">Delivering innovation across 157+ Airtel MSC and TNG Networks sites.</span>
-                  </h2>
+                  <h4 className="headline-display text-balance text-gradient" style={{ fontSize: '4.2rem' }}>
+                    Your trusted partner for mission-critical infrastructure. Delivering carrier-grade 
+                    networks, AI-powered <br />
+                    <span className="text-gradient opacity-40">security, and industrial automation. 
+                    Proven at scale. Executed with precision.</span>
+                  </h4>
                 </div>
+                
                 <div className="space-y-6">
                   <div className="flex items-start gap-4">
                     <CheckCircle className="text-green-500 flex-shrink-0 mt-1" size={22} />
                     <div>
-                      <h3 className="font-bold text-xl mb-2">Advanced Energy Solutions</h3>
-                      <p className="text-gray-600">Solar integration and smart monitoring systems for maximum efficiency</p>
+                      <h3 className="font-bold text-xl mb-2">157+ Sites. Zero Compromise</h3>
+                      <p className="text-gray-600">Successfully deployed across Airtel's MSC and TNG infrastructure</p>
                     </div>
                   </div>
                   <div className="flex items-start gap-4">
                     <CheckCircle className="text-green-500 flex-shrink-0 mt-1" size={22} />
                     <div>
-                      <h3 className="font-bold text-xl mb-2">Industrial Automation Excellence</h3>
-                      <p className="text-gray-600">Scalable systems that optimize operations and reduce downtime</p>
+                      <h3 className="font-bold text-xl mb-2">AI-Powered Security Solutions</h3>
+                      <p className="text-gray-600">2,400+ cameras with intelligent analytics, facial recognition, and real-time threat detection</p>
                     </div>
                   </div>
                   <div className="flex items-start gap-4">
                     <CheckCircle className="text-green-500 flex-shrink-0 mt-1" size={22} />
                     <div>
-                      <h3 className="font-bold text-xl mb-2">Robust Digital Infrastructure</h3>
-                      <p className="text-gray-600">Future-ready telecom and IT solutions for enterprise connectivity</p>
+                      <h3 className="font-bold text-xl mb-2">40% Security Enhancement</h3>
+                      <p className="text-gray-600">Proven reduction in site vulnerabilities with 95% uptime across all installations</p>
                     </div>
                   </div>
                   <div className="flex items-start gap-4">
                     <CheckCircle className="text-green-500 flex-shrink-0 mt-1" size={22} />
                     <div>
-                      <h3 className="font-bold text-xl mb-2">24/7 Technical Support</h3>
-                      <p className="text-gray-600">Comprehensive maintenance and monitoring services nationwide</p>
+                      <h3 className="font-bold text-xl mb-2">End-to-End Lifecycle Support</h3>
+                      <p className="text-gray-600">From design to deployment to 24/7 maintenance—we're with you every step</p>
                     </div>
                   </div>
                 </div>
@@ -353,6 +360,65 @@ export default function Home() {
                       AI-enabled CCTV systems with real-time monitoring
                     </p>
                   </div>
+                  <div className="bg-white p-8 rounded-2xl border border-gray-200 hover:shadow-xl transition-all">
+                    <div className="w-14 h-14 bg-orange-100 rounded-full flex items-center justify-center mb-6">
+                      <Wrench className="text-orange-600" size={28} />
+                    </div>
+                    <h3 className="text-2xl font-bold mb-4">MEP Engineering</h3>
+                    <p className="text-gray-600">
+                      Electrical, DG upgradation, HT/LT work, transformer solutions, data center MEP
+                    </p>
+                  </div>
+                  <div className="bg-white p-8 rounded-2xl border border-gray-200 hover:shadow-xl transition-all">
+                    <div className="w-14 h-14 bg-gray-100 rounded-full flex items-center justify-center mb-6">
+                      <HardHat className="text-gray-600" size={28} />
+                    </div>
+                    <h3 className="text-2xl font-bold mb-4">Civil & Earthing Works</h3>
+                    <p className="text-gray-600">
+                      Complete civil engineering and advanced earthing solutions for industrial safety
+                    </p>
+                  </div>
+                  <div className="bg-white p-8 rounded-2xl border border-gray-200 hover:shadow-xl transition-all">
+                    <div className="w-14 h-14 bg-yellow-100 rounded-full flex items-center justify-center mb-6">
+                      <Users className="text-yellow-600" size={28} />
+                    </div>
+                    <h3 className="text-2xl font-bold mb-4">Manpower Services</h3>
+                    <p className="text-gray-600">
+                      Security, maintenance, housekeeping comprehensive facility management
+                    </p>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </section>
+
+          {/* CLIENT TRUST SECTION */}
+          <section className="section-padding bg-light-gray">
+            <div className="container-custom">
+              <div className="max-w-4xl mx-auto text-center mb-16">
+                <h2 className="text-4xl md:text-5xl font-bold mb-2 text-black">
+                  Trusted by Industry Leaders
+                </h2>
+              </div>
+              
+              <div className="flex flex-wrap items-center justify-center gap-x-16 gap-y-12 max-w-5xl mx-auto">
+                {/* Airtel */}
+                <div className="flex flex-col items-center gap-3">
+                  <div className="text-5xl md:text-6xl font-black bg-gradient-to-br from-red-500 to-red-700 bg-clip-text text-transparent">
+                    AIRTEL
+                  </div>
+                  <p className="text-sm text-gray-500">157+ Sites Deployed</p>
+                </div>
+
+                {/* Vertical divider */}
+                <div className="hidden md:block w-px h-16 bg-gray-300" />
+
+                {/* EPACK PREFAB */}
+                <div className="flex flex-col items-center gap-3">
+                  <div className="text-4xl md:text-5xl font-black text-gray-900">
+                    EPACK PREFAB
+                  </div>
+                  <p className="text-sm text-gray-500">Premium Infrastructure Partner</p>
                 </div>
               </div>
             </div>
@@ -564,9 +630,9 @@ export default function Home() {
 
                 {/* Column 3: Proven Track Record */}
                 <div>
-                  <h3 className="text-2xl font-semibold mb-6">Proven Track Record</h3>
+                  <h3 className="text-2xl font-semibold mb-6">Unmatched Track Record</h3>
                   <p className="text-gray-500 mb-8 font-semibold leading-relaxed">
-                    Successfully deployed infrastructure across 157+ sites with comprehensive 24/7 monitoring and support ensuring operational excellence.
+                  Successfully secured critical infrastructure across 157+ sites with 95% uptime, 24/7 monitoring, and complete TRAI compliance certification.
                   </p>
                   <div className="space-y-4">
                     <div className="flex items-baseline gap-3">

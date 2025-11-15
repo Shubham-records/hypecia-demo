@@ -39,9 +39,9 @@ export default function TeamPage() {
         {/* Leadership Team */}
         <section className="section-padding">
           <div className="container-custom">
-            <h2 className="text-4xl md:text-5xl font-bold mb-4">Leadership</h2>
+            <h2 className="text-4xl md:text-5xl font-bold mb-4">Leadership Team</h2>
             <p className="text-xl text-gray-600 mb-16 max-w-2xl">
-              Seasoned experts with over a decade of experience in energy, automation, and telecom sectors.
+              Certified professionals with deep industry expertise in telecom security, green energy, and industrial automation—delivering 157+ successful deployments.
             </p>
             
             <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
@@ -54,7 +54,7 @@ export default function TeamPage() {
                 </div>
                 <h3 className="text-2xl font-bold mb-1">Ranjeet Kunwar</h3>
                 <p className="text-blue-600 font-semibold mb-2">Project Director</p>
-                <p className="text-gray-600 mb-4">Leading major infrastructure deployments with focus on telecom security and surveillance systems.</p>
+                <p className="text-gray-600 mb-4">Spearheading Airtel's 157-site CCTV infrastructure deployment with proven track record in telecom security and surveillance systems. Expert in AI-enabled surveillance and large-scale project execution.</p>
                 <div className="flex gap-3">
                   <a href="mailto:Hypeciaconnectservices@gmail.com" className="w-10 h-10 bg-gray-100 rounded-full flex items-center justify-center hover:bg-blue-600 hover:text-white transition-all">
                     <Mail size={18} />
@@ -74,7 +74,7 @@ export default function TeamPage() {
                 </div>
                 <h3 className="text-2xl font-bold mb-1">Rajeev Sharma</h3>
                 <p className="text-green-600 font-semibold mb-2">Technical Director</p>
-                <p className="text-gray-600 mb-4">Expert in green energy solutions and industrial automation with 10+ years of experience.</p>
+                <p className="text-gray-600 mb-4">Leading technical innovation in green energy solutions and industrial automation. 10+ years driving sustainable infrastructure transformation with expertise in solar integration and smart grid systems.</p>
                 <div className="flex gap-3">
                   <a href="mailto:Hypeciaconnectservices@gmail.com" className="w-10 h-10 bg-gray-100 rounded-full flex items-center justify-center hover:bg-green-600 hover:text-white transition-all">
                     <Mail size={18} />
@@ -93,8 +93,8 @@ export default function TeamPage() {
                   </div>
                 </div>
                 <h3 className="text-2xl font-bold mb-1">Operations Head</h3>
-                <p className="text-purple-600 font-semibold mb-2">Operations Manager</p>
-                <p className="text-gray-600 mb-4">Overseeing project execution and delivery across multiple sites with precision and efficiency.</p>
+                <p className="text-purple-600 font-semibold mb-2">Chief Operations Officer</p>
+                <p className="text-gray-600 mb-4">Ensuring flawless execution and delivery across multiple sites with precision timeline management. Overseeing 24/7 operations, quality control, and client satisfaction across all deployments.</p>
                 <div className="flex gap-3">
                   <a href="mailto:Hypeciaconnectservices@gmail.com" className="w-10 h-10 bg-gray-100 rounded-full flex items-center justify-center hover:bg-purple-600 hover:text-white transition-all">
                     <Mail size={18} />
@@ -108,25 +108,50 @@ export default function TeamPage() {
           </div>
         </section>
 
+        {/* Company Stats */}
+        <section className="section-padding bg-black text-white">
+          <div className="container-custom">
+            <h2 className="text-4xl md:text-5xl font-bold mb-16 text-center">Our Track Record</h2>
+            <div className="grid md:grid-cols-4 gap-8">
+              <div className="text-center">
+                <div className="text-6xl font-black mb-2">157+</div>
+                <p className="text-gray-400">Sites Deployed</p>
+              </div>
+              <div className="text-center">
+                <div className="text-6xl font-black mb-2">95%</div>
+                <p className="text-gray-400">Uptime Achievement</p>
+              </div>
+              <div className="text-center">
+                <div className="text-6xl font-black mb-2">2022</div>
+                <p className="text-gray-400">Established</p>
+              </div>
+              <div className="text-center">
+                <div className="text-6xl font-black mb-2">10/10</div>
+                <p className="text-gray-400">Client Satisfaction</p>
+              </div>
+            </div>
+          </div>
+        </section>
+
         {/* Values Section */}
         <section className="section-padding bg-light-gray">
           <div className="container-custom">
-            <h2 className="text-4xl md:text-5xl font-bold mb-16 text-center">Our Values</h2>
+            <h2 className="text-4xl md:text-5xl font-bold mb-16 text-center">Our Core Values</h2>
             <div className="grid md:grid-cols-3 gap-8">
               <div className="text-center">
                 <div className="text-6xl font-black text-gray-200 mb-4">01</div>
-                <h3 className="text-2xl font-bold mb-3">Innovation First</h3>
-                <p className="text-gray-600">Constantly pushing boundaries to deliver cutting-edge solutions that drive real transformation.</p>
+                <h3 className="text-2xl font-bold mb-3">Technical Excellence</h3>
+                <p className="text-gray-600">Industry-certified professionals delivering cutting-edge solutions with unmatched precision and quality standards.</p>
               </div>
               <div className="text-center">
                 <div className="text-6xl font-black text-gray-200 mb-4">02</div>
-                <h3 className="text-2xl font-bold mb-3">Sustainable Impact</h3>
-                <p className="text-gray-600">Every project designed with environmental responsibility and long-term sustainability in mind.</p>
+                <h3 className="text-2xl font-bold mb-3">Proven Execution</h3>
+                <p className="text-gray-600">Consistent on-time delivery across 157+ sites with 95% uptime—results that speak louder than promises.</p>
               </div>
               <div className="text-center">
                 <div className="text-6xl font-black text-gray-200 mb-4">03</div>
-                <h3 className="text-2xl font-bold mb-3">Excellence in Execution</h3>
-                <p className="text-gray-600">Delivering projects on time, within budget, and exceeding quality expectations every single time.</p>
+                <h3 className="text-2xl font-bold mb-3">Client Partnership</h3>
+                <p className="text-gray-600">Building long-term relationships with industry leaders through transparency, reliability, and exceptional service.</p>
               </div>
             </div>
           </div>

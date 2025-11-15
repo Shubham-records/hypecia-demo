@@ -45,11 +45,11 @@ export default function CaseStudiesPage() {
               <div className="grid lg:grid-cols-2 gap-12 p-12 lg:p-16">
                 <div>
                   <div className="inline-block bg-white/20 px-4 py-2 rounded-full text-sm font-semibold mb-6">
-                    Featured Project · Telecom Security
+                    Featured Project · Enterprise Security
                   </div>
                   <h2 className="text-5xl md:text-6xl font-bold mb-6">Airtel CCTV Infrastructure Deployment</h2>
                   <p className="text-xl mb-8 opacity-90">
-                    Comprehensive security transformation across 157 telecom sites with AI-enabled surveillance systems, securing critical MSC and TNG network infrastructure.
+                    Transforming India's largest telecom network with AI-enabled surveillance across 157 critical sites—delivering 40% security improvement and 95% uptime.
                   </p>
                   <div className="grid grid-cols-2 gap-6 mb-8">
                     <div>
@@ -60,7 +60,7 @@ export default function CaseStudiesPage() {
                     <div>
                       <p className="text-sm opacity-75 mb-1">Cameras Deployed</p>
                       <p className="text-3xl font-bold">2,400+</p>
-                      <p className="text-xs opacity-75">High-resolution AI-enabled</p>
+                      <p className="text-xs opacity-75">AI-enabled systems</p>
                     </div>
                     <div>
                       <p className="text-sm opacity-75 mb-1">Coverage Area</p>
@@ -68,7 +68,7 @@ export default function CaseStudiesPage() {
                       <p className="text-xs opacity-75">Urban & rural sites</p>
                     </div>
                     <div>
-                      <p className="text-sm opacity-75 mb-1">Project Timeline</p>
+                      <p className="text-sm opacity-75 mb-1">Timeline</p>
                       <p className="text-3xl font-bold">4-6 Months</p>
                       <p className="text-xs opacity-75">Phased rollout</p>
                     </div>
@@ -78,25 +78,25 @@ export default function CaseStudiesPage() {
                   <div className="space-y-6">
                     <div>
                       <h3 className="font-bold text-xl mb-3 flex items-center gap-2">
-                        <Shield className="w-5 h-5" /> Challenge
+                        <Shield className="w-5 h-5" /> The Challenge
                       </h3>
-                      <p className="opacity-90">Secure critical telecom infrastructure across Mobile Switching Centers (MSCs) and Transport Network Gateways (TNGs) to prevent unauthorized access, mitigate cyber-physical threats, and ensure TRAI compliance.</p>
+                      <p className="opacity-90">Airtel needed comprehensive security for Mobile Switching Centers (MSCs) and Transport Network Gateways (TNGs) to prevent unauthorized access, mitigate cyber-physical threats, and ensure TRAI compliance across critical telecom infrastructure.</p>
                     </div>
                     <div>
                       <h3 className="font-bold text-xl mb-3 flex items-center gap-2">
-                        <Zap className="w-5 h-5" /> Solution
+                        <Zap className="w-5 h-5" /> Our Solution
                       </h3>
-                      <p className="opacity-90">Deployed state-of-the-art AI-enabled CCTV systems with centralized video analytics, motion detection, facial recognition, and cloud storage integration. Comprehensive site surveys, professional installation, and integration with Airtel's central command center.</p>
+                      <p className="opacity-90">Deployed state-of-the-art AI-enabled CCTV systems with centralized video analytics, motion detection, facial recognition, and cloud storage. Comprehensive site surveys, professional installation across 157 sites, and seamless integration with Airtel's central command center.</p>
                     </div>
                     <div>
                       <h3 className="font-bold text-xl mb-3 flex items-center gap-2">
-                        <TrendingUp className="w-5 h-5" /> Results
+                        <TrendingUp className="w-5 h-5" /> Measurable Results
                       </h3>
                       <ul className="space-y-2 opacity-90">
                         <li>• <strong>40% reduction</strong> in site vulnerabilities</li>
                         <li>• <strong>25% cost savings</strong> on manual patrols</li>
-                        <li>• <strong>95% uptime</strong> achievement</li>
-                        <li>• <strong>100% TRAI compliance</strong> certification</li>
+                        <li>• <strong>95% uptime</strong> across all installations</li>
+                        <li>• <strong>100% TRAI compliance</strong> achieved</li>
                         <li>• Real-time threat detection & response</li>
                       </ul>
                     </div>
@@ -106,145 +106,26 @@ export default function CaseStudiesPage() {
               
               {/* Technical Highlights */}
               <div className="border-t border-white/20 p-12 lg:p-16">
-                <h3 className="text-2xl font-bold mb-6">Technical Capabilities</h3>
-                <div className="grid md:grid-cols-3 gap-6">
+                <h3 className="text-2xl font-bold mb-6">Technical Excellence</h3>
+                <div className="grid md:grid-cols-4 gap-6">
                   <div>
                     <h4 className="font-semibold mb-2">Site Coverage</h4>
-                    <p className="text-sm opacity-90">MSC sites: 30-60 cameras per site | TNG sites: 4-5 cameras per site with optimized perimeter coverage</p>
+                    <p className="text-sm opacity-90">MSC sites: 30-60 cameras | TNG sites: 4-5 cameras with optimized perimeter coverage</p>
                   </div>
                   <div>
                     <h4 className="font-semibold mb-2">AI Analytics</h4>
-                    <p className="text-sm opacity-90">Motion detection, facial recognition, anomaly detection, and automated threat alerts integrated with centralized monitoring</p>
+                    <p className="text-sm opacity-90">Motion detection, facial recognition, anomaly detection, automated alerts</p>
                   </div>
                   <div>
                     <h4 className="font-semibold mb-2">Infrastructure</h4>
-                    <p className="text-sm opacity-90">Professional cabling (500m+ per MSC), NVR setup, solar PoE integration for remote sites, bandwidth optimization</p>
+                    <p className="text-sm opacity-90">Professional cabling, NVR setup, solar PoE for remote sites, bandwidth optimization</p>
+                  </div>
+                  <div>
+                    <h4 className="font-semibold mb-2">Support</h4>
+                    <p className="text-sm opacity-90">24/7 monitoring, 1-year service support, preventive maintenance</p>
                   </div>
                 </div>
               </div>
-            </div>
-
-            {/* Service Capabilities - Not Completed Projects */}
-            <h2 className="text-4xl md:text-5xl font-bold mb-6">Our Solution Areas</h2>
-            <p className="text-xl text-gray-600 mb-12 max-w-3xl">
-              Comprehensive technology solutions across energy, automation, and digital infrastructure sectors.
-            </p>
-            <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
-              
-              {/* Green Energy Solutions */}
-              <div className="bg-white border-2 border-gray-200 rounded-3xl p-8 hover:shadow-xl transition-all">
-                <div className="aspect-video bg-gradient-to-br from-green-400 to-blue-500 rounded-2xl mb-6 flex items-center justify-center overflow-hidden relative">
-                  <Image
-                      src="/Green Energy Solutions.jpg"
-                      alt="Green Energy Icon"
-                      fill
-                      className="object-cover"
-                    />
-                </div>
-                <h3 className="text-3xl font-bold mb-3">Green Energy Solutions</h3>
-                <p className="text-gray-600 mb-4">Solar energy integration, advanced energy monitoring systems, and sustainable design practices for eco-conscious operations.</p>
-                <div className="space-y-2 text-sm text-gray-600">
-                  <p>• Solar power implementation</p>
-                  <p>• Real-time energy monitoring</p>
-                  <p>• Smart grid integration</p>
-                </div>
-              </div>
-
-              {/* Industrial Automation */}
-              <div className="bg-white border-2 border-gray-200 rounded-3xl p-8 hover:shadow-xl transition-all">
-                <div className="aspect-video bg-gradient-to-br from-indigo-500 to-purple-600 rounded-2xl mb-6 flex items-center justify-center overflow-hidden relative">
-                  <Image
-                      src="/Industrial Automation.jpg"
-                      alt="Industrial Automation"
-                      fill
-                      className="object-cover"
-                    />
-                </div>
-                <h3 className="text-3xl font-bold mb-3">Industrial Automation</h3>
-                <p className="text-gray-600 mb-4">Scalable automation systems that optimize industrial operations and transform traditional manufacturing processes.</p>
-                <div className="space-y-2 text-sm text-gray-600">
-                  <p>• Scalable automation systems</p>
-                  <p>• Process optimization</p>
-                  <p>• Industrial IoT integration</p>
-                </div>
-              </div>
-
-              {/* Telecom Infrastructure */}
-              <div className="bg-white border-2 border-gray-200 rounded-3xl p-8 hover:shadow-xl transition-all">
-                <div className="aspect-video bg-gradient-to-br from-blue-500 to-cyan-500 rounded-2xl mb-6 flex items-center justify-center overflow-hidden relative">
-                <Image
-                    src="/Telecom_IT_Infrastructure.png"
-                    alt="Telecom & IT Infrastructure"
-                    fill
-                    className="object-cover"
-                  />
-                </div>
-                <h3 className="text-3xl font-bold mb-3">Telecom & IT Infrastructure</h3>
-                <p className="text-gray-600 mb-4">Network design, deployment, and comprehensive lifecycle support services for robust digital connectivity.</p>
-                <div className="space-y-2 text-sm text-gray-600">
-                  <p>• Network design & implementation</p>
-                  <p>• Infrastructure deployment</p>
-                  <p>• Maintenance & support</p>
-                </div>
-              </div>
-
-              {/* Security & Surveillance */}
-              <div className="bg-white border-2 border-gray-200 rounded-3xl p-8 hover:shadow-xl transition-all">
-                <div className="aspect-video bg-gradient-to-br from-red-500 to-orange-500 rounded-2xl mb-6 flex items-center justify-center overflow-hidden relative">
-                  <Image
-                      src="/Security_Surveillance.png"
-                      alt="Security & Surveillance"
-                      fill
-                      className="object-cover"
-                    />
-                </div>
-                <h3 className="text-3xl font-bold mb-3">Security & Surveillance</h3>
-                <p className="text-gray-600 mb-4">AI-enabled CCTV systems with real-time monitoring, video analytics, and centralized command center integration.</p>
-                <div className="space-y-2 text-sm text-gray-600">
-                  <p>• AI-enabled surveillance</p>
-                  <p>• Video analytics & monitoring</p>
-                  <p>• Access control systems</p>
-                </div>
-              </div>
-
-              {/* Earthing Solutions */}
-              <div className="bg-white border-2 border-gray-200 rounded-3xl p-8 hover:shadow-xl transition-all">
-                <div className="aspect-video bg-gradient-to-br from-amber-500 to-yellow-500 rounded-2xl mb-6 flex items-center justify-center overflow-hidden relative">
-                  <Image
-                      src="/Earthing Solutions.png"
-                      alt="Earthing Solutions"
-                      fill
-                      className="object-cover"
-                    />
-                </div>
-                <h3 className="text-3xl font-bold mb-3">Earthing Solutions</h3>
-                <p className="text-gray-600 mb-4">Engineered earthing systems for industrial plants and smart grids, ensuring performance and protection.</p>
-                <div className="space-y-2 text-sm text-gray-600">
-                  <p>• Industrial plant earthing</p>
-                  <p>• Smart grid grounding</p>
-                  <p>• Safety compliance</p>
-                </div>
-              </div>
-
-              {/* Lifecycle Support */}
-              <div className="bg-white border-2 border-gray-200 rounded-3xl p-8 hover:shadow-xl transition-all">
-                <div className="aspect-video bg-gradient-to-br from-teal-500 to-green-600 rounded-2xl mb-6 flex items-center justify-center overflow-hidden relative">
-                <Image
-                    src="/Maintenance Services.png"
-                    alt="Maintenance Services"
-                    fill
-                    className="object-cover"
-                  />
-                </div>
-                <h3 className="text-3xl font-bold mb-3">Maintenance Services</h3>
-                <p className="text-gray-600 mb-4">Reliable maintenance solutions for telecom and IT infrastructure that safeguard uptime and optimize efficiency.</p>
-                <div className="space-y-2 text-sm text-gray-600">
-                  <p>• 24/7 technical support</p>
-                  <p>• Preventive maintenance</p>
-                  <p>• Infrastructure upgrades</p>
-                </div>
-              </div>
-
             </div>
           </div>
         </section>
