@@ -213,7 +213,8 @@ export default function Home() {
   const statsRef = useRef<HTMLDivElement>(null)
   const aboutLeftRef = useRef<HTMLDivElement>(null)
   const aboutRightRef = useRef<HTMLDivElement>(null)
-  
+  const aboutContainerRef = useRef<HTMLDivElement>(null)
+
   const handleLoaderComplete = () => {
     setStartFadeIn(true)
     setTimeout(() => {
@@ -295,7 +296,7 @@ export default function Home() {
         gsap.to(statItems, {
           opacity: 1,
           y: 0,
-          duration: 2,
+          duration: 1,
           ease: 'power3.out',
           stagger: {
             each: 0.2,
@@ -311,84 +312,75 @@ export default function Home() {
         })
       }
 
-      // About Section - Left Side Animation (preserve gradient background)
-      if (aboutLeftRef.current) {
-        const leftText = aboutLeftRef.current.querySelector('.about-text')
-        if (leftText) {
-          const textSplit = new SplitText(leftText, { type: 'words', wordsClass: 'split-word' })
-          
-          // Apply gradient to each word wrapper
-          gsap.set(textSplit.words, { 
-            opacity: 0, 
-            y: 50,
-            display: 'inline-block',
-            backgroundImage: 'inherit',
-            backgroundSize: 'inherit',
-            backgroundPosition: 'inherit',
-            backgroundRepeat: 'inherit',
-            WebkitBackgroundClip: 'text',
-            backgroundClip: 'text',
-            WebkitTextFillColor: 'transparent'
-          })
-          
-          gsap.to(textSplit.words, {
-            opacity: 1,
-            y: 0,
-            duration: 1.8,
-            ease: 'power2.out',
-            stagger: {
-              each: 0.05,
-              from: 'start'
-            },
-            scrollTrigger: {
-              trigger: aboutLeftRef.current,
-              start: 'top 50%',
-              end: 'top 20%',
-              toggleActions: 'play reverse play reverse',
-              scrub: 1.5
-            }
-          })
-        }
+      if (aboutContainerRef.current && aboutLeftRef.current && aboutRightRef.current) {
+  
+        const leftText = aboutLeftRef.current.querySelector(".about-text");
+        const rightItems = aboutRightRef.current.querySelectorAll(".about-item");
+      
+        const leftSplit = new SplitText(leftText, {
+          type: "words",
+          wordsClass: "split-word"
+        });
+      
+        // Restore gradient on each SplitText word
+        leftSplit.words.forEach(w => w.classList.add("text-gradient"));
+      
+        const tl = gsap.timeline({
+          scrollTrigger: {
+            trigger: aboutContainerRef.current,
+            start: "top 20%",
+            end: "+=200%",
+            scrub: 1,
+            pin: true,
+            pinSpacing: true,
+            anticipatePin: 1,
+          }
+        });
+      
+        // FADE IN (bottom-left + bottom-right)
+        tl.from(leftSplit.words, {
+          opacity: 0,
+          x: -80,
+          y: 80,
+          stagger: 0.04,
+          ease: "power3.out",
+          duration: 1,
+        });
+      
+        tl.from(rightItems, {
+          opacity: 0,
+          x: 80,
+          y: 80,
+          stagger: 0.15,
+          ease: "power3.out",
+          duration: 1,
+        }, "<");
+      
+        // HOLD
+        tl.to({}, { duration: 0.5 });
+      
+        // FADE OUT (top-left + top-right)
+        tl.to(leftSplit.words, {
+          opacity: 0,
+          x: -80,
+          y: -80,
+          stagger: 0.04,
+          ease: "power3.in",
+          duration: 1,
+        });
+      
+        tl.to(rightItems, {
+          opacity: 0,
+          x: 80,
+          y: -80,
+          stagger: 0.15,
+          ease: "power3.in",
+          duration: 1,
+        }, "<");
+      
       }
-
-      // About Section - Right Side Animation
-      if (aboutRightRef.current) {
-        const rightItems = aboutRightRef.current.querySelectorAll('.about-item')
-        
-        gsap.set(rightItems, { opacity: 0, x: 100 })
-        
-        rightItems.forEach((item, index) => {
-          const header = item.querySelector('h3')
-          const text = item.querySelector('p')
-          
-          gsap.set([header, text], { opacity: 0, y: 20 })
-          
-          const tl = gsap.timeline({
-            scrollTrigger: {
-              trigger: aboutRightRef.current,
-              start: 'top 60%',
-              end: 'top 20%',
-              toggleActions: 'play reverse play reverse',
-              scrub: 1
-            }
-          })
-          
-          tl.to(item, {
-            opacity: 1,
-            x: 0,
-            duration: 0.6,
-            ease: 'power2.out',
-            delay: index * 0.15
-          })
-          .to([header, text], {
-            opacity: 1,
-            y: 0,
-            duration: 0.5,
-            stagger: 0.1,
-            ease: 'power2.out'
-          }, '-=0.3')
-        })
-      }
+      
+      
     })
 
     return () => ctx.revert()
@@ -402,47 +394,47 @@ export default function Home() {
       <div className={`min-h-screen transition-opacity duration-700 ${startFadeIn ? 'opacity-100' : 'opacity-0'}`}>
         <Navigation />
         
-        {/* VIDEO HERO SECTION */}
-        <section className="pt-4 pb-12 bg-light-gray">
-          <div className="mx-auto px-4 md:px-4 lg:px-4">
-            <div 
-              ref={heroBoxRef}
-              className="relative w-full aspect-video rounded-3xl overflow-hidden shadow-2xl" 
-              style={{ height: '42.5rem', opacity: 0 }}
-            >
-              <video
-                ref={videoRef}
-                loop
-                muted
-                playsInline
-                className="w-full h-full object-cover"
+          {/* VIDEO HERO SECTION */}
+          <section className="pt-4 pb-12 bg-light-gray">
+            <div className="mx-auto px-4 md:px-4 lg:px-4">
+              <div 
+                ref={heroBoxRef}
+                className="relative w-full aspect-video rounded-3xl overflow-hidden shadow-2xl" 
+                style={{ height: '42.5rem', opacity: 0 }}
               >
-                <source src="/promo_video.mp4" type="video/mp4" />
-              </video>
-              <div className="absolute inset-0 bg-white/15 mix-blend-overlay pointer-events-none" />
+                <video
+                  ref={videoRef}
+                  loop
+                  muted
+                  playsInline
+                  className="w-full h-full object-cover"
+                >
+                  <source src="/promo_video.mp4" type="video/mp4" />
+                </video>
+                <div className="absolute inset-0 bg-white/15 mix-blend-overlay pointer-events-none" />
 
-              <div className="absolute inset-0 bg-gradient-to-t from-black/50 via-transparent to-transparent" />
-              <div className="absolute bottom-0 left-0 right-0 p-8 md:p-12 text-white">
-                <h2 
-                  ref={heroTitleRef}
-                  className="mb-6 leading-[0.9]"
-                  style={{ opacity: 0 }}
-                >
-                  The Infrastructure You Can Trust<br />
-                  <span>The Results You Demand</span>
-                </h2>
-                <p 
-                  ref={heroDescRef}
-                  className="text-lg md:text-xl text-white/90 max-w-3xl"
-                  style={{ opacity: 0 }}
-                >
-                  Carrier-grade networks. AI-powered security. Industrial automation.<br />
-                  Trusted by tier-1 operators for mission-critical deployments.
-                </p>
+                <div className="absolute inset-0 bg-gradient-to-t from-black/50 via-transparent to-transparent" />
+                <div className="absolute bottom-0 left-0 right-0 p-8 md:p-12 text-white">
+                  <h2 
+                    ref={heroTitleRef}
+                    className="mb-6 leading-[0.9]"
+                    style={{ opacity: 0 }}
+                  >
+                    The Infrastructure You Can Trust<br />
+                    <span>The Results You Demand</span>
+                  </h2>
+                  <p 
+                    ref={heroDescRef}
+                    className="text-lg md:text-xl text-white/90 max-w-3xl"
+                    style={{ opacity: 0 }}
+                  >
+                    Carrier-grade networks. AI-powered security. Industrial automation.<br />
+                    Trusted by tier-1 operators for mission-critical deployments.
+                  </p>
+                </div>
               </div>
             </div>
-          </div>
-        </section>
+          </section>
 
           {/* STATS SECTION */}
           <section ref={statsRef} className="section-padding py-12 bg-light-gray">
@@ -487,8 +479,8 @@ export default function Home() {
           </section>
 
           {/* SECTION 3: ABOUT US */}
-          <section className="section-padding bg-light-gray" style={{ height: '170vh', alignContent: 'center' }}>
-            <div className="container-custom">
+          <section className="section-padding bg-light-gray min-h-[250vh]">
+            <div ref={aboutContainerRef} className="container-custom">
               <div className="grid lg:grid-cols-[3fr_2fr] gap-16 items-center">
                 <div ref={aboutLeftRef}>
                   <h4 className="about-text headline-display text-balance text-gradient" style={{ fontSize: '4.2rem' }}>
