@@ -12,43 +12,26 @@ import { ScrollTrigger } from 'gsap/ScrollTrigger'
 
 gsap.registerPlugin(SplitText, ScrollTrigger)
 
-function AnimatedCounter({ target, duration = 2000 }: { target: number; duration?: number }) {
-  const [count, setCount] = useState(0)
-  const ref = useRef<HTMLDivElement>(null)
-  const counterRef = useRef({ value: 0 })
-
-  useEffect(() => {
-    if (!ref.current) return
-
-    gsap.to(counterRef.current, {
-      value: target,
-      duration: 1,
-      ease: 'power2.out',
-      onUpdate: () => {
-        setCount(Math.floor(counterRef.current.value))
-      },
-      scrollTrigger: {
-        trigger: ref.current,
-        start: 'top 60%',
-        end: 'top 40%',
-        toggleActions: 'play reverse play reverse',
-        scrub: 1,
-        onLeaveBack: () => {
-          counterRef.current.value = 0
-          setCount(0)
-        }
-      }
-    })
-  }, [target])
-
-  return <div ref={ref}>{count}</div>
-}
-
-// Add this BEFORE the Home() component
-function CircularGalleryServices() {
-  const containerRef = useRef<HTMLDivElement | null>(null);
-  const scrollRef = useRef({ ease: 0.05, current: 0, target: 0, last: 0 });
-  const rafRef = useRef<number | null>(null);
+export default function Home() {
+  const [showLoader, setShowLoader] = useState(true)
+  const [startFadeIn, setStartFadeIn] = useState(false)
+  const videoRef = useRef<HTMLVideoElement>(null)
+  const heroBoxRef = useRef<HTMLDivElement>(null)
+  const heroTitleRef = useRef<HTMLHeadingElement>(null)
+  const heroDescRef = useRef<HTMLParagraphElement>(null)
+  const statsRef = useRef<HTMLDivElement>(null)
+  const aboutLeftRef = useRef<HTMLDivElement>(null)
+  const aboutRightRef = useRef<HTMLDivElement>(null)
+  const aboutContainerRef = useRef<HTMLDivElement>(null)
+  const servicesContainerRef = useRef<HTMLDivElement>(null)
+  const servicesCardsRef = useRef<HTMLDivElement>(null)
+  
+  // Counter refs
+  const counter1Ref = useRef<HTMLSpanElement>(null)
+  const counter2Ref = useRef<HTMLSpanElement>(null)
+  const counter3Ref = useRef<HTMLSpanElement>(null)
+  
+  // Services state
   const [services] = useState([
     {
       title: "Green Energy Solutions",
@@ -89,131 +72,10 @@ function CircularGalleryServices() {
     {
       title: "Manpower & Facility Services",
       description: "Comprehensive facility management, security, and technical staffing with 24/7 operational support.",
-      icon: "🧑‍🔧",
+      icon: "👨🏻‍🔧",
       color: "from-yellow-400 to-yellow-600",
     },
-  ]);
-
-  const cardsRef = useRef<(HTMLDivElement | null)[]>([]);
-
-  useEffect(() => {
-    const container = containerRef.current;
-    if (!container) return;
-
-    const updatePositions = () => {
-      const scroll = scrollRef.current;
-      scroll.current = scroll.current + (scroll.target - scroll.current) * scroll.ease;
-
-      const containerWidth = container.offsetWidth;
-      const cardWidth = 320;
-      const totalWidth = (cardWidth + 32) * services.length;
-
-      cardsRef.current.forEach((card, index) => {
-        if (!card) return;
-
-        const baseX = index * (cardWidth + 32);
-        let x = baseX - scroll.current;
-
-        while (x < -cardWidth) x += totalWidth;
-        while (x > containerWidth + cardWidth) x -= totalWidth;
-
-        const centerX = containerWidth / 2;
-        const distanceFromCenter = x + cardWidth / 2 - centerX;
-        const maxDistance = containerWidth / 2;
-        const normalizedDistance = distanceFromCenter / maxDistance;
-
-        const bendAmount = 80;
-        const y = Math.abs(normalizedDistance) * bendAmount;
-        const rotation = normalizedDistance * 8;
-        const scale = 1 - Math.abs(normalizedDistance) * 0.2;
-        const opacity = 1 - Math.abs(normalizedDistance) * 0.5;
-
-        card.style.transform = `translateX(${x}px) translateY(${y}px) rotateY(${rotation}deg) scale(${Math.max(scale, 0.7)})`;
-        card.style.opacity = Math.max(opacity, 0.3).toString();
-        card.style.zIndex = Math.round((1 - Math.abs(normalizedDistance)) * 100).toString();
-      });
-
-      rafRef.current = requestAnimationFrame(updatePositions);
-    };
-
-    updatePositions();
-    return () => {
-      if (rafRef.current !== null) {
-        cancelAnimationFrame(rafRef.current);
-      }
-    };
-  }, [services.length]);
-
-  useEffect(() => {
-    const container = containerRef.current;
-    if (!container) return;
-    const totalDistance = services.length * 600;
-    const scrollTrigger = ScrollTrigger.create({
-      trigger: "#services-pin-wrapper",
-      start: "top -10%",
-      end: `+=${totalDistance}`,
-      pin: true,
-      pinSpacing: true,
-      scrub: 1,
-      onUpdate: (self) => {
-        const progress = self.progress;
-        const maxScroll = services.length * 352;
-        scrollRef.current.target = progress * maxScroll;
-      },
-    });
-
-    return () => {
-      scrollTrigger.kill();
-    };
-  }, [services.length]);
-
-  return (
-    <div
-      ref={containerRef}
-      className="relative w-full h-[500px] overflow-hidden cursor-grab active:cursor-grabbing select-none"
-      style={{ perspective: "1000px" }}
-    >
-      <div className="absolute inset-0 flex items-center"></div>
-      {services.map((service, index) => (
-        <div
-          key={index}
-          ref={(el) => {
-            cardsRef.current[index] = el;
-          }}
-          className="absolute left-0 bg-white rounded-2xl border border-gray-200 shadow-xl transition-shadow hover:shadow-2xl"
-          style={{
-            width: "320px",
-            height: "300px",
-            transformStyle: "preserve-3d",
-            willChange: "transform, opacity",
-          }}
-        >
-          <div className="p-8 h-full flex flex-col">
-            <div
-              className={`w-16 h-16 bg-gradient-to-br ${service.color} rounded-2xl flex items-center justify-center mb-6 text-3xl`}
-            >
-              {service.icon}
-            </div>
-            <h3 className="text-2xl font-bold mb-4 text-gray-900">{service.title}</h3>
-            <p className="text-gray-600 leading-relaxed">{service.description}</p>
-          </div>
-        </div>
-      ))}
-    </div>
-  );
-}
-
-export default function Home() {
-  const [showLoader, setShowLoader] = useState(true)
-  const [startFadeIn, setStartFadeIn] = useState(false)
-  const videoRef = useRef<HTMLVideoElement>(null)
-  const heroBoxRef = useRef<HTMLDivElement>(null)
-  const heroTitleRef = useRef<HTMLHeadingElement>(null)
-  const heroDescRef = useRef<HTMLParagraphElement>(null)
-  const statsRef = useRef<HTMLDivElement>(null)
-  const aboutLeftRef = useRef<HTMLDivElement>(null)
-  const aboutRightRef = useRef<HTMLDivElement>(null)
-  const aboutContainerRef = useRef<HTMLDivElement>(null)
+  ])
 
   const handleLoaderComplete = () => {
     setStartFadeIn(true)
@@ -231,13 +93,15 @@ export default function Home() {
     return () => clearTimeout(timer)
   }, [])
 
+  // UNIFIED GSAP ANIMATION
   useEffect(() => {
     if (!startFadeIn) return
 
     const ctx = gsap.context(() => {
-      const tl = gsap.timeline({ delay: 0.5 })
+      // ===== HERO ANIMATION =====
+      const heroTl = gsap.timeline({ delay: 0.5 })
 
-      tl.fromTo(
+      heroTl.fromTo(
         heroBoxRef.current,
         { scale: 0.95, opacity: 0 },
         { scale: 1, opacity: 1, duration: 0.8, ease: 'power2.out' }
@@ -247,7 +111,7 @@ export default function Home() {
         const titleSplit = new SplitText(heroTitleRef.current, { type: 'words' })
         gsap.set(heroTitleRef.current, { opacity: 1 })
         
-        tl.fromTo(
+        heroTl.fromTo(
           titleSplit.words,
           { y: 80, opacity: 0, rotationX: -90 },
           { 
@@ -269,7 +133,7 @@ export default function Home() {
         const descSplit = new SplitText(heroDescRef.current, { type: 'words' })
         gsap.set(heroDescRef.current, { opacity: 1 })
         
-        tl.fromTo(
+        heroTl.fromTo(
           descSplit.words,
           { y: 50, opacity: 0, scale: 0.8 },
           { 
@@ -287,7 +151,7 @@ export default function Home() {
         )
       }
 
-      // Stats Section Animation
+      // ===== STATS SECTION ANIMATION =====
       if (statsRef.current) {
         const statItems = statsRef.current.querySelectorAll('.stat-item')
         
@@ -304,87 +168,227 @@ export default function Home() {
           },
           scrollTrigger: {
             trigger: statsRef.current,
-            start: 'top 50%',
+            start: 'top 60%',
             end: 'top 40%',
             toggleActions: 'play reverse play reverse',
             scrub: 1.5
           }
         })
+        
+        // Counter animations
+        const counterObj1 = { value: 0 }
+        const counterObj2 = { value: 0 }
+        const counterObj3 = { value: 0 }
+        
+        gsap.to(counterObj1, {
+          value: 157,
+          duration: 1,
+          ease: 'power2.out',
+          onUpdate: () => {
+            if (counter1Ref.current) {
+              counter1Ref.current.textContent = Math.floor(counterObj1.value).toString()
+            }
+          },
+          scrollTrigger: {
+            trigger: statsRef.current,
+            start: 'top 60%',
+            toggleActions: 'play reverse play reverse',
+            onLeaveBack: () => {
+              counterObj1.value = 0
+              if (counter1Ref.current) counter1Ref.current.textContent = '0'
+            }
+          }
+        })
+        
+        gsap.to(counterObj2, {
+          value: 2400,
+          duration: 1,
+          ease: 'power2.out',
+          onUpdate: () => {
+            if (counter2Ref.current) {
+              counter2Ref.current.textContent = Math.floor(counterObj2.value).toString()
+            }
+          },
+          scrollTrigger: {
+            trigger: statsRef.current,
+            start: 'top 60%',
+            toggleActions: 'play reverse play reverse',
+            onLeaveBack: () => {
+              counterObj2.value = 0
+              if (counter2Ref.current) counter2Ref.current.textContent = '0'
+            }
+          }
+        })
+        
+        gsap.to(counterObj3, {
+          value: 95,
+          duration: 1,
+          ease: 'power2.out',
+          onUpdate: () => {
+            if (counter3Ref.current) {
+              counter3Ref.current.textContent = Math.floor(counterObj3.value).toString()
+            }
+          },
+          scrollTrigger: {
+            trigger: statsRef.current,
+            start: 'top 60%',
+            toggleActions: 'play reverse play reverse',
+            onLeaveBack: () => {
+              counterObj3.value = 0
+              if (counter3Ref.current) counter3Ref.current.textContent = '0'
+            }
+          }
+        })
       }
 
+      // ===== ABOUT US SECTION ANIMATION =====
       if (aboutContainerRef.current && aboutLeftRef.current && aboutRightRef.current) {
-  
-        const leftText = aboutLeftRef.current.querySelector(".about-text");
-        const rightItems = aboutRightRef.current.querySelectorAll(".about-item");
+        const leftText = aboutLeftRef.current.querySelector(".about-text")
+        const rightItems = aboutRightRef.current.querySelectorAll(".about-item")
       
         const leftSplit = new SplitText(leftText, {
           type: "words",
           wordsClass: "split-word"
-        });
+        })
       
-        // Restore gradient on each SplitText word
-        leftSplit.words.forEach(w => w.classList.add("text-gradient"));
+        leftSplit.words.forEach(w => w.classList.add("text-gradient"))
       
-        const tl = gsap.timeline({
+        const aboutTl = gsap.timeline({
           scrollTrigger: {
             trigger: aboutContainerRef.current,
             start: "top 20%",
-            end: "+=200%",
+            end: "+=180%",
             scrub: 1,
             pin: true,
             pinSpacing: true,
             anticipatePin: 1,
           }
-        });
+        })
       
-        // FADE IN (bottom-left + bottom-right)
-        tl.from(leftSplit.words, {
+        // FADE IN
+        aboutTl.from(leftSplit.words, {
           opacity: 0,
           x: -80,
           y: 80,
           stagger: 0.04,
           ease: "power3.out",
           duration: 1,
-        });
+        })
       
-        tl.from(rightItems, {
+        aboutTl.from(rightItems, {
           opacity: 0,
           x: 80,
           y: 80,
           stagger: 0.15,
           ease: "power3.out",
           duration: 1,
-        }, "<");
+        }, "<")
       
         // HOLD
-        tl.to({}, { duration: 0.5 });
+        aboutTl.to({}, { duration: 0.5 })
       
-        // FADE OUT (top-left + top-right)
-        tl.to(leftSplit.words, {
+        // FADE OUT
+        aboutTl.to(leftSplit.words, {
           opacity: 0,
           x: -80,
           y: -80,
           stagger: 0.04,
           ease: "power3.in",
           duration: 1,
-        });
+        })
       
-        tl.to(rightItems, {
+        aboutTl.to(rightItems, {
           opacity: 0,
           x: 80,
           y: -80,
           stagger: 0.15,
           ease: "power3.in",
           duration: 1,
-        }, "<");
-      
+        }, "<")
       }
-      
-      
+
+      // ===== SERVICES SECTION ANIMATION =====
+      if (servicesContainerRef.current && servicesCardsRef.current) {
+        const cards = servicesCardsRef.current.querySelectorAll('.service-card')
+        
+        // Set initial positions
+        const containerWidth = servicesCardsRef.current.offsetWidth
+        const cardWidth = 320
+        
+        cards.forEach((card, index) => {
+          const baseX = index * (cardWidth + 32)
+          const centerX = containerWidth / 2
+          const distanceFromCenter = baseX + cardWidth / 2 - centerX
+          const maxDistance = containerWidth / 2
+          const normalizedDistance = distanceFromCenter / maxDistance
+          
+          const bendAmount = 80
+          const y = Math.abs(normalizedDistance) * bendAmount
+          const rotation = normalizedDistance * 8
+          const scale = 1 - Math.abs(normalizedDistance) * 0.2
+          const opacity = 1 - Math.abs(normalizedDistance) * 0.5
+          
+          gsap.set(card, {
+            x: baseX,
+            y: y,
+            rotationY: rotation,
+            scale: Math.max(scale, 0.7),
+            opacity: Math.max(opacity, 0.3),
+            zIndex: Math.round((1 - Math.abs(normalizedDistance)) * 100)
+          })
+        })
+        
+        ScrollTrigger.create({
+          trigger: servicesContainerRef.current,
+          start: "top top",
+          end: () => `+=${services.length * 500}`,
+          pin: true,
+          pinSpacing: true,
+          scrub: 1,
+          onUpdate: (self) => {
+            const progress = self.progress
+            const containerWidth = servicesCardsRef.current?.offsetWidth || 1000
+            const cardWidth = 320
+            const totalScroll = services.length * 352
+            const currentScroll = progress * totalScroll
+            
+            cards.forEach((card, index) => {
+              const baseX = index * (cardWidth + 32)
+              let x = baseX - currentScroll
+              
+              // Loop cards
+              const totalWidth = (cardWidth + 32) * services.length
+              while (x < -cardWidth) x += totalWidth
+              while (x > containerWidth + cardWidth) x -= totalWidth
+              
+              // Calculate 3D effects
+              const centerX = containerWidth / 2
+              const distanceFromCenter = x + cardWidth / 2 - centerX
+              const maxDistance = containerWidth / 2
+              const normalizedDistance = distanceFromCenter / maxDistance
+              
+              const bendAmount = 80
+              const y = Math.abs(normalizedDistance) * bendAmount
+              const rotation = normalizedDistance * 8
+              const scale = 1 - Math.abs(normalizedDistance) * 0.2
+              const opacity = 1 - Math.abs(normalizedDistance) * 0.5
+              
+              gsap.set(card, {
+                x: x,
+                y: y,
+                rotationY: rotation,
+                scale: Math.max(scale, 0.7),
+                opacity: Math.max(opacity, 0.3),
+                zIndex: Math.round((1 - Math.abs(normalizedDistance)) * 100)
+              })
+            })
+          }
+        })
+      }
     })
 
     return () => ctx.revert()
-  }, [startFadeIn])
+  }, [startFadeIn, services.length])
 
   return (
     <>
@@ -442,7 +446,7 @@ export default function Home() {
               <div className="flex flex-wrap items-center justify-center gap-8 md:gap-12 text-center">
                 <div className="stat-item flex items-center gap-3">
                   <span className="text-4xl md:text-5xl font-bold text-black flex items-baseline gap-1">
-                    <AnimatedCounter target={157} />
+                    <span ref={counter1Ref}>0</span>
                     <span>+</span>
                   </span>
                   <span className="text-lg md:text-xl text-gray-600">Sites Secured</span>
@@ -452,7 +456,7 @@ export default function Home() {
                 
                 <div className="stat-item flex items-center gap-3">
                   <span className="text-4xl md:text-5xl font-bold text-black flex items-baseline gap-1">
-                    <AnimatedCounter target={2400} />
+                    <span ref={counter2Ref}>0</span>
                     <span>+</span>
                   </span>
                   <span className="text-lg md:text-xl text-gray-600">CCTV Systems</span>
@@ -462,7 +466,7 @@ export default function Home() {
                 
                 <div className="stat-item flex items-center gap-3">
                   <span className="text-4xl md:text-5xl font-bold text-black flex items-baseline gap-1">
-                    <AnimatedCounter target={95} />
+                    <span ref={counter3Ref}>0</span>
                     <span>%</span>
                   </span>
                   <span className="text-lg md:text-xl text-gray-600">Uptime Delivered</span>
@@ -479,7 +483,7 @@ export default function Home() {
           </section>
 
           {/* SECTION 3: ABOUT US */}
-          <section className="section-padding bg-light-gray min-h-[250vh]">
+          <section className="section-padding bg-light-gray min-h-[220vh]">
             <div ref={aboutContainerRef} className="container-custom">
               <div className="grid lg:grid-cols-[3fr_2fr] gap-16 items-center">
                 <div ref={aboutLeftRef}>
@@ -526,7 +530,7 @@ export default function Home() {
           </section>
 
           {/* SECTION 4: SERVICES */}
-          <section id="services-pin-wrapper" className="section-padding bg-light-gray relative overflow-hidden" style={{ minHeight: '1200px' }}>
+          <section ref={servicesContainerRef} className="section-padding bg-light-gray relative overflow-hidden" style={{ minHeight: '1200px' }}>
             <div className="container-custom">
               <div className="relative">
                 <div className="relative flex flex-col w-full items-center items-stretch mb-[-2%]" style={{ mask: 'linear-gradient(black, transparent)' }}>
@@ -551,8 +555,33 @@ export default function Home() {
                   </svg>
                 </div>
                 
-                <div className="relative z-10">
-                  <CircularGalleryServices />
+                <div 
+                  ref={servicesCardsRef}
+                  className="relative z-10 w-full h-[500px] overflow-hidden"
+                  style={{ perspective: "1000px" }}
+                >
+                  {services.map((service, index) => (
+                    <div
+                      key={index}
+                      className="service-card absolute left-0 bg-white rounded-2xl border border-gray-200 shadow-xl transition-shadow hover:shadow-2xl"
+                      style={{
+                        width: "320px",
+                        height: "300px",
+                        transformStyle: "preserve-3d",
+                        willChange: "transform, opacity",
+                      }}
+                    >
+                      <div className="p-8 h-full flex flex-col">
+                        <div
+                          className={`w-16 h-16 bg-gradient-to-br ${service.color} rounded-2xl flex items-center justify-center p-4 mb-6 text-3xl`}
+                        >
+                          {service.icon}
+                        </div>
+                        <h3 className="text-2xl font-bold mb-4 text-gray-900">{service.title}</h3>
+                        <p className="text-gray-600 leading-relaxed">{service.description}</p>
+                      </div>
+                    </div>
+                  ))}
                 </div>
               </div>
             </div>
