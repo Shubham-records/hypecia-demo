@@ -340,7 +340,7 @@ export default function Home() {
         
         ScrollTrigger.create({
           trigger: servicesContainerRef.current,
-          start: "top top",
+          start: "top -10%",
           end: () => `+=${services.length * 500}`,
           pin: true,
           pinSpacing: true,
@@ -398,194 +398,197 @@ export default function Home() {
       <div className={`min-h-screen transition-opacity duration-700 ${startFadeIn ? 'opacity-100' : 'opacity-0'}`}>
         <Navigation />
         
-          {/* VIDEO HERO SECTION */}
-          <section className="pt-4 pb-12 bg-light-gray">
-            <div className="mx-auto px-4 md:px-4 lg:px-4">
-              <div 
-                ref={heroBoxRef}
-                className="relative w-full aspect-video rounded-3xl overflow-hidden shadow-2xl" 
-                style={{ height: '42.5rem', opacity: 0 }}
+        {/* VIDEO HERO SECTION */}
+        <section className="pt-4 pb-12 bg-light-gray">
+          <div className="mx-auto px-4 md:px-4 lg:px-4">
+            <div 
+              ref={heroBoxRef}
+              className="relative w-full aspect-video rounded-3xl overflow-hidden shadow-2xl" 
+              style={{ height: '42.5rem', opacity: 0 }}
+            >
+              <video
+                ref={videoRef}
+                loop
+                muted
+                playsInline
+                className="w-full h-full object-cover"
               >
-                <video
-                  ref={videoRef}
-                  loop
-                  muted
-                  playsInline
-                  className="w-full h-full object-cover"
+                <source src="/promo_video.mp4" type="video/mp4" />
+              </video>
+              <div className="absolute inset-0 bg-white/15 mix-blend-overlay pointer-events-none" />
+
+              <div className="absolute inset-0 bg-gradient-to-t from-black/50 via-transparent to-transparent" />
+              <div className="absolute bottom-0 left-0 right-0 p-8 md:p-12 text-white">
+                <h2 
+                  ref={heroTitleRef}
+                  className="mb-6 leading-[0.9]"
+                  style={{ opacity: 0 }}
                 >
-                  <source src="/promo_video.mp4" type="video/mp4" />
-                </video>
-                <div className="absolute inset-0 bg-white/15 mix-blend-overlay pointer-events-none" />
-
-                <div className="absolute inset-0 bg-gradient-to-t from-black/50 via-transparent to-transparent" />
-                <div className="absolute bottom-0 left-0 right-0 p-8 md:p-12 text-white">
-                  <h2 
-                    ref={heroTitleRef}
-                    className="mb-6 leading-[0.9]"
-                    style={{ opacity: 0 }}
-                  >
-                    The Infrastructure You Can Trust<br />
-                    <span>The Results You Demand</span>
-                  </h2>
-                  <p 
-                    ref={heroDescRef}
-                    className="text-lg md:text-xl text-white/90 max-w-3xl"
-                    style={{ opacity: 0 }}
-                  >
-                    Carrier-grade networks. AI-powered security. Industrial automation.<br />
-                    Trusted by tier-1 operators for mission-critical deployments.
-                  </p>
-                </div>
-              </div>
-            </div>
-          </section>
-
-          {/* STATS SECTION */}
-          <section ref={statsRef} className="section-padding py-12 bg-light-gray">
-            <div className="container-custom">
-              <div className="flex flex-wrap items-center justify-center gap-8 md:gap-12 text-center">
-                <div className="stat-item flex items-center gap-3">
-                  <span className="text-4xl md:text-5xl font-bold text-black flex items-baseline gap-1">
-                    <span ref={counter1Ref}>0</span>
-                    <span>+</span>
-                  </span>
-                  <span className="text-lg md:text-xl text-gray-600">Sites Secured</span>
-                </div>
-                
-                <div className="hidden md:block w-px h-12 bg-gray-300" />
-                
-                <div className="stat-item flex items-center gap-3">
-                  <span className="text-4xl md:text-5xl font-bold text-black flex items-baseline gap-1">
-                    <span ref={counter2Ref}>0</span>
-                    <span>+</span>
-                  </span>
-                  <span className="text-lg md:text-xl text-gray-600">CCTV Systems</span>
-                </div>
-                
-                <div className="hidden md:block w-px h-12 bg-gray-300" />
-                
-                <div className="stat-item flex items-center gap-3">
-                  <span className="text-4xl md:text-5xl font-bold text-black flex items-baseline gap-1">
-                    <span ref={counter3Ref}>0</span>
-                    <span>%</span>
-                  </span>
-                  <span className="text-lg md:text-xl text-gray-600">Uptime Delivered</span>
-                </div>
-                
-                <div className="hidden md:block w-px h-12 bg-gray-300" />
-                
-                <div className="stat-item flex items-center gap-3">
-                  <span className="text-lg md:text-xl text-gray-600">Trusted by</span>
-                  <span className="text-4xl md:text-5xl font-bold text-black">Airtel</span>
-                </div>
-              </div>
-            </div>
-          </section>
-
-          {/* SECTION 3: ABOUT US */}
-          <section className="section-padding bg-light-gray min-h-[220vh]">
-            <div ref={aboutContainerRef} className="container-custom">
-              <div className="grid lg:grid-cols-[3fr_2fr] gap-16 items-center">
-                <div ref={aboutLeftRef}>
-                  <h4 className="about-text headline-display text-balance text-gradient" style={{ fontSize: '4.2rem' }}>
-                    Your trusted partner for mission-critical infrastructure. Delivering carrier-grade 
-                    networks, <br />
-                    <span className="text-gradient opacity-40">AI- powered security, and industrial automation. 
-                    Proven at scale. Executed with precision.</span>
-                  </h4>
-                </div>
-                
-                <div ref={aboutRightRef} className="space-y-6">
-                  <div className="about-item flex items-start gap-4">
-                    <CheckCircle className="text-green-500 flex-shrink-0 mt-1" size={22} />
-                    <div>
-                      <h3 className="font-bold text-xl mb-2">157+ Sites. Zero Compromise</h3>
-                      <p className="text-gray-600">Successfully deployed across Airtel's MSC and TNG infrastructure</p>
-                    </div>
-                  </div>
-                  <div className="about-item flex items-start gap-4">
-                    <CheckCircle className="text-green-500 flex-shrink-0 mt-1" size={22} />
-                    <div>
-                      <h3 className="font-bold text-xl mb-2">AI-Powered Security Solutions</h3>
-                      <p className="text-gray-600">2,400+ cameras with intelligent analytics, facial recognition, and real-time threat detection</p>
-                    </div>
-                  </div>
-                  <div className="about-item flex items-start gap-4">
-                    <CheckCircle className="text-green-500 flex-shrink-0 mt-1" size={22} />
-                    <div>
-                      <h3 className="font-bold text-xl mb-2">40% Security Enhancement</h3>
-                      <p className="text-gray-600">Proven reduction in site vulnerabilities with 95% uptime across all installations</p>
-                    </div>
-                  </div>
-                  <div className="about-item flex items-start gap-4">
-                    <CheckCircle className="text-green-500 flex-shrink-0 mt-1" size={22} />
-                    <div>
-                      <h3 className="font-bold text-xl mb-2">End-to-End Lifecycle Support</h3>
-                      <p className="text-gray-600">From design to deployment to 24/7 maintenance—we're with you every step</p>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </section>
-
-          {/* SECTION 4: SERVICES */}
-          <section ref={servicesContainerRef} className="section-padding bg-light-gray relative overflow-hidden" style={{ minHeight: '1200px' }}>
-            <div className="container-custom">
-              <div className="relative">
-                <div className="relative flex flex-col w-full items-center items-stretch mb-[-2%]" style={{ mask: 'linear-gradient(black, transparent)' }}>
-                  <svg
-                    width="100%"
-                    height="100%"
-                    viewBox="0 0 1163 325"
-                    fill="none"
-                    xmlns="http://www.w3.org/2000/svg"
-                    className="relative mb-[-5%]"
-                  >
-                    <defs>
-                      <clipPath id="services-clip">
-                        <text x="50%" y="70%" textAnchor="middle" fontFamily="Manrope, sans-serif" fontWeight="800" fontSize="14.8rem" letterSpacing="-0.03em">SERVICES</text>
-                      </clipPath>
-                      <linearGradient id="services-gradient" x1="0" y1="0" x2="0" y2="1">
-                        <stop offset="0%" stopColor="#D8D8D8" />
-                        <stop offset="100%" stopColor="#F5F5F5" />
-                      </linearGradient>
-                    </defs>
-                    <rect x="0" y="0" width="100%" height="100%" clipPath="url(#services-clip)" fill="url(#services-gradient)" />
-                  </svg>
-                </div>
-                
-                <div 
-                  ref={servicesCardsRef}
-                  className="relative z-10 w-full h-[500px] overflow-hidden"
-                  style={{ perspective: "1000px" }}
+                  The Infrastructure You Can Trust<br />
+                  <span>The Results You Demand</span>
+                </h2>
+                <p 
+                  ref={heroDescRef}
+                  className="text-lg md:text-xl text-white/90 max-w-3xl"
+                  style={{ opacity: 0 }}
                 >
-                  {services.map((service, index) => (
-                    <div
-                      key={index}
-                      className="service-card absolute left-0 bg-white rounded-2xl border border-gray-200 shadow-xl transition-shadow hover:shadow-2xl"
-                      style={{
-                        width: "320px",
-                        height: "300px",
-                        transformStyle: "preserve-3d",
-                        willChange: "transform, opacity",
-                      }}
-                    >
-                      <div className="p-8 h-full flex flex-col">
-                        <div
-                          className={`w-16 h-16 bg-gradient-to-br ${service.color} rounded-2xl flex items-center justify-center p-4 mb-6 text-3xl`}
-                        >
-                          {service.icon}
-                        </div>
-                        <h3 className="text-2xl font-bold mb-4 text-gray-900">{service.title}</h3>
-                        <p className="text-gray-600 leading-relaxed">{service.description}</p>
+                  Carrier-grade networks. AI-powered security. Industrial automation.<br />
+                  Trusted by tier-1 operators for mission-critical deployments.
+                </p>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        {/* STATS SECTION */}
+        <section ref={statsRef} className="section-padding py-12 bg-light-gray">
+          <div className="container-custom">
+            <div className="flex flex-wrap items-center justify-center gap-8 md:gap-12 text-center">
+              <div className="stat-item flex items-center gap-3">
+                <span className="text-4xl md:text-5xl font-bold text-black flex items-baseline gap-1">
+                  <span ref={counter1Ref}>0</span>
+                  <span>+</span>
+                </span>
+                <span className="text-lg md:text-xl text-gray-600">Sites Secured</span>
+              </div>
+              
+              <div className="hidden md:block w-px h-12 bg-gray-300" />
+              
+              <div className="stat-item flex items-center gap-3">
+                <span className="text-4xl md:text-5xl font-bold text-black flex items-baseline gap-1">
+                  <span ref={counter2Ref}>0</span>
+                  <span>+</span>
+                </span>
+                <span className="text-lg md:text-xl text-gray-600">CCTV Systems</span>
+              </div>
+              
+              <div className="hidden md:block w-px h-12 bg-gray-300" />
+              
+              <div className="stat-item flex items-center gap-3">
+                <span className="text-4xl md:text-5xl font-bold text-black flex items-baseline gap-1">
+                  <span ref={counter3Ref}>0</span>
+                  <span>%</span>
+                </span>
+                <span className="text-lg md:text-xl text-gray-600">Uptime Delivered</span>
+              </div>
+              
+              <div className="hidden md:block w-px h-12 bg-gray-300" />
+              
+              <div className="stat-item flex items-center gap-3">
+                <span className="text-lg md:text-xl text-gray-600">Trusted by</span>
+                <span className="text-4xl md:text-5xl font-bold text-black">Airtel</span>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        {/* SECTION 3: ABOUT US */}
+        <section className="section-padding bg-light-gray min-h-[220vh]">
+          <div ref={aboutContainerRef} className="container-custom">
+            <div className="grid lg:grid-cols-[3fr_2fr] gap-16 items-center">
+              <div ref={aboutLeftRef}>
+                <h4 className="about-text headline-display text-balance text-gradient" style={{ fontSize: '4.2rem' }}>
+                  Your trusted partner for mission-critical infrastructure. Delivering carrier-grade 
+                  networks, <br />
+                  <span className="text-gradient opacity-40">AI- powered security, and industrial automation. 
+                  Proven at scale. Executed with precision.</span>
+                </h4>
+              </div>
+              
+              <div ref={aboutRightRef} className="space-y-6">
+                <div className="about-item flex items-start gap-4">
+                  <CheckCircle className="text-green-500 flex-shrink-0 mt-1" size={22} />
+                  <div>
+                    <h3 className="font-bold text-xl mb-2">157+ Sites. Zero Compromise</h3>
+                    <p className="text-gray-600">Successfully deployed across Airtel's MSC and TNG infrastructure</p>
+                  </div>
+                </div>
+                <div className="about-item flex items-start gap-4">
+                  <CheckCircle className="text-green-500 flex-shrink-0 mt-1" size={22} />
+                  <div>
+                    <h3 className="font-bold text-xl mb-2">AI-Powered Security Solutions</h3>
+                    <p className="text-gray-600">2,400+ cameras with intelligent analytics, facial recognition, and real-time threat detection</p>
+                  </div>
+                </div>
+                <div className="about-item flex items-start gap-4">
+                  <CheckCircle className="text-green-500 flex-shrink-0 mt-1" size={22} />
+                  <div>
+                    <h3 className="font-bold text-xl mb-2">40% Security Enhancement</h3>
+                    <p className="text-gray-600">Proven reduction in site vulnerabilities with 95% uptime across all installations</p>
+                  </div>
+                </div>
+                <div className="about-item flex items-start gap-4">
+                  <CheckCircle className="text-green-500 flex-shrink-0 mt-1" size={22} />
+                  <div>
+                    <h3 className="font-bold text-xl mb-2">End-to-End Lifecycle Support</h3>
+                    <p className="text-gray-600">From design to deployment to 24/7 maintenance—we're with you every step</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        {/* SECTION 4: SERVICES */}
+        <section ref={servicesContainerRef} className="section-padding bg-light-gray relative overflow-hidden" style={{ minHeight: '1200px' }}>
+          <div className="container-custom">
+            <div className="relative">
+              <div className="relative flex flex-col w-full items-center items-stretch mb-[-2%]" style={{ mask: 'linear-gradient(black, transparent)' }}>
+                <svg
+                  width="100%"
+                  height="100%"
+                  viewBox="0 0 1163 325"
+                  fill="none"
+                  xmlns="http://www.w3.org/2000/svg"
+                  className="relative mb-[-5%]"
+                >
+                  <defs>
+                    <clipPath id="services-clip">
+                      <text x="50%" y="70%" textAnchor="middle" fontFamily="Manrope, sans-serif" fontWeight="800" fontSize="14.8rem" letterSpacing="-0.03em">SERVICES</text>
+                    </clipPath>
+                    <linearGradient id="services-gradient" x1="0" y1="0" x2="0" y2="1">
+                      <stop offset="0%" stopColor="#D8D8D8" />
+                      <stop offset="100%" stopColor="#F5F5F5" />
+                    </linearGradient>
+                  </defs>
+                  <rect x="0" y="0" width="100%" height="100%" clipPath="url(#services-clip)" fill="url(#services-gradient)" />
+                </svg>
+              </div>
+              
+              <div 
+                ref={servicesCardsRef}
+                className="relative z-10 w-full h-[500px] overflow-hidden"
+                style={{ perspective: "1000px",
+                          maskImage: 'linear-gradient(to right, transparent, white 10%, white 98%, transparent)',
+                          WebkitMaskImage: 'linear-gradient(to right, transparent, white 10%, white 98%, transparent)',
+                }}
+              >
+                {services.map((service, index) => (
+                  <div
+                    key={index}
+                    className="service-card absolute left-0 bg-white rounded-2xl border border-gray-200 shadow-xl transition-shadow hover:shadow-2xl"
+                    style={{
+                      width: "320px",
+                      height: "300px",
+                      transformStyle: "preserve-3d",
+                      willChange: "transform, opacity",
+                    }}
+                  >
+                    <div className="p-8 h-full flex flex-col">
+                      <div
+                        className={`w-16 h-16 bg-gradient-to-br ${service.color} rounded-2xl flex items-center justify-center mb-6 text-3xl`}
+                      >
+                        {service.icon}
                       </div>
+                      <h3 className="text-2xl font-bold mb-4 text-gray-900">{service.title}</h3>
+                      <p className="text-gray-600 leading-relaxed">{service.description}</p>
                     </div>
-                  ))}
-                </div>
+                  </div>
+                ))}
               </div>
             </div>
-          </section>
+          </div>
+        </section>
 
           {/* CLIENT TRUST SECTION */}
           <section className="section-padding bg-light-gray">
