@@ -290,7 +290,7 @@ export default function Home() {
       if (statsRef.current) {
         const statItems = statsRef.current.querySelectorAll('.stat-item')
         
-        gsap.set(statItems, { opacity: 0, y: 50 })
+        gsap.set(statItems, { opacity: 0, y: 30 })
         
         gsap.to(statItems, {
           opacity: 1,
@@ -304,7 +304,7 @@ export default function Home() {
           scrollTrigger: {
             trigger: statsRef.current,
             start: 'top 50%',
-            end: 'top 10%',
+            end: 'top 40%',
             toggleActions: 'play reverse play reverse',
             scrub: 1.5
           }
@@ -320,7 +320,7 @@ export default function Home() {
           // Apply gradient to each word wrapper
           gsap.set(textSplit.words, { 
             opacity: 0, 
-            y: 40,
+            y: 50,
             display: 'inline-block',
             backgroundImage: 'inherit',
             backgroundSize: 'inherit',
@@ -342,7 +342,7 @@ export default function Home() {
             },
             scrollTrigger: {
               trigger: aboutLeftRef.current,
-              start: 'top 90%',
+              start: 'top 50%',
               end: 'top 20%',
               toggleActions: 'play reverse play reverse',
               scrub: 1.5
