@@ -342,7 +342,14 @@
     border-width: 0;
   }
 
+  .testimonial-card {
+    cursor: grab;
+    user-select: none;
+  }
   
+  .testimonial-card:active {
+    cursor: grabbing;
+  }
   
   .text-balance {
     text-wrap: balance;
