@@ -818,7 +818,7 @@ export default function Home() {
 
         {/* SECTION 3: ABOUT US */}
         <section className="section-padding bg-light-gray min-h-[220vh]">
-          <div ref={aboutContainerRef} className="container-custom">
+          <div ref={aboutContainerRef} className="mx-auto px-4 md:px-8 lg:px-8 max-w-[1400px]">
             <div className="grid lg:grid-cols-[3fr_2fr] gap-16 items-center">
               <div ref={aboutLeftRef}>
                 <h4 className="about-text headline-display text-balance text-gradient" style={{ fontSize: '4.2rem' }}>
