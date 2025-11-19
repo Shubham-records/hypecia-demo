@@ -17,14 +17,6 @@ export default function ContactPage() {
   })
   const [isSubmitting, setIsSubmitting] = useState(false)
   const [submitted, setSubmitted] = useState(false)
-  const [showLoader, setShowLoader] = useState(true)
-  const [startFadeIn, setStartFadeIn] = useState(false)
-  const handleLoaderComplete = () => {
-    setStartFadeIn(true)
-    setTimeout(() => {
-      setShowLoader(false)
-    }, 100)
-  }
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
@@ -42,10 +34,7 @@ export default function ContactPage() {
 
   return (
     <>
-      {showLoader && (
-        <HypeciaLoader onComplete={handleLoaderComplete} />
-      )}
-      <div className={`min-h-screen transition-opacity duration-700 ${startFadeIn ? 'opacity-100' : 'opacity-0'}`}>
+      <div className={`min-h-screen`}>
         <Navigation />
         
         {/* Hero Section */}

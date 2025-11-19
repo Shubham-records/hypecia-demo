@@ -2,24 +2,12 @@
 
 import Navigation from '@/components/Navigation'
 import Footer from '@/components/Footer'
-import HypeciaLoader from '@/components/logo_animation'
-import {useState } from 'react'
+
 
 export default function PrivacyPage() {
-  const [showLoader, setShowLoader] = useState(true)
-  const [startFadeIn, setStartFadeIn] = useState(false)
-  const handleLoaderComplete = () => {
-    setStartFadeIn(true)
-    setTimeout(() => {
-      setShowLoader(false)
-    }, 100)
-  }
   return (
     <>
-      {showLoader && (
-        <HypeciaLoader onComplete={handleLoaderComplete} />
-      )}
-      <div className={`min-h-screen transition-opacity duration-700 ${startFadeIn ? 'opacity-100' : 'opacity-0'}`}>
+      <div className={`min-h-screen`}>
         <Navigation />
         
         {/* Hero Section */}

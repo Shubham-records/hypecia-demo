@@ -3,7 +3,6 @@
 import HypeciaLoader from '@/components/logo_animation'
 import Navigation from '@/components/Navigation'
 import Footer from '@/components/Footer'
-import Link from 'next/link'
 import { ArrowRight, CheckCircle } from 'lucide-react'
 import { useEffect, useRef, useState } from 'react'
 import { gsap } from 'gsap'

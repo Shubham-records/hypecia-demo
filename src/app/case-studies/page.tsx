@@ -3,26 +3,14 @@
 import Navigation from '@/components/Navigation'
 import Footer from '@/components/Footer'
 import Link from 'next/link'
-import HypeciaLoader from '@/components/logo_animation'
-import {useState } from 'react'
+
 import Image from 'next/image'
 import { ArrowRight, MapPin, Calendar, TrendingUp, Shield, Zap, Network } from 'lucide-react'
 
 export default function CaseStudiesPage() {
-  const [showLoader, setShowLoader] = useState(true)
-  const [startFadeIn, setStartFadeIn] = useState(false)
-  const handleLoaderComplete = () => {
-    setStartFadeIn(true)
-    setTimeout(() => {
-      setShowLoader(false)
-    }, 100)
-  }
   return (
     <>
-      {showLoader && (
-        <HypeciaLoader onComplete={handleLoaderComplete} />
-      )}
-      <div className={`min-h-screen transition-opacity duration-700 ${startFadeIn ? 'opacity-100' : 'opacity-0'}`}>
+      <div className={`min-h-screen`}>
         <Navigation />
         
         {/* Hero Section */}
