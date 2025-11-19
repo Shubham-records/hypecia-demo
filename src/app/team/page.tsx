@@ -33,26 +33,6 @@ export default function TeamPage() {
             </p>
             
             <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
-              {/* Team Member 1 */}
-              <div className="group">
-                <div className="aspect-square bg-gradient-to-br from-blue-400 to-blue-600 rounded-3xl mb-6 overflow-hidden">
-                  <div className="w-full h-full flex items-center justify-center text-white text-6xl font-black">
-                    RK
-                  </div>
-                </div>
-                <h3 className="text-2xl font-bold mb-1">Ranjeet Kunwar</h3>
-                <p className="text-blue-600 font-semibold mb-2">Project Director</p>
-                <p className="text-gray-600 mb-4">Spearheading Airtel's 157-site CCTV infrastructure deployment with proven track record in telecom security and surveillance systems. Expert in AI-enabled surveillance and large-scale project execution.</p>
-                <div className="flex gap-3">
-                  <a href="mailto:Hypeciaconnectservices@gmail.com" className="w-10 h-10 bg-gray-100 rounded-full flex items-center justify-center hover:bg-blue-600 hover:text-white transition-all">
-                    <Mail size={18} />
-                  </a>
-                  <a href="#" className="w-10 h-10 bg-gray-100 rounded-full flex items-center justify-center hover:bg-blue-600 hover:text-white transition-all">
-                    <Linkedin size={18} />
-                  </a>
-                </div>
-              </div>
-
               {/* Team Member 2 */}
               <div className="group">
                 <div className="aspect-square bg-gradient-to-br from-green-400 to-green-600 rounded-3xl mb-6 overflow-hidden">

@@ -101,9 +101,9 @@ export default function Home() {
   const testimonials = [
     {
       quote: "Hypecia delivers reliable, innovative solutions with technical excellence. Their expertise transformed our infrastructure.",
-      author: "Ranjeet Kunwar",
-      role: "Project Director, Hypecia Connect Services",
-      initials: "RK"
+      author: "Rajeev Sharma",
+      role: "Technical Director, Hypecia Connect Services",
+      initials: "RS"
     },
     {
       quote: "Outstanding execution on our CCTV infrastructure project. 157 sites deployed flawlessly with zero downtime.",
@@ -120,19 +120,19 @@ export default function Home() {
     {
       quote: "Professional, punctual, and precise. Hypecia's team handled our complete MEP requirements with exceptional quality.",
       author: "Amit Patel",
-      role: "Engineering Director, Infrastructure Corp",
+      role: "",
       initials: "AP"
     },
     {
       quote: "Best-in-class security solutions with AI integration. Their 24/7 monitoring system gives us complete peace of mind.",
       author: "Neha Gupta",
-      role: "Security Head, Tech Solutions Ltd",
+      role: "",
       initials: "NG"
     },
     {
       quote: "From planning to execution, Hypecia exceeded expectations. Their green energy solutions reduced our costs by 35%.",
       author: "Rajesh Kumar",
-      role: "Sustainability Officer, Green Industries",
+      role: "",
       initials: "RK"
     }
   ]
