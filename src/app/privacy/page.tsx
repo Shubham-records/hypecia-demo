@@ -2,9 +2,49 @@
 
 import Navigation from '@/components/Navigation'
 import Footer from '@/components/Footer'
+import { useEffect } from 'react'
+import { gsap } from 'gsap'
 
 
 export default function PrivacyPage() {
+  useEffect(() => {
+        // Add a small delay to ensure DOM is fully mounted
+        const timer = setTimeout(() => {
+          const ctx = gsap.context(() => {
+            // ===== FOOTER SECTION ANIMATION =====
+            const footerSection = document.querySelector(".footer-section")
+            if (footerSection) {
+              const footerItems = footerSection.querySelectorAll('.footer-animate')
+      
+              // Set initial state explicitly
+              gsap.set(footerItems, {
+                opacity: 0,
+                y: 60
+              })
+      
+              gsap.to(footerItems, {
+                opacity: 1,
+                y: 0,
+                stagger: 0.15,
+                duration: 0.9,
+                ease: "power3.out",
+                scrollTrigger: {
+                  trigger: footerSection,
+                  start: "top 80%", // Adjusted to trigger earlier
+                  end: "top 50%",
+                  toggleActions: "play none none reverse",
+                  markers: false, // Set to true for debugging
+                  id: "team-footer"
+                },
+              })
+            }
+          })
+      
+          return () => ctx.revert()
+        }, 100) // 100ms delay
+        
+        return () => clearTimeout(timer)
+      }, [])
   return (
     <>
       <div className={`min-h-screen`}>

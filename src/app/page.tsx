@@ -229,8 +229,10 @@ export default function Home() {
       if (statsRef.current) {
         const statItems = statsRef.current.querySelectorAll('.stat-item')
         
+        // Set initial state for stat items
         gsap.set(statItems, { opacity: 0, y: 30 })
         
+        // Animate stat items
         gsap.to(statItems, {
           opacity: 1,
           y: 0,
@@ -245,72 +247,123 @@ export default function Home() {
             start: 'top 60%',
             end: 'top 40%',
             toggleActions: 'play reverse play reverse',
-            scrub: 1.5
+            scrub: 1
           }
         })
         
-        // Counter animations
-        const counterObj1 = { value: 0 }
-        const counterObj2 = { value: 0 }
-        const counterObj3 = { value: 0 }
+        // Counter animations with proper reset handling
+        let counter1Tween: gsap.core.Tween | null = null
+        let counter2Tween: gsap.core.Tween | null = null
+        let counter3Tween: gsap.core.Tween | null = null
         
-        gsap.to(counterObj1, {
-          value: 157,
-          duration: 1,
-          ease: 'power2.out',
-          onUpdate: () => {
-            if (counter1Ref.current) {
-              counter1Ref.current.textContent = Math.floor(counterObj1.value).toString()
-            }
+        ScrollTrigger.create({
+          trigger: statsRef.current,
+          start: 'top 60%',
+          end: 'bottom 60%',
+          onEnter: () => {
+            // Kill any existing tweens
+            if (counter1Tween) counter1Tween.kill()
+            if (counter2Tween) counter2Tween.kill()
+            if (counter3Tween) counter3Tween.kill()
+            
+            // Counter 1: 157+
+            const counterObj1 = { value: 0 }
+            counter1Tween = gsap.to(counterObj1, {
+              value: 157,
+              duration: 1,
+              ease: 'power2.out',
+              onUpdate: () => {
+                if (counter1Ref.current) {
+                  counter1Ref.current.textContent = Math.floor(counterObj1.value).toString()
+                }
+              }
+            })
+            
+            // Counter 2: 2400+
+            const counterObj2 = { value: 0 }
+            counter2Tween = gsap.to(counterObj2, {
+              value: 2400,
+              duration: 1,
+              ease: 'power2.out',
+              onUpdate: () => {
+                if (counter2Ref.current) {
+                  counter2Ref.current.textContent = Math.floor(counterObj2.value).toString()
+                }
+              }
+            })
+            
+            // Counter 3: 95%
+            const counterObj3 = { value: 0 }
+            counter3Tween = gsap.to(counterObj3, {
+              value: 95,
+              duration: 1,
+              ease: 'power2.out',
+              onUpdate: () => {
+                if (counter3Ref.current) {
+                  counter3Ref.current.textContent = Math.floor(counterObj3.value).toString()
+                }
+              }
+            })
           },
-          scrollTrigger: {
-            trigger: statsRef.current,
-            start: 'top 60%',
-            toggleActions: 'play reverse play reverse',
-            onLeaveBack: () => {
-              counterObj1.value = 0
-              if (counter1Ref.current) counter1Ref.current.textContent = '0'
-            }
-          }
-        })
-        
-        gsap.to(counterObj2, {
-          value: 2400,
-          duration: 1,
-          ease: 'power2.out',
-          onUpdate: () => {
-            if (counter2Ref.current) {
-              counter2Ref.current.textContent = Math.floor(counterObj2.value).toString()
-            }
+          onLeaveBack: () => {
+            // Kill any existing tweens
+            if (counter1Tween) counter1Tween.kill()
+            if (counter2Tween) counter2Tween.kill()
+            if (counter3Tween) counter3Tween.kill()
+            
+            // Reset all counters immediately when scrolling back up
+            if (counter1Ref.current) counter1Ref.current.textContent = '0'
+            if (counter2Ref.current) counter2Ref.current.textContent = '0'
+            if (counter3Ref.current) counter3Ref.current.textContent = '0'
           },
-          scrollTrigger: {
-            trigger: statsRef.current,
-            start: 'top 60%',
-            toggleActions: 'play reverse play reverse',
-            onLeaveBack: () => {
-              counterObj2.value = 0
-              if (counter2Ref.current) counter2Ref.current.textContent = '0'
-            }
-          }
-        })
-        
-        gsap.to(counterObj3, {
-          value: 95,
-          duration: 1,
-          ease: 'power2.out',
-          onUpdate: () => {
-            if (counter3Ref.current) {
-              counter3Ref.current.textContent = Math.floor(counterObj3.value).toString()
-            }
+          onEnterBack: () => {
+            // Kill any existing tweens
+            if (counter1Tween) counter1Tween.kill()
+            if (counter2Tween) counter2Tween.kill()
+            if (counter3Tween) counter3Tween.kill()
+            
+            // Reanimate when scrolling back down
+            const counterObj1 = { value: 0 }
+            counter1Tween = gsap.to(counterObj1, {
+              value: 157,
+              duration: 1,
+              ease: 'power2.out',
+              onUpdate: () => {
+                if (counter1Ref.current) {
+                  counter1Ref.current.textContent = Math.floor(counterObj1.value).toString()
+                }
+              }
+            })
+            
+            const counterObj2 = { value: 0 }
+            counter2Tween = gsap.to(counterObj2, {
+              value: 2400,
+              duration: 1,
+              ease: 'power2.out',
+              onUpdate: () => {
+                if (counter2Ref.current) {
+                  counter2Ref.current.textContent = Math.floor(counterObj2.value).toString()
+                }
+              }
+            })
+            
+            const counterObj3 = { value: 0 }
+            counter3Tween = gsap.to(counterObj3, {
+              value: 95,
+              duration: 1,
+              ease: 'power2.out',
+              onUpdate: () => {
+                if (counter3Ref.current) {
+                  counter3Ref.current.textContent = Math.floor(counterObj3.value).toString()
+                }
+              }
+            })
           },
-          scrollTrigger: {
-            trigger: statsRef.current,
-            start: 'top 60%',
-            toggleActions: 'play reverse  play reverse',
-            onLeaveBack: () => {
-              counterObj3.value = 0
-              if (counter3Ref.current) counter3Ref.current.textContent = '0'
-            }
+          onLeave: () => {
+            // Keep the final values when scrolling down past the section
+            if (counter1Ref.current) counter1Ref.current.textContent = '157'
+            if (counter2Ref.current) counter2Ref.current.textContent = '2400'
+            if (counter3Ref.current) counter3Ref.current.textContent = '95'
           }
         })
       }
@@ -718,6 +771,32 @@ export default function Home() {
         })
       }
 
+      // ===== FOOTER SECTION ANIMATION =====
+      const footerSection = document.querySelector(".footer-section")
+      if (footerSection) {
+        const footerItems = footerSection.querySelectorAll('.footer-animate')
+
+        // Set initial state explicitly
+        gsap.set(footerItems, {
+          opacity: 0,
+          y: 60
+        })
+
+        gsap.to(footerItems, {
+          opacity: 1,
+          y: 0,
+          stagger: 0.15,
+          duration: 0.9,
+          ease: "power3.out",
+          scrollTrigger: {
+            trigger: footerSection,
+            start: "top 65%",
+            end: "top 40%",
+            toggleActions: "play none none reverse",
+          },
+        })
+      }
+
     })
 
     return () => ctx.revert()
@@ -730,7 +809,7 @@ export default function Home() {
         <HypeciaLoader onComplete={handleLoaderComplete} />
       )}
       <div className={`min-h-screen transition-opacity duration-700 ${startFadeIn ? 'opacity-100' : 'opacity-0'}`}>
-        <Navigation />
+        <Navigation animate={true} isHomepage={true} />
         
         {/* VIDEO HERO SECTION */}
         <section className="pt-4 pb-12 relative overflow-hidden ">
@@ -776,7 +855,7 @@ export default function Home() {
 
         {/* STATS SECTION */}
         <section ref={statsRef} className="section-padding py-12 bg-light-gray relative overflow-hidden" style={{ minHeight: '40vh', alignContent: 'center' }}>
-          <div className="container-custom" >
+          <div className="container-custom">
             <div className="flex flex-wrap items-center justify-center gap-8 md:gap-12 text-center">
               <div className="stat-item flex items-center gap-3">
                 <span className="text-4xl md:text-5xl font-bold text-black flex items-baseline gap-1">
@@ -1253,7 +1332,7 @@ export default function Home() {
         </section>
 
         {/* SECTION 9: FOOTER */}
-        <Footer />
+        <Footer/>
       </div>
     </>
   )

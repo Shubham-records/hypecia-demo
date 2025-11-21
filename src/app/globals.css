@@ -173,6 +173,10 @@
   .text-display {
     @apply text-4xl md:text-6xl lg:text-7xl font-bold tracking-tight;
   }
+
+  .text-display_v2 {
+    @apply text-3xl md:text-5xl lg:text-6xl font-bold tracking-tight;
+  }
   
   .text-gray {
     color: #6B7280;
@@ -293,7 +297,7 @@
     line-height: 1;
     font-family: PP Neue Montreal, sans-serif;
     font-size: clamp(2rem, 1rem + 4vw, 5rem);
-    letter-spacing: -.02em;
+    letter-spacing: -.015em;
   }
 
   .text-gradient {
