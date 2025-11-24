@@ -25,32 +25,32 @@ export default function Home() {
   const aboutContainerRef = useRef<HTMLDivElement>(null)
   const servicesContainerRef = useRef<HTMLDivElement>(null)
   const servicesCardsRef = useRef<HTMLDivElement>(null)
-  
+
   // Client trust refs
   const clientTrustRef = useRef<HTMLDivElement>(null)
   const circleRevealRef = useRef<HTMLDivElement>(null)
   const clientContentRef = useRef<HTMLDivElement>(null)
-  
+
   // Testimonial refs
   const testimonialSectionRef = useRef<HTMLDivElement>(null)
   const testimonialTrackRef = useRef<HTMLDivElement>(null)
   const testimonialInterval = useRef<NodeJS.Timeout | null>(null)
-  
+
   // Project refs
   const projectSectionRef = useRef<HTMLDivElement>(null)
   const projectTitleRef = useRef<HTMLDivElement>(null)
   const projectCardsRef = useRef<HTMLDivElement>(null)
-  
+
   // Process refs
   const processSectionRef = useRef<HTMLDivElement>(null)
   const processTitleRef = useRef<HTMLDivElement>(null)
   const processCardsRef = useRef<HTMLDivElement>(null)
-  
+
   // Counter refs
   const counter1Ref = useRef<HTMLSpanElement>(null)
   const counter2Ref = useRef<HTMLSpanElement>(null)
   const counter3Ref = useRef<HTMLSpanElement>(null)
-  
+
   // Services state
   const [services] = useState([
     {
@@ -139,16 +139,16 @@ export default function Home() {
 
   const goToSlide = (index: number) => {
     if (!testimonialTrackRef.current) return;
-  
+
     const cards = gsap.utils.toArray<HTMLElement>(".testimonial-card");
     const cardWidth = cards[0].offsetWidth;
-  
+
     gsap.to(testimonialTrackRef.current, {
       x: -(index * cardWidth),
       duration: 0.5,
       ease: "power3.inOut"
     });
-  };  
+  };
 
   const handleLoaderComplete = () => {
     setStartFadeIn(true)
@@ -184,16 +184,16 @@ export default function Home() {
       if (heroTitleRef.current) {
         const titleSplit = new SplitText(heroTitleRef.current, { type: 'words' })
         gsap.set(heroTitleRef.current, { opacity: 1 })
-        
+
         heroTl.fromTo(
           titleSplit.words,
           { y: 80, opacity: 0, rotationX: -90 },
-          { 
-            y: 0, 
+          {
+            y: 0,
             opacity: 1,
             rotationX: 0,
-            duration: 1, 
-            ease: 'back.out(1.7)', 
+            duration: 1,
+            ease: 'back.out(1.7)',
             stagger: {
               each: 0.05,
               ease: 'sine.inOut'
@@ -206,15 +206,15 @@ export default function Home() {
       if (heroDescRef.current) {
         const descSplit = new SplitText(heroDescRef.current, { type: 'words' })
         gsap.set(heroDescRef.current, { opacity: 1 })
-        
+
         heroTl.fromTo(
           descSplit.words,
           { y: 50, opacity: 0, scale: 0.8 },
-          { 
-            y: 0, 
+          {
+            y: 0,
             opacity: 1,
             scale: 1,
-            duration: 0.8, 
+            duration: 0.8,
             ease: 'elastic.out(1, 0.6)',
             stagger: {
               each: 0.05,
@@ -228,10 +228,10 @@ export default function Home() {
       // ===== STATS SECTION ANIMATION =====
       if (statsRef.current) {
         const statItems = statsRef.current.querySelectorAll('.stat-item')
-        
+
         // Set initial state for stat items
         gsap.set(statItems, { opacity: 0, y: 30 })
-        
+
         // Animate stat items
         gsap.to(statItems, {
           opacity: 1,
@@ -250,12 +250,12 @@ export default function Home() {
             scrub: 1
           }
         })
-        
+
         // Counter animations with proper reset handling
         let counter1Tween: gsap.core.Tween | null = null
         let counter2Tween: gsap.core.Tween | null = null
         let counter3Tween: gsap.core.Tween | null = null
-        
+
         ScrollTrigger.create({
           trigger: statsRef.current,
           start: 'top 60%',
@@ -265,7 +265,7 @@ export default function Home() {
             if (counter1Tween) counter1Tween.kill()
             if (counter2Tween) counter2Tween.kill()
             if (counter3Tween) counter3Tween.kill()
-            
+
             // Counter 1: 157+
             const counterObj1 = { value: 0 }
             counter1Tween = gsap.to(counterObj1, {
@@ -278,7 +278,7 @@ export default function Home() {
                 }
               }
             })
-            
+
             // Counter 2: 2400+
             const counterObj2 = { value: 0 }
             counter2Tween = gsap.to(counterObj2, {
@@ -291,7 +291,7 @@ export default function Home() {
                 }
               }
             })
-            
+
             // Counter 3: 95%
             const counterObj3 = { value: 0 }
             counter3Tween = gsap.to(counterObj3, {
@@ -310,7 +310,7 @@ export default function Home() {
             if (counter1Tween) counter1Tween.kill()
             if (counter2Tween) counter2Tween.kill()
             if (counter3Tween) counter3Tween.kill()
-            
+
             // Reset all counters immediately when scrolling back up
             if (counter1Ref.current) counter1Ref.current.textContent = '0'
             if (counter2Ref.current) counter2Ref.current.textContent = '0'
@@ -321,7 +321,7 @@ export default function Home() {
             if (counter1Tween) counter1Tween.kill()
             if (counter2Tween) counter2Tween.kill()
             if (counter3Tween) counter3Tween.kill()
-            
+
             // Reanimate when scrolling back down
             const counterObj1 = { value: 0 }
             counter1Tween = gsap.to(counterObj1, {
@@ -334,7 +334,7 @@ export default function Home() {
                 }
               }
             })
-            
+
             const counterObj2 = { value: 0 }
             counter2Tween = gsap.to(counterObj2, {
               value: 2400,
@@ -346,7 +346,7 @@ export default function Home() {
                 }
               }
             })
-            
+
             const counterObj3 = { value: 0 }
             counter3Tween = gsap.to(counterObj3, {
               value: 95,
@@ -372,14 +372,14 @@ export default function Home() {
       if (aboutContainerRef.current && aboutLeftRef.current && aboutRightRef.current) {
         const leftText = aboutLeftRef.current.querySelector(".about-text")
         const rightItems = aboutRightRef.current.querySelectorAll(".about-item")
-      
+
         const leftSplit = new SplitText(leftText, {
           type: "words",
           wordsClass: "split-word"
         })
-      
+
         leftSplit.words.forEach(w => w.classList.add("text-gradient"))
-      
+
         const aboutTl = gsap.timeline({
           scrollTrigger: {
             trigger: aboutContainerRef.current,
@@ -391,7 +391,7 @@ export default function Home() {
             anticipatePin: 1,
           }
         })
-      
+
         aboutTl.from(leftSplit.words, {
           opacity: 0,
           x: -80,
@@ -400,7 +400,7 @@ export default function Home() {
           ease: "power3.out",
           duration: 1,
         })
-      
+
         aboutTl.from(rightItems, {
           opacity: 0,
           x: 80,
@@ -409,9 +409,9 @@ export default function Home() {
           ease: "power3.out",
           duration: 1,
         }, "<")
-      
+
         aboutTl.to({}, { duration: 0.5 })
-      
+
         aboutTl.to(leftSplit.words, {
           opacity: 0,
           x: -80,
@@ -420,7 +420,7 @@ export default function Home() {
           ease: "power3.in",
           duration: 1,
         })
-      
+
         aboutTl.to(rightItems, {
           opacity: 0,
           x: 80,
@@ -434,23 +434,23 @@ export default function Home() {
       // ===== SERVICES SECTION ANIMATION =====
       if (servicesContainerRef.current && servicesCardsRef.current) {
         const cards = servicesCardsRef.current.querySelectorAll('.service-card')
-        
+
         const containerWidth = servicesCardsRef.current.offsetWidth
         const cardWidth = 320
-        
+
         cards.forEach((card, index) => {
           const baseX = index * (cardWidth + 32)
           const centerX = containerWidth / 2
           const distanceFromCenter = baseX + cardWidth / 2 - centerX
           const maxDistance = containerWidth / 2
           const normalizedDistance = distanceFromCenter / maxDistance
-          
+
           const bendAmount = 80
           const y = Math.abs(normalizedDistance) * bendAmount
           const rotation = normalizedDistance * 8
           const scale = 1 - Math.abs(normalizedDistance) * 0.2
           const opacity = 1 - Math.abs(normalizedDistance) * 0.5
-          
+
           gsap.set(card, {
             x: baseX,
             y: y,
@@ -460,7 +460,7 @@ export default function Home() {
             zIndex: Math.round((1 - Math.abs(normalizedDistance)) * 100)
           })
         })
-        
+
         ScrollTrigger.create({
           trigger: servicesContainerRef.current,
           start: "top -10%",
@@ -474,26 +474,26 @@ export default function Home() {
             const cardWidth = 320
             const totalScroll = services.length * 352
             const currentScroll = progress * totalScroll
-            
+
             cards.forEach((card, index) => {
               const baseX = index * (cardWidth + 32)
               let x = baseX - currentScroll
-              
+
               const totalWidth = (cardWidth + 32) * services.length
               while (x < -cardWidth) x += totalWidth
               while (x > containerWidth + cardWidth) x -= totalWidth
-              
+
               const centerX = containerWidth / 2
               const distanceFromCenter = x + cardWidth / 2 - centerX
               const maxDistance = containerWidth / 2
               const normalizedDistance = distanceFromCenter / maxDistance
-              
+
               const bendAmount = 80
               const y = Math.abs(normalizedDistance) * bendAmount
               const rotation = normalizedDistance * 8
               const scale = 1 - Math.abs(normalizedDistance) * 0.2
               const opacity = 1 - Math.abs(normalizedDistance) * 0.5
-              
+
               gsap.set(card, {
                 x: x,
                 y: y,
@@ -531,7 +531,7 @@ export default function Home() {
         })
 
         const clientItems = clientContentRef.current.querySelectorAll('.client-item')
-        
+
         tl.from(clientItems, {
           y: 100,
           opacity: 0,
@@ -568,9 +568,9 @@ export default function Home() {
           // Function to slide to next testimonial
           const slideToNext = () => {
             if (isDragging) return; // Don't auto-slide while dragging
-            
+
             currentIndex++;
-            
+
             gsap.to(track, {
               x: -(currentIndex * cardWidth),
               duration: 0.5,
@@ -598,13 +598,13 @@ export default function Home() {
                 testimonialInterval.current = null;
               }
             },
-            onDragEnd: function() {
+            onDragEnd: function () {
               const currentX = gsap.getProperty(track, "x") as number;
-              
+
               // Calculate which card we're closest to
               const snapIndex = Math.round(Math.abs(currentX) / cardWidth);
               const snapPosition = -(snapIndex * cardWidth);
-              
+
               // Animate to snapped position
               gsap.to(track, {
                 x: snapPosition,
@@ -613,7 +613,7 @@ export default function Home() {
                 onComplete: () => {
                   isDragging = false;
                   currentIndex = snapIndex;
-                  
+
                   // Handle infinite loop wrapping
                   if (currentIndex >= total) {
                     currentIndex = 0;
@@ -622,7 +622,7 @@ export default function Home() {
                     currentIndex = total - 1;
                     gsap.set(track, { x: -(currentIndex * cardWidth) });
                   }
-                  
+
                   // Resume auto-slide after 3 seconds of inactivity
                   setTimeout(() => {
                     if (!isDragging && !testimonialInterval.current) {
@@ -657,7 +657,7 @@ export default function Home() {
       // ===== PROJECT SECTION - PIN → TITLE ANIMATE → CARDS ANIMATE → UNPIN =====
       if (projectSectionRef.current && projectTitleRef.current && projectCardsRef.current) {
         const projectCards = projectCardsRef.current.querySelectorAll('.project-card')
-        
+
         // Single timeline with one ScrollTrigger that pins the whole section
         const projectTl = gsap.timeline({
           scrollTrigger: {
@@ -682,7 +682,7 @@ export default function Home() {
         projectTl.to({}, { duration: 0.3 })
 
         // Step 3: Animate cards from bottom with stagger
-        projectTl.fromTo(projectCards, 
+        projectTl.fromTo(projectCards,
           {
             y: 100,
             opacity: 0
@@ -810,13 +810,13 @@ export default function Home() {
       )}
       <div className={`min-h-screen transition-opacity duration-700 ${startFadeIn ? 'opacity-100' : 'opacity-0'}`}>
         <Navigation animate={true} isHomepage={true} />
-        
+
         {/* VIDEO HERO SECTION */}
         <section className="pt-4 pb-12 relative overflow-hidden ">
           <div className="mx-auto px-4 md:px-4 lg:px-4">
-            <div 
+            <div
               ref={heroBoxRef}
-              className="relative w-full aspect-video rounded-3xl overflow-hidden shadow-2xl" 
+              className="relative w-full aspect-video rounded-3xl overflow-hidden shadow-2xl"
               style={{ height: '42.5rem', opacity: 0 }}
             >
               <video
@@ -832,7 +832,7 @@ export default function Home() {
 
               <div className="absolute inset-0 bg-gradient-to-t from-black/50 via-transparent to-transparent" />
               <div className="absolute bottom-0 left-0 right-0 p-8 md:p-12 text-white">
-                <h2 
+                <h2
                   ref={heroTitleRef}
                   className="mb-6 leading-[0.9]"
                   style={{ opacity: 0 }}
@@ -840,7 +840,7 @@ export default function Home() {
                   The Infrastructure You Can Trust<br />
                   <span>The Results You Demand</span>
                 </h2>
-                <p 
+                <p
                   ref={heroDescRef}
                   className="text-lg md:text-xl text-white/90 max-w-3xl"
                   style={{ opacity: 0 }}
@@ -864,9 +864,9 @@ export default function Home() {
                 </span>
                 <span className="text-lg md:text-xl text-gray-600">Sites Secured</span>
               </div>
-              
+
               <div className="hidden md:block w-px h-12 bg-gray-300" />
-              
+
               <div className="stat-item flex items-center gap-3">
                 <span className="text-4xl md:text-5xl font-bold text-black flex items-baseline gap-1">
                   <span ref={counter2Ref}>0</span>
@@ -874,9 +874,9 @@ export default function Home() {
                 </span>
                 <span className="text-lg md:text-xl text-gray-600">CCTV Systems</span>
               </div>
-              
+
               <div className="hidden md:block w-px h-12 bg-gray-300" />
-              
+
               <div className="stat-item flex items-center gap-3">
                 <span className="text-4xl md:text-5xl font-bold text-black flex items-baseline gap-1">
                   <span ref={counter3Ref}>0</span>
@@ -884,9 +884,9 @@ export default function Home() {
                 </span>
                 <span className="text-lg md:text-xl text-gray-600">Uptime Delivered</span>
               </div>
-              
+
               <div className="hidden md:block w-px h-12 bg-gray-300" />
-              
+
               <div className="stat-item flex items-center gap-3">
                 <span className="text-lg md:text-xl text-gray-600">Trusted by</span>
                 <span className="text-4xl md:text-5xl font-bold text-black">Airtel</span>
@@ -901,13 +901,13 @@ export default function Home() {
             <div className="grid lg:grid-cols-[3fr_2fr] gap-16 items-center">
               <div ref={aboutLeftRef}>
                 <h4 className="about-text headline-display text-balance text-gradient" style={{ fontSize: '4.2rem' }}>
-                  Your trusted partner for mission-critical infrastructure. Delivering carrier-grade 
+                  Your trusted partner for mission-critical infrastructure. Delivering carrier-grade
                   networks, <br />
-                  <span className="text-gradient opacity-40">AI-powered security, and industrial automation. 
-                  Proven at scale. Executed with precision.</span>
+                  <span className="text-gradient opacity-40">AI-powered security, and industrial automation.
+                    Proven at scale. Executed with precision.</span>
                 </h4>
               </div>
-              
+
               <div ref={aboutRightRef} className="space-y-6">
                 <div className="about-item flex items-start gap-4">
                   <CheckCircle className="text-green-500 flex-shrink-0 mt-1" size={22} />
@@ -968,13 +968,14 @@ export default function Home() {
                   <rect x="0" y="0" width="100%" height="100%" clipPath="url(#services-clip)" fill="url(#services-gradient)" />
                 </svg>
               </div>
-              
-              <div 
+
+              <div
                 ref={servicesCardsRef}
                 className="relative z-10 w-full h-[500px] overflow-hidden"
-                style={{ perspective: "1000px",
-                          maskImage: 'linear-gradient(to right, transparent, white 10%, white 98%, transparent)',
-                          WebkitMaskImage: 'linear-gradient(to right, transparent, white 10%, white 98%, transparent)',
+                style={{
+                  perspective: "1000px",
+                  maskImage: 'linear-gradient(to right, transparent, white 10%, white 98%, transparent)',
+                  WebkitMaskImage: 'linear-gradient(to right, transparent, white 10%, white 98%, transparent)',
                 }}
               >
                 {services.map((service, index) => (
@@ -1006,19 +1007,19 @@ export default function Home() {
 
         {/* CLIENT TRUST SECTION - BLACK BG */}
         <section ref={clientTrustRef} className="section-padding bg-light-gray relative overflow-hidden" style={{ minHeight: '120vh', alignContent: 'center' }}>
-          <div 
+          <div
             ref={circleRevealRef}
             className="absolute inset-0 bg-black"
             style={{ clipPath: 'circle(0% at 50% 50%)' }}
           >
             <div ref={clientContentRef} className="h-full flex items-center justify-center">
               <div className="container-custom text-center">
-                <div className="max-w-4xl mx-auto mb-16">
+                <div className="max-w-4xl mx-auto mb-16 mt-[-15%]">
                   <h2 className="text-4xl md:text-5xl font-bold mb-2 text-white">
                     Trusted by Industry Leaders
                   </h2>
                 </div>
-                
+
                 <div className="flex flex-wrap items-center justify-center gap-x-16 gap-y-12 max-w-5xl mx-auto">
                   {/* Airtel */}
                   <div className="client-item flex flex-col items-center gap-3">
@@ -1053,7 +1054,7 @@ export default function Home() {
 
         {/* SECTION 5: CONVERSATIONAL TESTIMONIAL - Circle Reveal */}
         <section ref={testimonialSectionRef} className="bg-light-gray relative overflow-hidden" style={{ minHeight: '100vh' }}>
-          <div 
+          <div
             className="sticky top-0 h-screen flex items-center justify-center"
             ref={(el) => {
               if (el) {
@@ -1061,19 +1062,19 @@ export default function Home() {
               }
             }}
           >
-            <div 
+            <div
               className="absolute inset-0 bg-light-gray flex items-center justify-center"
               style={{ clipPath: 'none' }}
             >
               <div className="container-custom w-full">
                 <div className="relative overflow-hidden">
-                  <div 
+                  <div
                     ref={testimonialTrackRef}
                     className="flex"
                     style={{ width: `${testimonials.length * 100}vw` }}
                   >
                     {testimonials.map((testimonial, index) => (
-                      <div 
+                      <div
                         key={index}
                         className="testimonial-card flex-shrink-0 px-4"
                         style={{ width: '100vw' }}
@@ -1103,7 +1104,7 @@ export default function Home() {
         </section>
 
         {/* SECTION 6: PROJECT SHOWCASE */}
-        <section ref={projectSectionRef} className="section-padding bg-light-gray relative overflow-hidden" style={{ minHeight: '120vh'}}>
+        <section ref={projectSectionRef} className="section-padding bg-light-gray relative overflow-hidden" style={{ minHeight: '120vh' }}>
           <div className="container-custom">
             {/* Background large text "PROJECTS" */}
             <div
@@ -1200,7 +1201,7 @@ export default function Home() {
                   >
                     {/* Title with slide up + staggered delay */}
                     <div className="flex flex-col gap-4">
-                      <span 
+                      <span
                         className="text-2xl font-semibold max-w-[28ch]
                                   opacity-0 translate-y-3
                                   transition-all duration-[600ms] ease-[cubic-bezier(0.65,0.05,0.36,1)]
@@ -1212,7 +1213,7 @@ export default function Home() {
                     </div>
 
                     {/* Bottom section with longer delay */}
-                    <div 
+                    <div
                       className="flex items-center justify-between
                                 opacity-0 translate-y-3
                                 transition-all duration-[600ms] ease-[cubic-bezier(0.65,0.05,0.36,1)]
@@ -1246,7 +1247,7 @@ export default function Home() {
         </section>
 
         {/* SECTION 7: PROCESS/HOW WE WORK */}
-        <section ref={processSectionRef} className="section-padding bg-light-gray relative overflow-hidden" style={{ minHeight: '160vh'}}>
+        <section ref={processSectionRef} className="section-padding bg-light-gray relative overflow-hidden" style={{ minHeight: '150vh' }}>
           <div className="container-custom">
             <div className='mb-28'>
               <h1 ref={processTitleRef} className="headline-display text-balance">
@@ -1256,7 +1257,7 @@ export default function Home() {
                 </span>
               </h1>
             </div>
-            
+
             <div ref={processCardsRef} className="grid md:grid-cols-3 gap-12 mx-auto">
               {/* Column 1: Expert Engineering */}
               <div className="process-card">
@@ -1332,7 +1333,7 @@ export default function Home() {
         </section>
 
         {/* SECTION 9: FOOTER */}
-        <Footer/>
+        <Footer />
       </div>
     </>
   )
