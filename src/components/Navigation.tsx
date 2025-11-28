@@ -13,14 +13,15 @@ interface NavigationProps {
 
 export default function Navigation({ animate = false, isHomepage = false }: NavigationProps) {
   const [isScrolled, setIsScrolled] = useState(false)
+  const [menuTheme, setMenuTheme] = useState<'light' | 'dark'>('light')
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false)
   const [currentTheme, setCurrentTheme] = useState<'light' | 'dark'>('light')
-  const [splitTheme, setSplitTheme] = useState<{ left: 'light' | 'dark', right: 'light' | 'dark', split: boolean }>({ 
-    left: 'light', 
-    right: 'light', 
-    split: false 
+  const [splitTheme, setSplitTheme] = useState<{ left: 'light' | 'dark', right: 'light' | 'dark', split: boolean }>({
+    left: 'light',
+    right: 'light',
+    split: false
   })
-  
+
   const headerCardRef = useRef<HTMLDivElement>(null)
   const logoRef = useRef<HTMLAnchorElement>(null)
   const navLinksRef = useRef<HTMLElement>(null)
@@ -31,22 +32,22 @@ export default function Navigation({ animate = false, isHomepage = false }: Navi
   // Advanced theme detection with split support
   useEffect(() => {
     let rafId: number;
-    
+
     const detectTheme = () => {
       if (!headerCardRef.current) return;
-      
+
       const rect = headerCardRef.current.getBoundingClientRect();
-      
+
       // Sample multiple points across the header
       const leftX = rect.left + rect.width * 0.25;
       const centerX = rect.left + rect.width / 2;
       const rightX = rect.left + rect.width * 0.75;
       const centerY = rect.top + rect.height / 2;
-      
+
       const getThemeAtPoint = (x: number, y: number): 'light' | 'dark' => {
         const element = document.elementFromPoint(x, y);
         if (!element) return 'light';
-        
+
         // Skip if we hit the header itself
         if (element === headerCardRef.current || headerCardRef.current?.contains(element)) {
           // Look at the element behind
@@ -65,10 +66,10 @@ export default function Navigation({ animate = false, isHomepage = false }: Navi
             }
           }
         }
-        
+
         const bgColor = window.getComputedStyle(element).backgroundColor;
         const rgb = bgColor.match(/\d+/g);
-        
+
         if (rgb) {
           const [r, g, b] = rgb.map(Number);
           const brightness = (r * 299 + g * 587 + b * 114) / 1000;
@@ -76,14 +77,14 @@ export default function Navigation({ animate = false, isHomepage = false }: Navi
         }
         return 'light';
       };
-      
+
       const leftTheme = getThemeAtPoint(leftX, centerY);
       const centerTheme = getThemeAtPoint(centerX, centerY);
       const rightTheme = getThemeAtPoint(rightX, centerY);
-      
+
       // Check if we're at a split between light and dark
       const isSplit = leftTheme !== rightTheme;
-      
+
       if (isSplit) {
         setSplitTheme({
           left: leftTheme,
@@ -108,14 +109,14 @@ export default function Navigation({ animate = false, isHomepage = false }: Navi
 
     // Initial detection
     detectTheme();
-    
+
     // Use requestAnimationFrame for smoother detection
     const smoothDetect = () => {
       detectTheme();
       rafId = requestAnimationFrame(smoothDetect);
     };
     smoothDetect();
-    
+
     window.addEventListener("scroll", handleScroll);
     return () => {
       window.removeEventListener("scroll", handleScroll);
@@ -130,16 +131,16 @@ export default function Navigation({ animate = false, isHomepage = false }: Navi
     if (isMobileMenuOpen) {
       // Open animation
       document.body.style.overflow = 'hidden';
-      
+
       const tl = gsap.timeline();
-      
+
       // Slide in from right
       tl.fromTo(
         mobileMenuRef.current,
         { x: '100%' },
         { x: '0%', duration: 0.5, ease: 'power3.out' }
       );
-      
+
       // Fade in content
       const menuItems = mobileMenuContentRef.current.querySelectorAll('.mobile-menu-item');
       tl.fromTo(
@@ -151,7 +152,7 @@ export default function Navigation({ animate = false, isHomepage = false }: Navi
     } else {
       // Close animation
       document.body.style.overflow = '';
-      
+
       if (mobileMenuRef.current) {
         gsap.to(mobileMenuRef.current, {
           x: '100%',
@@ -202,7 +203,7 @@ export default function Navigation({ animate = false, isHomepage = false }: Navi
 
   const getButtonClasses = (position: 'right') => {
     const theme = splitTheme.split ? splitTheme.right : currentTheme;
-    
+
     if (theme === 'dark') {
       return 'bg-gradient-to-b from-white to-gray-200 text-black';
     }
@@ -215,39 +216,39 @@ export default function Navigation({ animate = false, isHomepage = false }: Navi
       if (headerCardRef.current) gsap.set(headerCardRef.current, { opacity: 1, scaleX: 1 });
       if (logoRef.current) gsap.set(logoRef.current, { opacity: 1, y: 0 });
       if (ctaButtonRef.current) gsap.set(ctaButtonRef.current, { opacity: 1, y: 0 });
-      
+
       const navItems = navLinksRef.current?.querySelectorAll('a');
       if (navItems) gsap.set(navItems, { opacity: 1, y: 0 });
-      
+
       return;
     }
 
     const ctx = gsap.context(() => {
-      const tl = gsap.timeline({ delay: 3.8 }) 
+      const tl = gsap.timeline({ delay: 3.8 })
 
       // Step 1: Header box appears narrow and slides down
       tl.fromTo(
         headerCardRef.current,
-        { 
+        {
           scaleX: 0.05,
           y: -50,
-          opacity: 0 
+          opacity: 0
         },
-        { 
+        {
           scaleX: 0.3,
           y: 0,
-          opacity: 1, 
-          duration: 0.7, 
-          ease: 'power2.out' 
+          opacity: 1,
+          duration: 0.7,
+          ease: 'power2.out'
         }
       )
 
       // Step 2: Expand to full width
       tl.to(
         headerCardRef.current,
-        { 
+        {
           scaleX: 1,
-          duration: 0.5, 
+          duration: 0.5,
           ease: 'back.out(1.2)'
         },
         '+=0.1'
@@ -267,12 +268,12 @@ export default function Navigation({ animate = false, isHomepage = false }: Navi
         tl.fromTo(
           navItems,
           { y: -10, opacity: 0 },
-          { 
-            y: 0, 
-            opacity: 1, 
-            duration: 0.4, 
+          {
+            y: 0,
+            opacity: 1,
+            duration: 0.4,
             ease: 'power3.out',
-            stagger: 0.06 
+            stagger: 0.06
           },
           '-=0.3'
         )
@@ -303,14 +304,14 @@ export default function Navigation({ animate = false, isHomepage = false }: Navi
       <header
         className={`z-50 fixed top-0 w-full mx-auto p-6 lg:p-8 pointer-events-none flex items-center justify-center transition-colors duration-300`}
       >
-        <div 
+        <div
           ref={headerCardRef}
           className="header-card flex items-center justify-between gap-8 relative w-full"
           style={{ opacity: animate ? 0 : 1 }}
         >
           {/* Gradient overlay for split theme effect */}
           {splitTheme.split && (
-            <div 
+            <div
               className="absolute inset-0 pointer-events-none rounded-[inherit]"
               style={{
                 background: `linear-gradient(to right, 
@@ -321,11 +322,11 @@ export default function Navigation({ animate = false, isHomepage = false }: Navi
               }}
             />
           )}
-          
+
           {/* Logo */}
-          <Link 
+          <Link
             ref={logoRef}
-            href="/" 
+            href="/"
             className={`header-logo flex items-center gap-2 select-none relative z-10 transition-all duration-300 ${getThemeClasses('left')}`}
             style={{ opacity: animate ? 0 : 1 }}
           >
@@ -340,7 +341,7 @@ export default function Navigation({ animate = false, isHomepage = false }: Navi
           </Link>
 
           {/* Desktop Nav Links */}
-          <nav 
+          <nav
             ref={navLinksRef}
             className="hidden md:flex items-center gap-10 relative z-10"
           >
@@ -374,7 +375,10 @@ export default function Navigation({ animate = false, isHomepage = false }: Navi
 
           {/* Mobile Hamburger Menu */}
           <button
-            onClick={() => setIsMobileMenuOpen(true)}
+            onClick={() => {
+              setMenuTheme(currentTheme)
+              setIsMobileMenuOpen(true)
+            }}
             className={`md:hidden relative z-10 pointer-events-auto transition-all duration-300 ${getThemeClasses('right')}`}
             aria-label="Open menu"
           >
@@ -421,42 +425,49 @@ export default function Navigation({ animate = false, isHomepage = false }: Navi
           display: isMobileMenuOpen ? 'block' : 'none'
         }}
       >
-        {/* Backdrop with glassmorphism */}
-        <div 
+        {/* Backdrop with glassmorphism - KEEP AS IS */}
+        <div
           className="absolute inset-0 backdrop-blur-xl"
           style={{
+            background: 'rgba(255, 255, 255, 0.20)',
             boxShadow: '0 0 1em .25em rgba(255, 255, 255, 0.15) inset, 0 .125em .25em -.125em rgba(0, 0, 0, 0.3)'
           }}
         />
-        
+
         {/* Menu Content */}
         <div ref={mobileMenuContentRef} className="relative h-full flex flex-col p-6">
-          {/* Close Button */}
+          {/* Close Button - ADAPT TEXT COLOR */}
           <div className="mobile-menu-item flex justify-end mb-12">
             <button
               onClick={() => setIsMobileMenuOpen(false)}
-              className="w-12 h-12 flex items-center justify-center rounded-full bg-black/5 hover:bg-black/10 transition-colors"
+              className={`w-12 h-12 flex items-center justify-center rounded-full transition-colors ${menuTheme === 'dark'
+                ? 'bg-white/10 hover:bg-white/20'
+                : 'bg-black/5 hover:bg-black/10'
+                }`}
               aria-label="Close menu"
             >
-              <X size={24} className="text-black" />
+              <X size={24} className={menuTheme === 'dark' ? 'text-white' : 'text-black'} />
             </button>
           </div>
 
-          {/* Menu Links */}
+          {/* Menu Links - ADAPT TEXT COLOR */}
           <nav className="flex flex-col gap-6 mb-12">
             {navLinks.map((link) => (
               <Link
                 key={link.href}
                 href={link.href}
                 onClick={handleMobileLinkClick}
-                className="mobile-menu-item text-3xl font-bold text-black hover:text-blue-600 transition-colors"
+                className={`mobile-menu-item text-3xl font-bold transition-colors ${menuTheme === 'dark'
+                  ? 'text-white hover:text-blue-400'
+                  : 'text-black hover:text-blue-600'
+                  }`}
               >
                 {link.label}
               </Link>
             ))}
           </nav>
 
-          {/* CTA Button */}
+          {/* CTA Button - KEEP EXISTING STYLING */}
           <Link
             href="/contact"
             onClick={handleBookCallClick}
@@ -481,5 +492,5 @@ export default function Navigation({ animate = false, isHomepage = false }: Navi
         </div>
       </div>
     </>
-  )  
+  )
 }

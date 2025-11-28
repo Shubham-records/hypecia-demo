@@ -394,7 +394,7 @@ export default function Home() {
 
         aboutTl.from(leftSplit.words, {
           opacity: 0,
-          x: -80,
+          x: -30,
           y: 80,
           stagger: 0.04,
           ease: "power3.out",
@@ -403,7 +403,7 @@ export default function Home() {
 
         aboutTl.from(rightItems, {
           opacity: 0,
-          x: 80,
+          x: 30,
           y: 80,
           stagger: 0.15,
           ease: "power3.out",
@@ -816,8 +816,7 @@ export default function Home() {
           <div className="mx-auto px-4 md:px-4 lg:px-4">
             <div
               ref={heroBoxRef}
-              className="relative w-full aspect-video rounded-3xl overflow-hidden shadow-2xl"
-              style={{ height: '42.5rem', opacity: 0 }}
+              className="relative w-full aspect-video rounded-3xl overflow-hidden shadow-2xl md:h-[42.5rem] h-[40rem]"
             >
               <video
                 ref={videoRef}
@@ -834,7 +833,7 @@ export default function Home() {
               <div className="absolute bottom-0 left-0 right-0 p-8 md:p-12 text-white">
                 <h2
                   ref={heroTitleRef}
-                  className="mb-6 leading-[0.9]"
+                  className="mb-6 text-3xl md:text-5xl font-bold leading-tight"
                   style={{ opacity: 0 }}
                 >
                   The Infrastructure You Can Trust<br />
@@ -842,7 +841,7 @@ export default function Home() {
                 </h2>
                 <p
                   ref={heroDescRef}
-                  className="text-lg md:text-xl text-white/90 max-w-3xl"
+                  className="text-base md:text-xl text-white/90 max-w-3xl"
                   style={{ opacity: 0 }}
                 >
                   Carrier-grade networks. AI-powered security. Industrial automation.<br />
@@ -896,11 +895,11 @@ export default function Home() {
         </section>
 
         {/* SECTION 3: ABOUT US */}
-        <section className="section-padding bg-light-gray min-h-[220vh]">
-          <div ref={aboutContainerRef} className="mx-auto px-4 md:px-8 lg:px-8 max-w-[1400px]">
+        <section className="section-padding bg-light-gray md:min-h-[220vh] min-h-[auto]">
+          <div ref={aboutContainerRef} className="container-custom">
             <div className="grid lg:grid-cols-[3fr_2fr] gap-16 items-center">
               <div ref={aboutLeftRef}>
-                <h4 className="about-text headline-display text-balance text-gradient" style={{ fontSize: '4.2rem' }}>
+                <h4 className="about-text headline-display text-balance text-gradient">
                   Your trusted partner for mission-critical infrastructure. Delivering carrier-grade
                   networks, <br />
                   <span className="text-gradient opacity-40">AI-powered security, and industrial automation.

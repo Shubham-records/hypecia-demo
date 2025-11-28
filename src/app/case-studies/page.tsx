@@ -16,25 +16,25 @@ export default function CaseStudiesPage() {
   // Hero refs
   const heroTitleRef = useRef<HTMLHeadingElement>(null)
   const heroDescRef = useRef<HTMLParagraphElement>(null)
-  
+
   // Featured case study refs
   const featuredCaseRef = useRef<HTMLDivElement>(null)
-  
+
   // Stats section refs
   const statsSectionRef = useRef<HTMLDivElement>(null)
-  
+
   // CTA refs
   const ctaSectionRef = useRef<HTMLDivElement>(null)
 
   useEffect(() => {
     const timer = setTimeout(() => {
       const ctx = gsap.context(() => {
-        
+
         // ===== HERO SECTION ANIMATION =====
         if (heroTitleRef.current) {
           const titleSplit = new SplitText(heroTitleRef.current, { type: 'words,chars' })
           gsap.set(heroTitleRef.current, { opacity: 1 })
-          
+
           gsap.from(titleSplit.chars, {
             opacity: 0,
             y: 100,
@@ -53,7 +53,7 @@ export default function CaseStudiesPage() {
         if (heroDescRef.current) {
           const descSplit = new SplitText(heroDescRef.current, { type: 'words' })
           gsap.set(heroDescRef.current, { opacity: 1 })
-          
+
           gsap.from(descSplit.words, {
             opacity: 0,
             y: 50,
@@ -276,8 +276,8 @@ export default function CaseStudiesPage() {
   return (
     <>
       <div className="min-h-screen">
-        <Navigation isHomepage={true}/>
-        
+        <Navigation isHomepage={true} />
+
         {/* Hero Section */}
         <section className="min-h-[70vh] flex items-center justify-center relative overflow-hidden pt-20">
           <div className="absolute inset-0 bg-gradient-to-br from-blue-50 via-white to-green-50 opacity-60" />
@@ -295,57 +295,57 @@ export default function CaseStudiesPage() {
         <section className="section-padding">
           <div className="container-custom">
             <div ref={featuredCaseRef} className="bg-gradient-to-br from-red-600 to-red-800 rounded-3xl overflow-hidden text-white mb-16">
-              <div className="grid lg:grid-cols-2 gap-12 p-12 lg:p-16">
+              <div className="grid lg:grid-cols-2 gap-8 md:gap-12 p-6 md:p-12 lg:p-16">
                 <div>
                   <div className="featured-badge inline-block bg-white/20 px-4 py-2 rounded-full text-sm font-semibold mb-6">
                     Featured Project · Enterprise Security
                   </div>
-                  <h2 className="featured-title text-5xl md:text-6xl font-bold mb-6">Airtel CCTV Infrastructure Deployment</h2>
-                  <p className="featured-description text-xl mb-8 opacity-90">
+                  <h2 className="featured-title text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold mb-4 md:mb-6">Airtel CCTV Infrastructure Deployment</h2>
+                  <p className="featured-description text-base md:text-lg lg:text-xl mb-6 md:mb-8 opacity-90">
                     Transforming India's largest telecom network with AI-enabled surveillance across 157 critical sites—delivering 40% security improvement and 95% uptime.
                   </p>
-                  <div className="grid grid-cols-2 gap-6 mb-8">
+                  <div className="grid grid-cols-2 gap-4 md:gap-6 mb-6 md:mb-8">
                     <div className="stat-item">
-                      <p className="text-sm opacity-75 mb-1">Total Sites</p>
-                      <p className="text-3xl font-bold">157</p>
+                      <p className="text-xs md:text-sm opacity-75 mb-1">Total Sites</p>
+                      <p className="text-2xl md:text-3xl font-bold">157</p>
                       <p className="text-xs opacity-75">16 MSCs + 141 TNGs</p>
                     </div>
                     <div className="stat-item">
-                      <p className="text-sm opacity-75 mb-1">Cameras Deployed</p>
-                      <p className="text-3xl font-bold">2,400+</p>
+                      <p className="text-xs md:text-sm opacity-75 mb-1">Cameras Deployed</p>
+                      <p className="text-2xl md:text-3xl font-bold">2,400+</p>
                       <p className="text-xs opacity-75">AI-enabled systems</p>
                     </div>
                     <div className="stat-item">
-                      <p className="text-sm opacity-75 mb-1">Coverage Area</p>
-                      <p className="text-3xl font-bold">UP & Bihar</p>
+                      <p className="text-xs md:text-sm opacity-75 mb-1">Coverage Area</p>
+                      <p className="text-2xl md:text-3xl font-bold">UP & Bihar</p>
                       <p className="text-xs opacity-75">Urban & rural sites</p>
                     </div>
                     <div className="stat-item">
-                      <p className="text-sm opacity-75 mb-1">Timeline</p>
-                      <p className="text-3xl font-bold">4-6 Months</p>
+                      <p className="text-xs md:text-sm opacity-75 mb-1">Timeline</p>
+                      <p className="text-2xl md:text-3xl font-bold">4-6 Months</p>
                       <p className="text-xs opacity-75">Phased rollout</p>
                     </div>
                   </div>
                 </div>
                 <div className="flex flex-col justify-between">
-                  <div className="space-y-6">
+                  <div className="space-y-4 md:space-y-6">
                     <div className="challenge-section">
-                      <h3 className="font-bold text-xl mb-3 flex items-center gap-2">
-                        <Shield className="w-5 h-5" /> The Challenge
+                      <h3 className="font-bold text-lg md:text-xl mb-2 md:mb-3 flex items-center gap-2">
+                        <Shield className="w-4 h-4 md:w-5 md:h-5" /> The Challenge
                       </h3>
-                      <p className="opacity-90">Airtel needed comprehensive security for Mobile Switching Centers (MSCs) and Transport Network Gateways (TNGs) to prevent unauthorized access, mitigate cyber-physical threats, and ensure TRAI compliance across critical telecom infrastructure.</p>
+                      <p className="opacity-90 text-sm md:text-base">Airtel needed comprehensive security for Mobile Switching Centers (MSCs) and Transport Network Gateways (TNGs) to prevent unauthorized access, mitigate cyber-physical threats, and ensure TRAI compliance across critical telecom infrastructure.</p>
                     </div>
                     <div className="challenge-section">
-                      <h3 className="font-bold text-xl mb-3 flex items-center gap-2">
-                        <Zap className="w-5 h-5" /> Our Solution
+                      <h3 className="font-bold text-lg md:text-xl mb-2 md:mb-3 flex items-center gap-2">
+                        <Zap className="w-4 h-4 md:w-5 md:h-5" /> Our Solution
                       </h3>
-                      <p className="opacity-90">Deployed state-of-the-art AI-enabled CCTV systems with centralized video analytics, motion detection, facial recognition, and cloud storage. Comprehensive site surveys, professional installation across 157 sites, and seamless integration with Airtel's central command center.</p>
+                      <p className="opacity-90 text-sm md:text-base">Deployed state-of-the-art AI-enabled CCTV systems with centralized video analytics, motion detection, facial recognition, and cloud storage. Comprehensive site surveys, professional installation across 157 sites, and seamless integration with Airtel's central command center.</p>
                     </div>
                     <div className="challenge-section">
-                      <h3 className="font-bold text-xl mb-3 flex items-center gap-2">
-                        <TrendingUp className="w-5 h-5" /> Measurable Results
+                      <h3 className="font-bold text-lg md:text-xl mb-2 md:mb-3 flex items-center gap-2">
+                        <TrendingUp className="w-4 h-4 md:w-5 md:h-5" /> Measurable Results
                       </h3>
-                      <ul className="space-y-2 opacity-90">
+                      <ul className="space-y-2 opacity-90 text-sm md:text-base">
                         <li>• <strong>40% reduction</strong> in site vulnerabilities</li>
                         <li>• <strong>25% cost savings</strong> on manual patrols</li>
                         <li>• <strong>95% uptime</strong> across all installations</li>
@@ -356,26 +356,26 @@ export default function CaseStudiesPage() {
                   </div>
                 </div>
               </div>
-              
+
               {/* Technical Highlights */}
-              <div className="border-t border-white/20 p-12 lg:p-16">
-                <h3 className="text-2xl font-bold mb-6">Technical Excellence</h3>
-                <div className="grid md:grid-cols-4 gap-6">
+              <div className="border-t border-white/20 p-6 md:p-12 lg:p-16">
+                <h3 className="text-xl md:text-2xl font-bold mb-4 md:mb-6">Technical Excellence</h3>
+                <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-4 md:gap-6">
                   <div className="tech-highlight">
-                    <h4 className="font-semibold mb-2">Site Coverage</h4>
-                    <p className="text-sm opacity-90">MSC sites: 30-60 cameras | TNG sites: 4-5 cameras with optimized perimeter coverage</p>
+                    <h4 className="font-semibold mb-2 text-sm md:text-base">Site Coverage</h4>
+                    <p className="text-xs md:text-sm opacity-90">MSC sites: 30-60 cameras | TNG sites: 4-5 cameras with optimized perimeter coverage</p>
                   </div>
                   <div className="tech-highlight">
-                    <h4 className="font-semibold mb-2">AI Analytics</h4>
-                    <p className="text-sm opacity-90">Motion detection, facial recognition, anomaly detection, automated alerts</p>
+                    <h4 className="font-semibold mb-2 text-sm md:text-base">AI Analytics</h4>
+                    <p className="text-xs md:text-sm opacity-90">Motion detection, facial recognition, anomaly detection, automated alerts</p>
                   </div>
                   <div className="tech-highlight">
-                    <h4 className="font-semibold mb-2">Infrastructure</h4>
-                    <p className="text-sm opacity-90">Professional cabling, NVR setup, solar PoE for remote sites, bandwidth optimization</p>
+                    <h4 className="font-semibold mb-2 text-sm md:text-base">Infrastructure</h4>
+                    <p className="text-xs md:text-sm opacity-90">Professional cabling, NVR setup, solar PoE for remote sites, bandwidth optimization</p>
                   </div>
                   <div className="tech-highlight">
-                    <h4 className="font-semibold mb-2">Support</h4>
-                    <p className="text-sm opacity-90">24/7 monitoring, 1-year service support, preventive maintenance</p>
+                    <h4 className="font-semibold mb-2 text-sm md:text-base">Support</h4>
+                    <p className="text-xs md:text-sm opacity-90">24/7 monitoring, 1-year service support, preventive maintenance</p>
                   </div>
                 </div>
               </div>
