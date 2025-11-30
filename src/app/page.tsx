@@ -95,6 +95,18 @@ export default function Home() {
       icon: "👨🏻‍🔧",
       color: "from-yellow-400 to-yellow-600",
     },
+    {
+      title: "ELV Systems",
+      description: "Extra low voltage solutions including structured cabling, fire alarms, PA systems, and BMS integration",
+      icon: "🔌",
+      color: "from-cyan-400 to-cyan-600",
+    },
+    {
+      title: "Access Control Systems",
+      description: "Biometric, RFID, and integrated access management for secure facility operations",
+      icon: "🔐",
+      color: "from-indigo-400 to-indigo-600",
+    }
   ])
 
   // Testimonials data
@@ -960,7 +972,7 @@ export default function Home() {
                   preserveAspectRatio="xMidYMid meet"
                   fill="none"
                   xmlns="http://www.w3.org/2000/svg"
-                  className="relative mb-[-7%]"
+                  className="relative md:mb-[-7%] mb-[-5%]"
                 >
                   <defs>
                     <clipPath id="services-clip">
@@ -1020,18 +1032,21 @@ export default function Home() {
           >
             <div ref={clientContentRef} className="h-full flex items-center justify-center">
               <div className="container-custom text-center">
-                <div className="max-w-4xl mx-auto mb-16" style={{ marginTop: '-30%' }}>
+                <div className="max-w-4xl mx-auto mb-16 md:mb-20" style={{ marginTop: '-35%' }}>
                   <h2 className="text-4xl md:text-5xl font-bold mb-2 text-white">
                     Trusted by Industry Leaders
                   </h2>
                 </div>
 
-                <div className="flex flex-wrap items-center justify-center gap-x-16 gap-y-12 max-w-6xl mx-auto">
+                {/* Mobile: 2-Column Grid Layout, Desktop: Flex Layout */}
+                <div className="grid grid-cols-2 gap-8 md:flex md:flex-wrap md:items-center md:justify-center md:gap-x-16 md:gap-y-12 max-w-6xl mx-auto">
                   {/* Airtel */}
-                  <div className="client-item flex flex-col items-center gap-3">
-                    <div className="text-5xl md:text-6xl font-black bg-gradient-to-br from-red-500 to-red-700 bg-clip-text text-transparent">
-                      AIRTEL
-                    </div>
+                  <div className="client-item flex flex-col items-center gap-4">
+                    <img
+                      src="/Airtel-Logo-PNG-High-Quality-Image.png"
+                      alt="Airtel"
+                      className="h-16 md:h-20 w-auto object-contain"
+                    />
                     <p className="text-sm text-gray-400">157+ Sites Deployed</p>
                   </div>
 
@@ -1039,10 +1054,12 @@ export default function Home() {
                   <div className="client-item hidden md:block w-px h-16 bg-gray-600" />
 
                   {/* EPACK PREFAB */}
-                  <div className="client-item flex flex-col items-center gap-3">
-                    <div className="text-4xl md:text-5xl font-black text-white">
-                      EPACK PREFAB
-                    </div>
+                  <div className="client-item flex flex-col items-center gap-4">
+                    <img
+                      src="/epack-logo.webp"
+                      alt="epack"
+                      className="h-16 md:h-20 w-auto object-contain"
+                    />
                     <p className="text-sm text-gray-400">Premium Infrastructure Partner</p>
                   </div>
 
@@ -1050,10 +1067,12 @@ export default function Home() {
                   <div className="client-item hidden md:block w-px h-16 bg-gray-600" />
 
                   {/* Voltas */}
-                  <div className="client-item flex flex-col items-center gap-3">
-                    <div className="text-4xl md:text-5xl font-black bg-gradient-to-br from-blue-400 to-blue-600 bg-clip-text text-transparent">
-                      VOLTAS
-                    </div>
+                  <div className="client-item flex flex-col items-center gap-4 col-span-2 md:col-span-1">
+                    <img
+                      src="/voltas.png"
+                      alt="Voltas"
+                      className="h-16 md:h-20 w-auto object-contain"
+                    />
                     <p className="text-sm text-gray-400">HVAC Solutions Partner</p>
                   </div>
                 </div>
