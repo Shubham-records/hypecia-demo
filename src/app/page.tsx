@@ -835,7 +835,7 @@ export default function Home() {
           <div className="mx-auto px-4 md:px-4 lg:px-4">
             <div
               ref={heroBoxRef}
-              className="relative w-full aspect-video rounded-3xl overflow-hidden shadow-2xl md:h-[42.5rem] h-[40rem]"
+              className="relative w-full rounded-3xl overflow-hidden shadow-2xl h-[95vh]"
             >
               <video
                 ref={videoRef}
