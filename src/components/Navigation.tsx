@@ -302,12 +302,16 @@ export default function Navigation({ animate = false, isHomepage = false }: Navi
   return (
     <>
       <header
-        className={`z-50 fixed top-0 w-full mx-auto p-6 lg:p-8 pointer-events-none flex items-center justify-center transition-colors duration-300`}
+        className="z-50 fixed top-0 w-full mx-auto p-[clamp(2rem,2vh,2rem)] pointer-events-none flex items-center justify-center transition-colors duration-300"
       >
         <div
           ref={headerCardRef}
-          className="header-card flex items-center justify-between gap-8 relative w-full"
-          style={{ opacity: animate ? 0 : 1 }}
+          className="header-card flex items-center justify-between relative w-full"
+          style={{ 
+            opacity: animate ? 0 : 1,
+            gap: 'clamp(1rem, 3vw, 2rem)',
+            padding: 'clamp(0.5rem, 1.5vh, 1rem) clamp(1rem, 2vw, 1.5rem)'
+          }}
         >
           {/* Gradient overlay for split theme effect */}
           {splitTheme.split && (
@@ -327,8 +331,11 @@ export default function Navigation({ animate = false, isHomepage = false }: Navi
           <Link
             ref={logoRef}
             href="/"
-            className={`header-logo flex items-center gap-2 select-none relative z-10 transition-all duration-300 ${getThemeClasses('left')}`}
-            style={{ opacity: animate ? 0 : 1 }}
+            className={`header-logo flex items-center select-none relative z-10 transition-all duration-300 ${getThemeClasses('left')}`}
+            style={{ 
+              opacity: animate ? 0 : 1,
+              gap: 'clamp(0.5rem, 1vw, 0.75rem)'
+            }}
           >
             <Image
               src="/logo.svg"
@@ -336,14 +343,21 @@ export default function Navigation({ animate = false, isHomepage = false }: Navi
               width={124}
               height={48}
               priority
-              className={`h-10 w-auto transition-all duration-300 ${getLogoFilter('left')}`}
+              className={`transition-all duration-300 ${getLogoFilter('left')}`}
+              style={{
+                height: 'clamp(2rem, 4vh, 2.5rem)',
+                width: 'auto'
+              }}
             />
           </Link>
 
           {/* Desktop Nav Links */}
           <nav
             ref={navLinksRef}
-            className="hidden md:flex items-center gap-10 relative z-10"
+            className="hidden md:flex items-center relative z-10"
+            style={{
+              gap: 'clamp(1.5rem, 2.5vw, 2.5rem)'
+            }}
           >
             {navLinks.map((link, index) => {
               const position = 'center';
@@ -351,7 +365,7 @@ export default function Navigation({ animate = false, isHomepage = false }: Navi
                 <Link
                   key={link.href}
                   href={link.href}
-                  className={`text-[15px] font-medium transition-all duration-300 hover:opacity-70 ${getThemeClasses(position)}
+                  className={`font-medium transition-all duration-300 hover:opacity-70 ${getThemeClasses(position)}
                               relative
                               after:content-['']
                               after:absolute
@@ -365,7 +379,10 @@ export default function Navigation({ animate = false, isHomepage = false }: Navi
                               after:duration-300
                               hover:after:w-full
                           `}
-                  style={{ opacity: animate ? 0 : 1 }}
+                  style={{ 
+                    opacity: animate ? 0 : 1,
+                    fontSize: 'clamp(0.875rem, 1.25vw, 0.9375rem)'
+                  }}
                 >
                   {link.label}
                 </Link>
@@ -380,11 +397,14 @@ export default function Navigation({ animate = false, isHomepage = false }: Navi
               setIsMobileMenuOpen(true)
             }}
             className={`md:hidden relative z-10 pointer-events-auto transition-all duration-300 ${getThemeClasses('right')}`}
+            style={{
+              width: 'clamp(1.5rem, 5vw, 2rem)'
+            }}
             aria-label="Open menu"
           >
-            <div className="flex flex-col gap-1.5 w-6">
-              <span className="w-full h-0.5 bg-current transition-all"></span>
-              <span className="w-full h-0.5 bg-current transition-all"></span>
+            <div className="flex flex-col gap-[clamp(0.25rem,0.5vh,0.375rem)] w-full">
+              <span className="w-full h-[2px] bg-current transition-all"></span>
+              <span className="w-full h-[2px] bg-current transition-all"></span>
             </div>
           </button>
 
@@ -393,8 +413,13 @@ export default function Navigation({ animate = false, isHomepage = false }: Navi
             ref={ctaButtonRef}
             href="/contact"
             onClick={handleBookCallClick}
-            className={`hidden md:inline-flex book-call-btn items-center justify-center px-6 py-3 md:px-7 md:py-4 rounded-full font-medium whitespace-nowrap transition-all duration-300 hover:opacity-90 relative z-10 ${getButtonClasses('right')}`}
-            style={{ opacity: animate ? 0 : 1 }}
+            className={`hidden md:inline-flex book-call-btn items-center justify-center rounded-full font-medium whitespace-nowrap transition-all duration-300 hover:opacity-90 relative z-10 ${getButtonClasses('right')}`}
+            style={{ 
+              opacity: animate ? 0 : 1,
+              padding: 'clamp(0.75rem, 1.5vh, 1rem) clamp(1.25rem, 2vw, 1.75rem)',
+              fontSize: 'clamp(0.875rem, 1.25vw, 0.9375rem)',
+              gap: 'clamp(0.375rem, 0.75vw, 0.5rem)'
+            }}
           >
             Book a Call
             <svg
@@ -403,7 +428,10 @@ export default function Navigation({ animate = false, isHomepage = false }: Navi
               viewBox="0 0 16 16"
               fill="none"
               xmlns="http://www.w3.org/2000/svg"
-              className="ml-2"
+              style={{
+                width: 'clamp(0.875rem, 1.5vw, 1rem)',
+                height: 'clamp(0.875rem, 1.5vw, 1rem)'
+              }}
             >
               <path
                 d="M9.33333 4L13.5 8L9.33333 12M13 8H2.5"
@@ -419,13 +447,13 @@ export default function Navigation({ animate = false, isHomepage = false }: Navi
       {/* Mobile Menu Sidebar */}
       <div
         ref={mobileMenuRef}
-        className={`fixed inset-0 z-[100] md:hidden pointer-events-auto`}
+        className="fixed inset-0 z-[100] md:hidden pointer-events-auto"
         style={{
           transform: 'translateX(100%)',
           display: isMobileMenuOpen ? 'block' : 'none'
         }}
       >
-        {/* Backdrop with glassmorphism - KEEP AS IS */}
+        {/* Backdrop with glassmorphism */}
         <div
           className="absolute inset-0 backdrop-blur-xl"
           style={{
@@ -435,43 +463,55 @@ export default function Navigation({ animate = false, isHomepage = false }: Navi
         />
 
         {/* Menu Content */}
-        <div ref={mobileMenuContentRef} className="relative h-full flex flex-col p-6">
-          {/* Close Button - ADAPT TEXT COLOR */}
-          <div className="mobile-menu-item flex justify-end mb-12">
+        <div ref={mobileMenuContentRef} className="relative h-full flex flex-col p-[clamp(1.5rem,5vw,2rem)]">
+          {/* Close Button */}
+          <div className="mobile-menu-item flex justify-end mb-[clamp(2rem,8vh,3rem)]">
             <button
               onClick={() => setIsMobileMenuOpen(false)}
-              className={`w-12 h-12 flex items-center justify-center rounded-full transition-colors ${menuTheme === 'dark'
+              className={`flex items-center justify-center rounded-full transition-colors ${menuTheme === 'dark'
                 ? 'bg-white/10 hover:bg-white/20'
                 : 'bg-black/5 hover:bg-black/10'
                 }`}
+              style={{
+                width: 'clamp(2.5rem, 8vw, 3rem)',
+                height: 'clamp(2.5rem, 8vw, 3rem)'
+              }}
               aria-label="Close menu"
             >
               <X size={24} className={menuTheme === 'dark' ? 'text-white' : 'text-black'} />
             </button>
           </div>
 
-          {/* Menu Links - ADAPT TEXT COLOR */}
-          <nav className="flex flex-col gap-6 mb-12">
+          {/* Menu Links */}
+          <nav className="flex flex-col mb-[clamp(2rem,8vh,3rem)]" style={{ gap: 'clamp(1rem, 4vh, 1.5rem)' }}>
             {navLinks.map((link) => (
               <Link
                 key={link.href}
                 href={link.href}
                 onClick={handleMobileLinkClick}
-                className={`mobile-menu-item text-3xl font-bold transition-colors ${menuTheme === 'dark'
+                className={`mobile-menu-item font-bold transition-colors ${menuTheme === 'dark'
                   ? 'text-white hover:text-blue-400'
                   : 'text-black hover:text-blue-600'
                   }`}
+                style={{
+                  fontSize: 'clamp(1.75rem, 6vw, 3rem)'
+                }}
               >
                 {link.label}
               </Link>
             ))}
           </nav>
 
-          {/* CTA Button - KEEP EXISTING STYLING */}
+          {/* CTA Button */}
           <Link
             href="/contact"
             onClick={handleBookCallClick}
-            className="mobile-menu-item bg-gradient-to-b from-[#232522] to-[#191B18] text-white px-8 py-4 rounded-full text-lg font-semibold hover:opacity-90 transition-all inline-flex items-center justify-center gap-2 book-call-btn"
+            className="mobile-menu-item bg-gradient-to-b from-[#232522] to-[#191B18] text-white rounded-full font-semibold hover:opacity-90 transition-all inline-flex items-center justify-center book-call-btn"
+            style={{
+              padding: 'clamp(0.75rem, 2vh, 1rem) clamp(1.5rem, 4vw, 2rem)',
+              fontSize: 'clamp(1rem, 2.5vw, 1.125rem)',
+              gap: 'clamp(0.375rem, 1vw, 0.5rem)'
+            }}
           >
             Book a Call
             <svg
