@@ -76,9 +76,6 @@ export default function Footer({ animate = false }: FooterProps) {
             <p className="text-gray-400 text-sm">
               © {currentYear} Hypecia Connect Services Pvt Ltd. All rights reserved.
             </p>
-            <p className="text-gray-400 text-sm">
-              Incorporated March 2022
-            </p>
           </div>
         </div>
       </div>

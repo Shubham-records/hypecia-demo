@@ -137,19 +137,6 @@ export default function Home() {
     }
   ]
 
-  const goToSlide = (index: number) => {
-    if (!testimonialTrackRef.current) return;
-
-    const cards = gsap.utils.toArray<HTMLElement>(".testimonial-card");
-    const cardWidth = cards[0].offsetWidth;
-
-    gsap.to(testimonialTrackRef.current, {
-      x: -(index * cardWidth),
-      duration: 0.5,
-      ease: "power3.inOut"
-    });
-  };
-
   const handleLoaderComplete = () => {
     setStartFadeIn(true)
     setTimeout(() => {
@@ -373,6 +360,9 @@ export default function Home() {
         const leftText = aboutLeftRef.current.querySelector(".about-text")
         const rightItems = aboutRightRef.current.querySelectorAll(".about-item")
 
+        // Check if mobile (width < 1024px)
+        const isMobile = window.innerWidth < 1024
+
         const leftSplit = new SplitText(leftText, {
           type: "words",
           wordsClass: "split-word"
@@ -392,6 +382,7 @@ export default function Home() {
           }
         })
 
+        // FADE IN (same for both mobile and desktop)
         aboutTl.from(leftSplit.words, {
           opacity: 0,
           x: -30,
@@ -412,23 +403,26 @@ export default function Home() {
 
         aboutTl.to({}, { duration: 0.5 })
 
-        aboutTl.to(leftSplit.words, {
-          opacity: 0,
-          x: -80,
-          y: -80,
-          stagger: 0.04,
-          ease: "power3.in",
-          duration: 1,
-        })
+        // FADE OUT (only on desktop)
+        if (!isMobile) {
+          aboutTl.to(leftSplit.words, {
+            opacity: 0,
+            x: -80,
+            y: -80,
+            stagger: 0.04,
+            ease: "power3.in",
+            duration: 1,
+          })
 
-        aboutTl.to(rightItems, {
-          opacity: 0,
-          x: 80,
-          y: -80,
-          stagger: 0.15,
-          ease: "power3.in",
-          duration: 1,
-        }, "<")
+          aboutTl.to(rightItems, {
+            opacity: 0,
+            x: 80,
+            y: -80,
+            stagger: 0.15,
+            ease: "power3.in",
+            duration: 1,
+          }, "<")
+        }
       }
 
       // ===== SERVICES SECTION ANIMATION =====
@@ -437,33 +431,42 @@ export default function Home() {
 
         const containerWidth = servicesCardsRef.current.offsetWidth
         const cardWidth = 320
+        const cardGap = 32
 
+        // Set initial positions with wrapping (to show cards on both sides)
         cards.forEach((card, index) => {
-          const baseX = index * (cardWidth + 32)
-          const centerX = containerWidth / 2
-          const distanceFromCenter = baseX + cardWidth / 2 - centerX
-          const maxDistance = containerWidth / 2
-          const normalizedDistance = distanceFromCenter / maxDistance
+          const baseX = index * (cardWidth + cardGap)
+          let x = (containerWidth / 2) - (cardWidth / 2) + baseX
 
-          const bendAmount = 80
-          const y = Math.abs(normalizedDistance) * bendAmount
-          const rotation = normalizedDistance * 8
-          const scale = 1 - Math.abs(normalizedDistance) * 0.2
-          const opacity = 1 - Math.abs(normalizedDistance) * 0.5
+          // Apply wrapping to initial position so cards appear on both sides
+          const totalWidth = services.length * (cardWidth + cardGap)
+          while (x < -(cardWidth * 2)) x += totalWidth
+          while (x > containerWidth + cardWidth) x -= totalWidth
+
+          const centerX = containerWidth / 2
+          const cardCenter = x + cardWidth / 2
+          const distanceFromCenter = Math.abs(cardCenter - centerX)
+          const normalizedDistance = distanceFromCenter / (containerWidth / 2)
+
+          const bendAmount = 60
+          const y = normalizedDistance * bendAmount * 1.5
+          const rotation = ((cardCenter - centerX) / (containerWidth / 2)) * 6
+          const scale = 1 - (normalizedDistance * 0.15)
+          const opacity = 1 - (normalizedDistance * 0.4)
 
           gsap.set(card, {
-            x: baseX,
+            x: x,
             y: y,
             rotationY: rotation,
             scale: Math.max(scale, 0.7),
-            opacity: Math.max(opacity, 0.3),
-            zIndex: Math.round((1 - Math.abs(normalizedDistance)) * 100)
+            opacity: Math.max(opacity, 0.4),
+            zIndex: Math.round((1 - normalizedDistance) * 100)
           })
         })
 
         ScrollTrigger.create({
           trigger: servicesContainerRef.current,
-          start: "top -10%",
+          start: window.innerWidth < 1024 ? "top 5%" : "top -10%",
           end: () => `+=${services.length * 1200}`,
           pin: true,
           pinSpacing: true,
@@ -472,35 +475,39 @@ export default function Home() {
             const progress = self.progress
             const containerWidth = servicesCardsRef.current?.offsetWidth || 1000
             const cardWidth = 320
-            const totalScroll = services.length * 352
+            const cardGap = 32
+            const totalScroll = services.length * (cardWidth + cardGap)
             const currentScroll = progress * totalScroll
 
             cards.forEach((card, index) => {
-              const baseX = index * (cardWidth + 32)
-              let x = baseX - currentScroll
+              // Calculate position relative to center
+              const baseX = index * (cardWidth + cardGap)
+              let x = (containerWidth / 2) - (cardWidth / 2) + baseX - currentScroll
 
-              const totalWidth = (cardWidth + 32) * services.length
-              while (x < -cardWidth) x += totalWidth
+              // Infinite loop wrapping
+              const totalWidth = services.length * (cardWidth + cardGap)
+              while (x < -(cardWidth * 2)) x += totalWidth
               while (x > containerWidth + cardWidth) x -= totalWidth
 
+              // Calculate distance from center
               const centerX = containerWidth / 2
-              const distanceFromCenter = x + cardWidth / 2 - centerX
-              const maxDistance = containerWidth / 2
-              const normalizedDistance = distanceFromCenter / maxDistance
+              const cardCenter = x + cardWidth / 2
+              const distanceFromCenter = Math.abs(cardCenter - centerX)
+              const normalizedDistance = distanceFromCenter / (containerWidth / 2)
 
-              const bendAmount = 80
-              const y = Math.abs(normalizedDistance) * bendAmount
-              const rotation = normalizedDistance * 8
-              const scale = 1 - Math.abs(normalizedDistance) * 0.2
-              const opacity = 1 - Math.abs(normalizedDistance) * 0.5
+              const bendAmount = 60
+              const y = normalizedDistance * bendAmount * 1.5
+              const rotation = ((cardCenter - centerX) / (containerWidth / 2)) * 6
+              const scale = 1 - (normalizedDistance * 0.15)
+              const opacity = 1 - (normalizedDistance * 0.4)
 
               gsap.set(card, {
                 x: x,
                 y: y,
                 rotationY: rotation,
                 scale: Math.max(scale, 0.7),
-                opacity: Math.max(opacity, 0.3),
-                zIndex: Math.round((1 - Math.abs(normalizedDistance)) * 100)
+                opacity: Math.max(opacity, 0.4),
+                zIndex: Math.round((1 - normalizedDistance) * 100)
               })
             })
           }
@@ -512,7 +519,7 @@ export default function Home() {
         const tl = gsap.timeline({
           scrollTrigger: {
             trigger: clientTrustRef.current,
-            start: "top top",
+            start: window.innerWidth < 1024 ? "top -15%" : "top top",
             end: "+=120%",
             scrub: 1,
             pin: true,
@@ -706,7 +713,7 @@ export default function Home() {
         const tl = gsap.timeline({
           scrollTrigger: {
             trigger: processSectionRef.current,
-            start: "top top",
+            start: window.innerWidth < 1024 ? "top 10%" : "top top",
             end: "+=60%",
             scrub: 1,
             pin: true,
@@ -1005,7 +1012,7 @@ export default function Home() {
         </section>
 
         {/* CLIENT TRUST SECTION - BLACK BG */}
-        <section ref={clientTrustRef} className="section-padding bg-light-gray relative overflow-hidden" style={{ minHeight: '120vh', alignContent: 'center' }}>
+        <section ref={clientTrustRef} className="section-padding bg-light-gray relative overflow-hidden" style={{ minHeight: '150vh' }}>
           <div
             ref={circleRevealRef}
             className="absolute inset-0 bg-black"
@@ -1013,13 +1020,13 @@ export default function Home() {
           >
             <div ref={clientContentRef} className="h-full flex items-center justify-center">
               <div className="container-custom text-center">
-                <div className="max-w-4xl mx-auto mb-16 mt-[-15%]">
+                <div className="max-w-4xl mx-auto mb-16" style={{ marginTop: '-30%' }}>
                   <h2 className="text-4xl md:text-5xl font-bold mb-2 text-white">
                     Trusted by Industry Leaders
                   </h2>
                 </div>
 
-                <div className="flex flex-wrap items-center justify-center gap-x-16 gap-y-12 max-w-5xl mx-auto">
+                <div className="flex flex-wrap items-center justify-center gap-x-16 gap-y-12 max-w-6xl mx-auto">
                   {/* Airtel */}
                   <div className="client-item flex flex-col items-center gap-3">
                     <div className="text-5xl md:text-6xl font-black bg-gradient-to-br from-red-500 to-red-700 bg-clip-text text-transparent">
@@ -1037,6 +1044,17 @@ export default function Home() {
                       EPACK PREFAB
                     </div>
                     <p className="text-sm text-gray-400">Premium Infrastructure Partner</p>
+                  </div>
+
+                  {/* Vertical divider */}
+                  <div className="client-item hidden md:block w-px h-16 bg-gray-600" />
+
+                  {/* Voltas */}
+                  <div className="client-item flex flex-col items-center gap-3">
+                    <div className="text-4xl md:text-5xl font-black bg-gradient-to-br from-blue-400 to-blue-600 bg-clip-text text-transparent">
+                      VOLTAS
+                    </div>
+                    <p className="text-sm text-gray-400">HVAC Solutions Partner</p>
                   </div>
                 </div>
               </div>
@@ -1065,21 +1083,21 @@ export default function Home() {
               className="absolute inset-0 bg-light-gray flex items-center justify-center"
               style={{ clipPath: 'none' }}
             >
-              <div className="container-custom w-full">
-                <div className="relative overflow-hidden">
+              <div className="w-full h-full flex items-center justify-center">
+                <div className="relative overflow-hidden w-full">
                   <div
                     ref={testimonialTrackRef}
-                    className="flex"
+                    className="flex items-center"
                     style={{ width: `${testimonials.length * 100}vw` }}
                   >
                     {testimonials.map((testimonial, index) => (
                       <div
                         key={index}
-                        className="testimonial-card flex-shrink-0 px-4"
-                        style={{ width: '100vw' }}
+                        className="testimonial-card flex-shrink-0 px-4 md:px-8 flex items-center justify-center"
+                        style={{ width: '100vw', height: '100%' }}
                       >
                         <div className="max-w-4xl mx-auto text-center">
-                          <p className="text-3xl md:text-4xl lg:text-5xl font-bold leading-tight mb-8">
+                          <p className="text-2xl md:text-3xl lg:text-5xl font-bold leading-tight mb-8 px-4">
                             "{testimonial.quote.split('.')[0]}.{' '}
                             <span className="text-green-600">{testimonial.quote.split('.')[1] ? testimonial.quote.split('.')[1] + '."' : '"'}</span>
                           </p>
@@ -1108,7 +1126,7 @@ export default function Home() {
             {/* Background large text "PROJECTS" */}
             <div
               ref={projectTitleRef}
-              className="relative flex flex-col w-full items-center mb-[-5%]"
+              className="relative flex flex-col w-full items-center mt-[10%] mb-[-5%] sm:block sm:w-auto sm:mt-0 sm:mb-0"
               style={{ mask: "linear-gradient(black, transparent)" }}
             >
               <svg
@@ -1118,7 +1136,7 @@ export default function Home() {
                 preserveAspectRatio="xMidYMid meet"
                 fill="none"
                 xmlns="http://www.w3.org/2000/svg"
-                className="relative mb-[-5%]"
+                className="relative mb-[-5%] md:mb-[-11%]"
               >
                 <defs>
                   <clipPath id="projects-clip">
@@ -1156,7 +1174,7 @@ export default function Home() {
                 {/* Airtel Project */}
                 <a
                   href="/case-studies"
-                  className="project-card group relative block aspect-[4/3] rounded-3xl overflow-hidden"
+                  className="project-card group relative block aspect-[5/6] md:aspect-[4/3] rounded-3xl overflow-hidden"
                 >
                   {/* Background image */}
                   <img
@@ -1171,10 +1189,10 @@ export default function Home() {
                                 transition-opacity duration-300 ease-[cubic-bezier(0.65,0.05,0.36,1)]"
                   >
                     <div className="transition-opacity duration-300 ease-[cubic-bezier(0.65,0.05,0.36,1)] group-hover:opacity-0">
-                      <h3 className="text-3xl font-bold mb-2">
+                      <h3 className="text-xl md:text-3xl font-bold mb-2">
                         Airtel CCTV Infrastructure
                       </h3>
-                      <p className="text-lg opacity-90 max-w-[28ch]">
+                      <p className="text-sm md:text-lg opacity-90 max-w-[28ch]">
                         157 sites secured across UP & Bihar with AI-enabled surveillance
                       </p>
                     </div>
@@ -1246,11 +1264,11 @@ export default function Home() {
         </section>
 
         {/* SECTION 7: PROCESS/HOW WE WORK */}
-        <section ref={processSectionRef} className="section-padding bg-light-gray relative overflow-hidden" style={{ minHeight: '150vh' }}>
+        <section ref={processSectionRef} className="section-padding bg-light-gray relative overflow-hidden min-h-[160vh] md:min-h-[140vh]">
           <div className="container-custom">
             <div className='mb-28'>
               <h1 ref={processTitleRef} className="headline-display text-balance">
-                <span className="process-title-text">
+                <span className="process-title-text text-5xl md:text-6xl lg:text-7xl xl:text-7xl mt-[20%]">
                   We keep the process flexible<br />
                   <span className="opacity-40">and the results extraordinary.</span>
                 </span>

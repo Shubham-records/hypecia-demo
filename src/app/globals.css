@@ -134,7 +134,7 @@
   }
 
   body {
-    @apply bg-white text-black antialiased;
+    @apply bg-light-gray text-black antialiased;
     font-family: 'Manrope', -apple-system, BlinkMacSystemFont, sans-serif;
     overflow-x: hidden;
     /* position: relative; */
@@ -326,8 +326,15 @@
     font-weight: 500;
     line-height: 1;
     font-family: PP Neue Montreal, sans-serif;
-    font-size: 4.2rem;
+    font-size: 2rem; /* Mobile: smaller size */
     letter-spacing: -.015em;
+  }
+  
+  /* Desktop: restore original size */
+  @media (min-width: 1024px) {
+    .headline-display {
+      font-size: 4.2rem;
+    }
   }
 
   .text-gradient {
