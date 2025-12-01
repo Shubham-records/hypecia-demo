@@ -25,6 +25,8 @@ export default function ServicesPage() {
   const service5Ref = useRef<HTMLDivElement>(null)
   const service6Ref = useRef<HTMLDivElement>(null)
   const service7Ref = useRef<HTMLDivElement>(null)
+  const service8Ref = useRef<HTMLDivElement>(null)
+  const service9Ref = useRef<HTMLDivElement>(null)
   
   // CTA refs
   const ctaSectionRef = useRef<HTMLDivElement>(null)
@@ -732,24 +734,224 @@ export default function ServicesPage() {
           })}
         }
 
-        // ===== CTA SECTION ANIMATION =====
-        if (ctaSectionRef.current) {
-          const ctaTitle = ctaSectionRef.current.querySelector('h2')
-          const ctaDesc = ctaSectionRef.current.querySelector('p')
-          const ctaButton = ctaSectionRef.current.querySelector('a')
+        // ===== SERVICE 8: ELV SYSTEMS (Image Left, Text Right) =====
+        if (service8Ref.current) {
+          const image = service8Ref.current.querySelector('.service-image')
+          const textContent = service8Ref.current.querySelector('.service-text')
+          const title = textContent?.querySelector('h2')
+          const description = textContent?.querySelector('.service-description')
+          const listItems = textContent?.querySelectorAll('li')
+          const button = textContent?.querySelector('a')
 
-          gsap.from([ctaTitle, ctaDesc, ctaButton], {
+          gsap.from(image, {
             opacity: 0,
-            y: 60,
-            stagger: 0.2,
-            duration: 0.8,
+            x: -100,
+            y: 100,
+            duration: 1.2,
             ease: 'power3.out',
             scrollTrigger: {
-              trigger: ctaSectionRef.current,
+              trigger: service8Ref.current,
               start: 'top 70%',
               toggleActions: 'play none none reverse'
             }
           })
+
+          gsap.from(textContent, {
+            opacity: 0,
+            x: 100,
+            y: 100,
+            duration: 1.2,
+            ease: 'power3.out',
+            scrollTrigger: {
+              trigger: service8Ref.current,
+              start: 'top 70%',
+              toggleActions: 'play none none reverse'
+            }
+          })
+
+          if (title) {
+            const titleSplit = new SplitText(title, { type: 'chars' })
+            gsap.from(titleSplit.chars, {
+              opacity: 0,
+              y: 50,
+              stagger: 0.03,
+              duration: 0.8,
+              ease: 'back.out(1.7)',
+              scrollTrigger: {
+                trigger: title,
+                start: 'top 75%',
+                toggleActions: 'play none none reverse'
+              }
+            })
+          }
+
+          if (description) {
+            const descSplit = new SplitText(description, { type: 'words' })
+            gsap.from(descSplit.words, {
+              opacity: 0,
+              y: 30,
+              stagger: 0.02,
+              duration: 0.6,
+              ease: 'power2.out',
+              scrollTrigger: {
+                trigger: description,
+                start: 'top 80%',
+                toggleActions: 'play none none reverse'
+              }
+            })
+          }
+
+          if (listItems && listItems.length > 0) {
+            gsap.from(listItems, {
+              opacity: 0,
+              y: 30,
+              stagger: 0.1,
+              duration: 0.6,
+              ease: 'power2.out',
+              scrollTrigger: {
+                trigger: listItems,
+                start: 'top 85%',
+                toggleActions: 'play none none reverse'
+              }
+            })
+          }
+
+          if (button) {
+            gsap.from(button, {
+              opacity: 0,
+              y: 30,
+              duration: 0.6,
+              ease: 'back.out(1.7)',
+              scrollTrigger: {
+                trigger: button,
+                start: 'top 90%',
+                toggleActions: 'play none none reverse'
+              }
+            })
+          }
+        }
+
+        // ===== SERVICE 9: ACCESS CONTROL (Image Right, Text Left) =====
+        if (service9Ref.current) {
+          const image = service9Ref.current.querySelector('.service-image')
+          const textContent = service9Ref.current.querySelector('.service-text')
+          const title = textContent?.querySelector('h2')
+          const description = textContent?.querySelector('.service-description')
+          const listItems = textContent?.querySelectorAll('li')
+          const button = textContent?.querySelector('a')
+
+          gsap.from(image, {
+            opacity: 0,
+            x: 100,
+            y: 100,
+            duration: 1.2,
+            ease: 'power3.out',
+            scrollTrigger: {
+              trigger: service9Ref.current,
+              start: 'top 70%',
+              toggleActions: 'play none none reverse'
+            }
+          })
+
+          gsap.from(textContent, {
+            opacity: 0,
+            x: -100,
+            y: 100,
+            duration: 1.2,
+            ease: 'power3.out',
+            scrollTrigger: {
+              trigger: service9Ref.current,
+              start: 'top 70%',
+              toggleActions: 'play none none reverse'
+            }
+          })
+
+          if (title) {
+            const titleSplit = new SplitText(title, { type: 'chars' })
+            gsap.from(titleSplit.chars, {
+              opacity: 0,
+              y: 50,
+              stagger: 0.03,
+              duration: 0.8,
+              ease: 'back.out(1.7)',
+              scrollTrigger: {
+                trigger: title,
+                start: 'top 75%',
+                toggleActions: 'play none none reverse'
+              }
+            })
+          }
+
+          if (description) {
+            const descSplit = new SplitText(description, { type: 'words' })
+            gsap.from(descSplit.words, {
+              opacity: 0,
+              y: 30,
+              stagger: 0.02,
+              duration: 0.6,
+              ease: 'power2.out',
+              scrollTrigger: {
+                trigger: description,
+                start: 'top 80%',
+                toggleActions: 'play none none reverse'
+              }
+            })
+          }
+
+          if (listItems && listItems.length > 0) {
+            gsap.from(listItems, {
+              opacity: 0,
+              y: 30,
+              stagger: 0.1,
+              duration: 0.6,
+              ease: 'power2.out',
+              scrollTrigger: {
+                trigger: listItems,
+                start: 'top 85%',
+                toggleActions: 'play none none reverse'
+              }
+            })
+          }
+
+          if (button) {
+            gsap.from(button, {
+              opacity: 0,
+              y: 30,
+              duration: 0.6,
+              ease: 'back.out(1.7)',
+              scrollTrigger: {
+                trigger: button,
+                start: 'top 90%',
+                toggleActions: 'play none none reverse'
+              }
+            })
+          }
+        }
+
+        // ===== CTA SECTION ANIMATION =====
+        if (ctaSectionRef.current) {
+          const ctaTitle = ctaSectionRef.current.querySelector('h2')
+          const ctaDesc = ctaSectionRef.current.querySelector('p')
+          const ctaButton = ctaSectionRef.current.querySelector('.button_primary') || ctaSectionRef.current.querySelector('a')
+
+          gsap.fromTo([ctaTitle, ctaDesc, ctaButton], 
+            {
+              opacity: 0,
+              y: 60
+            },
+            {
+              opacity: 1,
+              y: 0,
+              stagger: 0.2,
+              duration: 0.8,
+              ease: 'power3.out',
+              scrollTrigger: {
+                trigger: ctaSectionRef.current,
+                start: 'top 70%',
+                toggleActions: 'play none none reverse'
+              }
+            }
+          )
         }
 
         // ===== FOOTER SECTION ANIMATION =====
@@ -1013,8 +1215,13 @@ export default function ServicesPage() {
                   Get Started <ArrowRight size={18} />
                 </Link>
               </div>
-              <div className="service-image aspect-square bg-gradient-to-br from-orange-400 to-orange-600 rounded-3xl overflow-hidden flex items-center justify-center">
-                <Wrench className="text-white" size={180} />
+              <div className="service-image aspect-square bg-gradient-to-br from-orange-400 to-orange-600 rounded-3xl overflow-hidden relative">
+              <Image
+                  src="/Gemini_Generated_Image_swp1m0swp1m0swp1.png"
+                  alt="Civil & Earthing Works"
+                  fill
+                  className="object-cover"
+                />
               </div>
             </div>
   
@@ -1100,8 +1307,105 @@ export default function ServicesPage() {
                   Get Started <ArrowRight size={18} />
                 </Link>
               </div>
-              <div className="service-image aspect-square bg-gradient-to-br from-yellow-400 to-yellow-600 rounded-3xl overflow-hidden flex items-center justify-center">
-                <Users className="text-white" size={180} />
+              <div className="service-image aspect-square bg-gradient-to-br from-yellow-400 to-yellow-600 rounded-3xl overflow-hidden relative">
+              <Image
+                  src="/company-managers-visiting-their-employees-factory-happy-african-american-businesswoman-is-shaking-hands-with-one-worker.jpg"
+                  alt="Civil & Earthing Works"
+                  fill
+                  className="object-cover"
+                />
+              </div>
+            </div>
+
+            {/* ELV Systems */}
+            <div ref={service8Ref} className="grid lg:grid-cols-2 gap-16 items-center">
+              <div className="service-image order-2 lg:order-1 aspect-square bg-gradient-to-br from-cyan-400 to-cyan-600 rounded-3xl overflow-hidden relative">
+              <Image
+                  src="/man-florist-working-green-house.jpg"
+                  alt="Civil & Earthing Works"
+                  fill
+                  className="object-cover"
+                />
+              </div>
+              <div className="service-text order-1 lg:order-2">
+                <div className="w-16 h-16 bg-cyan-100 rounded-full flex items-center justify-center mb-6">
+                  <Network className="text-cyan-600" size={32} />
+                </div>
+                <h2 className="text-display_v2 mb-6">ELV Systems</h2>
+                <p className="service-description text-xl text-gray-600 mb-8">
+                  Extra low voltage solutions including structured cabling, fire alarms, PA systems, and BMS integration for intelligent building management.
+                </p>
+                <ul className="space-y-4 mb-8">
+                  <li className="flex items-start gap-3">
+                    <CheckCircle className="text-cyan-500 flex-shrink-0 mt-1" size={20} />
+                    <span className="text-gray-700">Structured Cabling Systems</span>
+                  </li>
+                  <li className="flex items-start gap-3">
+                    <CheckCircle className="text-cyan-500 flex-shrink-0 mt-1" size={20} />
+                    <span className="text-gray-700">Fire Alarm & Detection Systems</span>
+                  </li>
+                  <li className="flex items-start gap-3">
+                    <CheckCircle className="text-cyan-500 flex-shrink-0 mt-1" size={20} />
+                    <span className="text-gray-700">Public Address (PA) Systems</span>
+                  </li>
+                  <li className="flex items-start gap-3">
+                    <CheckCircle className="text-cyan-500 flex-shrink-0 mt-1" size={20} />
+                    <span className="text-gray-700">Building Management System (BMS) Integration</span>
+                  </li>
+                  <li className="flex items-start gap-3">
+                    <CheckCircle className="text-cyan-500 flex-shrink-0 mt-1" size={20} />
+                    <span className="text-gray-700">Low Voltage Infrastructure</span>
+                  </li>
+                </ul>
+                <Link href="/contact" className="bg-cyan-600 book-call-btn text-white px-6 py-3 rounded-full font-semibold hover:bg-cyan-700 transition-all inline-flex items-center gap-2">
+                  Get Started <ArrowRight size={18} />
+                </Link>
+              </div>
+            </div>
+
+            {/* Access Control Systems */}
+            <div ref={service9Ref} className="grid lg:grid-cols-2 gap-16 items-center">
+              <div className="service-text">
+                <div className="w-16 h-16 bg-indigo-100 rounded-full flex items-center justify-center mb-6">
+                  <Shield className="text-indigo-600" size={32} />
+                </div>
+                <h2 className="text-display_v2 mb-6">Access Control Systems</h2>
+                <p className="service-description text-xl text-gray-600 mb-8">
+                  Biometric, RFID, and integrated access management solutions for secure facility operations with real-time monitoring and reporting.
+                </p>
+                <ul className="space-y-4 mb-8">
+                  <li className="flex items-start gap-3">
+                    <CheckCircle className="text-indigo-500 flex-shrink-0 mt-1" size={20} />
+                    <span className="text-gray-700">Biometric Authentication Systems</span>
+                  </li>
+                  <li className="flex items-start gap-3">
+                    <CheckCircle className="text-indigo-500 flex-shrink-0 mt-1" size={20} />
+                    <span className="text-gray-700">RFID Access Control</span>
+                  </li>
+                  <li className="flex items-start gap-3">
+                    <CheckCircle className="text-indigo-500 flex-shrink-0 mt-1" size={20} />
+                    <span className="text-gray-700">Integrated Access Management</span>
+                  </li>
+                  <li className="flex items-start gap-3">
+                    <CheckCircle className="text-indigo-500 flex-shrink-0 mt-1" size={20} />
+                    <span className="text-gray-700">Real-Time Monitoring & Alerts</span>
+                  </li>
+                  <li className="flex items-start gap-3">
+                    <CheckCircle className="text-indigo-500 flex-shrink-0 mt-1" size={20} />
+                    <span className="text-gray-700">Multi-Site Access Control</span>
+                  </li>
+                </ul>
+                <Link href="/contact" className="bg-indigo-600 book-call-btn text-white px-6 py-3 rounded-full font-semibold hover:bg-indigo-700 transition-all inline-flex items-center gap-2">
+                  Get Started <ArrowRight size={18} />
+                </Link>
+              </div>
+              <div className="service-image aspect-square bg-gradient-to-br from-indigo-400 to-indigo-600 rounded-3xl overflow-hidden relative">
+              <Image
+                  src="/biometric.jpg"
+                  alt="Civil & Earthing Works"
+                  fill
+                  className="object-cover"
+                />
               </div>
             </div>
   
@@ -1109,7 +1413,7 @@ export default function ServicesPage() {
         </section>
   
         {/* CTA Section */}
-        <section ref={ctaSectionRef} className="section-padding bg-black text-white h-[90vh] flex items-center justify-center">
+        <section ref={ctaSectionRef} className="section-padding bg-black text-white min-h-[90vh] flex items-center justify-center">
           <div className="container-custom text-center">
             <h2 className="text-5xl md:text-6xl font-bold mb-6">
               Ready to get started?
@@ -1117,7 +1421,7 @@ export default function ServicesPage() {
             <p className="text-xl text-gray-400 mb-8 max-w-2xl mx-auto">
               Let's discuss how our solutions can transform your business operations.
             </p>
-            <a href="/contact" className="bg-white contact-btn cta-section text-black px-8 py-4 rounded-full text-lg font-semibold hover:bg-blue-600 hover:text-white transition-all inline-flex items-center gap-2">
+            <a href="/contact" className="bg-white button_primary contact-btn cta-section text-black px-8 py-4 rounded-full text-lg font-semibold hover:bg-blue-600 hover:text-white transition-all inline-flex items-center gap-2">
               Contact Us <ArrowRight size={20} />
             </a>
           </div>
