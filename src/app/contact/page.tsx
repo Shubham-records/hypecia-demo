@@ -21,25 +21,45 @@ export default function ContactPage() {
   })
   const [isSubmitting, setIsSubmitting] = useState(false)
   const [submitted, setSubmitted] = useState(false)
+  const [error, setError] = useState('')
 
   // Hero refs
   const heroTitleRef = useRef<HTMLHeadingElement>(null)
   const heroDescRef = useRef<HTMLParagraphElement>(null)
-  
+
   // Contact section refs
   const contactSectionRef = useRef<HTMLDivElement>(null)
-  
+
   // CTA refs
   const ctaSectionRef = useRef<HTMLDivElement>(null)
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
     setIsSubmitting(true)
-    // Simulate form submission
-    await new Promise(resolve => setTimeout(resolve, 1500))
-    setIsSubmitting(false)
-    setSubmitted(true)
-    setFormData({ name: '', email: '', company: '', phone: '', service: '', message: '' })
+    setError('')
+
+    try {
+      const response = await fetch('/api/send-email', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(formData),
+      })
+
+      const data = await response.json()
+
+      if (!response.ok) {
+        throw new Error(data.error || 'Failed to send email')
+      }
+
+      setSubmitted(true)
+      setFormData({ name: '', email: '', company: '', phone: '', service: '', message: '' })
+    } catch (err) {
+      setError(err instanceof Error ? err.message : 'Something went wrong. Please try again.')
+    } finally {
+      setIsSubmitting(false)
+    }
   }
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
@@ -49,12 +69,12 @@ export default function ContactPage() {
   useEffect(() => {
     const timer = setTimeout(() => {
       const ctx = gsap.context(() => {
-        
+
         // ===== HERO SECTION ANIMATION =====
         if (heroTitleRef.current) {
           const titleSplit = new SplitText(heroTitleRef.current, { type: 'words,chars' })
           gsap.set(heroTitleRef.current, { opacity: 1 })
-          
+
           gsap.from(titleSplit.chars, {
             opacity: 0,
             y: 100,
@@ -73,7 +93,7 @@ export default function ContactPage() {
         if (heroDescRef.current) {
           const descSplit = new SplitText(heroDescRef.current, { type: 'words' })
           gsap.set(heroDescRef.current, { opacity: 1 })
-          
+
           gsap.from(descSplit.words, {
             opacity: 0,
             y: 50,
@@ -92,7 +112,7 @@ export default function ContactPage() {
         if (contactSectionRef.current) {
           const leftColumn = contactSectionRef.current.querySelector('.contact-info')
           const rightColumn = contactSectionRef.current.querySelector('.contact-form')
-          
+
           // Left column elements
           if (leftColumn) {
             const title = leftColumn.querySelector('.contact-title')
@@ -294,7 +314,7 @@ export default function ContactPage() {
 
       return () => ctx.revert()
     }, 100)
-    
+
     return () => clearTimeout(timer)
   }, [])
 
@@ -302,7 +322,7 @@ export default function ContactPage() {
     <>
       <div className="min-h-screen">
         <Navigation />
-        
+
         {/* Hero Section */}
         <section className="min-h-[70vh] flex items-center justify-center relative overflow-hidden pt-20">
           <div className="absolute inset-0 bg-gradient-to-br from-blue-50 via-white to-green-50 opacity-60" />
@@ -320,7 +340,7 @@ export default function ContactPage() {
         <section ref={contactSectionRef} className="section-padding">
           <div className="container-custom">
             <div className="grid lg:grid-cols-2 gap-16">
-              
+
               {/* Contact Info */}
               <div className="contact-info">
                 <h2 className="contact-title text-4xl md:text-5xl font-bold mb-6">Get in Touch</h2>
@@ -398,7 +418,13 @@ export default function ContactPage() {
                   </div>
                 ) : (
                   <form onSubmit={handleSubmit} className="space-y-6">
-                    <div className="form-field">
+                                        {error && (
+                      <div className="bg-red-50 border-2 border-red-200 text-red-700 px-4 py-3 rounded-xl">
+                        <p className="font-semibold">Error</p>
+                        <p className="text-sm">{error}</p>
+                      </div>
+                    )}
+                                        <div className="form-field">
                       <label htmlFor="name" className="block text-sm font-semibold mb-2">
                         Full Name *
                       </label>
