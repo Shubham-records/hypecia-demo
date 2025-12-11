@@ -1230,7 +1230,7 @@ export default function ServicesPage() {
               <div className="service-image order-2 lg:order-1 aspect-square bg-gradient-to-br from-gray-400 to-gray-600 rounded-3xl overflow-hidden relative">
                 <Image
                   src="/Earthing Solutions.png"
-                  alt="Civil & Earthing Works"
+                  alt="Earthing Solutions"
                   fill
                   className="object-cover"
                 />
@@ -1310,7 +1310,7 @@ export default function ServicesPage() {
               <div className="service-image aspect-square bg-gradient-to-br from-yellow-400 to-yellow-600 rounded-3xl overflow-hidden relative">
               <Image
                   src="/company-managers-visiting-their-employees-factory-happy-african-american-businesswoman-is-shaking-hands-with-one-worker.jpg"
-                  alt="Civil & Earthing Works"
+                  alt="Manpower Services"
                   fill
                   className="object-cover"
                 />
@@ -1322,7 +1322,7 @@ export default function ServicesPage() {
               <div className="service-image order-2 lg:order-1 aspect-square bg-gradient-to-br from-cyan-400 to-cyan-600 rounded-3xl overflow-hidden relative">
               <Image
                   src="/man-florist-working-green-house.jpg"
-                  alt="Civil & Earthing Works"
+                  alt="ELV Systems"
                   fill
                   className="object-cover"
                 />
@@ -1402,7 +1402,7 @@ export default function ServicesPage() {
               <div className="service-image aspect-square bg-gradient-to-br from-indigo-400 to-indigo-600 rounded-3xl overflow-hidden relative">
               <Image
                   src="/biometric.jpg"
-                  alt="Civil & Earthing Works"
+                  alt="Access Control Systems"
                   fill
                   className="object-cover"
                 />
