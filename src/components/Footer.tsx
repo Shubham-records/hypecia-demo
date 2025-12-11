@@ -56,14 +56,18 @@ export default function Footer({ animate = false }: FooterProps) {
             <ul className="space-y-3">
               <li className="flex items-center gap-2 text-gray-400 text-sm">
                 <Mail size={16} />
-                <a href="mailto:Hypeciaconnectservices@gmail.com" className="hover:text-white transition-colors">
-                  Hypeciaconnectservices@gmail.com
+                <a href="mailto:info@hypeciaconnect.com" className="hover:text-white transition-colors">
+                  info@hypeciaconnect.com
                 </a>
               </li>
               <li className="flex items-center gap-2 text-gray-400 text-sm">
                 <Phone size={16} />
                 <a href="tel:+919836012349" className="hover:text-white transition-colors">
                   +91-9836012349
+                </a>
+                <br />
+                <a href="tel:+919870297922" className="hover:text-white transition-colors">
+                  +91-9870297922
                 </a>
               </li>
             </ul>

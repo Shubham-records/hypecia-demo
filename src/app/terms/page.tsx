@@ -216,8 +216,8 @@ export default function TermsPage() {
                 </p>
                 <div className="bg-light-gray p-6 rounded-2xl">
                   <p className="font-bold mb-2">Hypecia Connect Services Pvt Ltd</p>
-                  <p className="text-gray-600">Email: Hypeciaconnectservices@gmail.com</p>
-                  <p className="text-gray-600">Phone: +91-9836012349</p>
+                  <p className="text-gray-600">Email: info@hypeciaconnect.com</p>
+                  <p className="text-gray-600">Phone: +91-9836012349, +91-9870297922</p>
                 </div>
               </div>
 

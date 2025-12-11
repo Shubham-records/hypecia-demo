@@ -355,8 +355,8 @@ export default function ContactPage() {
                     </div>
                     <div className="contact-content">
                       <h3 className="font-bold text-lg mb-1">Email Us</h3>
-                      <a href="mailto:Hypeciaconnectservices@gmail.com" className="text-gray-600 hover:text-blue-600 transition-colors">
-                        Hypeciaconnectservices@gmail.com
+                      <a href="mailto:info@hypeciaconnect.com" className="text-gray-600 hover:text-blue-600 transition-colors">
+                        info@hypeciaconnect.com
                       </a>
                     </div>
                   </div>
@@ -369,6 +369,10 @@ export default function ContactPage() {
                       <h3 className="font-bold text-lg mb-1">Call Us</h3>
                       <a href="tel:+919836012349" className="text-gray-600 hover:text-green-600 transition-colors">
                         +91-9836012349
+                      </a>
+                      <br />
+                      <a href="tel:+919870297922" className="text-gray-600 hover:text-green-600 transition-colors">
+                        +91-9870297922
                       </a>
                     </div>
                   </div>
@@ -549,8 +553,8 @@ export default function ContactPage() {
             <p className="text-xl text-gray-400 mb-8 max-w-2xl mx-auto">
               Schedule a 30-minute consultation to discuss your project requirements.
             </p>
-            <a href="tel:+919836012349" className="bg-white contact-btn text-black px-8 py-4 rounded-full text-lg font-semibold hover:bg-green-600 hover:text-white transition-all inline-block">
-              Call Now: +91-9836012349
+            <a href="tel:+919870297922" className="bg-white contact-btn text-black px-8 py-4 rounded-full text-lg font-semibold hover:bg-green-600 hover:text-white transition-all inline-block">
+              Call Now: +91-9870297922
             </a>
           </div>
         </section>

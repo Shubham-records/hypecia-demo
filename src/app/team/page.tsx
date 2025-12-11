@@ -392,7 +392,7 @@ export default function TeamPage() {
                 <p className="team-role text-green-600 font-semibold mb-2">Technical Director</p>
                 <p className="team-bio text-gray-600 mb-4">Leading technical innovation in green energy solutions and industrial automation. 10+ years driving sustainable infrastructure transformation with expertise in solar integration and smart grid systems.</p>
                 <div className="team-socials flex gap-3">
-                  <a href="mailto:Hypeciaconnectservices@gmail.com" className="w-10 h-10 bg-gray-100 rounded-full flex items-center justify-center hover:bg-green-600 hover:text-white transition-all">
+                  <a href="mailto:info@hypeciaconnect.com" className="w-10 h-10 bg-gray-100 rounded-full flex items-center justify-center hover:bg-green-600 hover:text-white transition-all">
                     <Mail size={18} />
                   </a>
                   <a href="#" className="w-10 h-10 bg-gray-100 rounded-full flex items-center justify-center hover:bg-green-600 hover:text-white transition-all">
@@ -412,7 +412,7 @@ export default function TeamPage() {
                 <p className="team-role text-purple-600 font-semibold mb-2">Chief Operations Officer</p>
                 <p className="team-bio text-gray-600 mb-4">Ensuring flawless execution and delivery across multiple sites with precision timeline management. Overseeing 24/7 operations, quality control, and client satisfaction across all deployments.</p>
                 <div className="team-socials flex gap-3">
-                  <a href="mailto:Hypeciaconnectservices@gmail.com" className="w-10 h-10 bg-gray-100 rounded-full flex items-center justify-center hover:bg-purple-600 hover:text-white transition-all">
+                  <a href="mailto:info@hypeciaconnect.com" className="w-10 h-10 bg-gray-100 rounded-full flex items-center justify-center hover:bg-purple-600 hover:text-white transition-all">
                     <Mail size={18} />
                   </a>
                   <a href="#" className="w-10 h-10 bg-gray-100 rounded-full flex items-center justify-center hover:bg-purple-600 hover:text-white transition-all">
