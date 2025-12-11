@@ -1043,7 +1043,7 @@ export default function Home() {
                   {/* Airtel */}
                   <div className="client-item flex flex-col items-center gap-4">
                     <img
-                      src="/Airtel-Logo-PNG-High-Quality-Image.png"
+                      src="/Airtel-Logo-PNG-High-Quality-Image.webp"
                       alt="Airtel"
                       className="h-16 md:h-20 w-auto object-contain"
                     />
@@ -1069,7 +1069,7 @@ export default function Home() {
                   {/* Voltas */}
                   <div className="client-item flex flex-col items-center gap-4 col-span-2 md:col-span-1">
                     <img
-                      src="/voltas.png"
+                      src="/voltas.webp"
                       alt="Voltas"
                       className="h-16 md:h-20 w-auto object-contain"
                     />
@@ -1197,7 +1197,7 @@ export default function Home() {
                 >
                   {/* Background image */}
                   <img
-                    src="/airtel.jpg"
+                    src="/airtel.webp"
                     alt="Airtel CCTV Infrastructure"
                     className="absolute inset-0 w-full h-full object-cover transition-transform duration-700 ease-[cubic-bezier(0.77,0,0.18,1)] group-hover:scale-105"
                   />

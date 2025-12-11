@@ -1045,8 +1045,9 @@ export default function ServicesPage() {
               </div>
               <div className="service-image aspect-square bg-gradient-to-br from-green-400 to-green-600 rounded-3xl overflow-hidden relative">
                 <Image
-                  src="/Green Energy Solutions.jpg"
+                  src="/Green Energy Solutions.webp"
                   alt="Green Energy Icon"
+                  quality={75}
                   fill
                   className="object-cover"
                 />
@@ -1057,8 +1058,9 @@ export default function ServicesPage() {
             <div ref={service2Ref} className="grid lg:grid-cols-2 gap-16 items-center">
               <div className="service-image order-2 lg:order-1 aspect-square bg-gradient-to-br from-blue-400 to-blue-600 rounded-3xl overflow-hidden relative">
                 <Image
-                  src="/Industrial Automation.jpg"
+                  src="/Industrial Automation.webp"
                   alt="Industrial Automation"
+                  quality={75}
                   fill
                   className="object-cover"
                 />
@@ -1129,8 +1131,9 @@ export default function ServicesPage() {
               </div>
               <div className="service-image aspect-square bg-gradient-to-br from-purple-400 to-purple-600 rounded-3xl overflow-hidden relative">
                 <Image
-                  src="/Telecom_IT_Infrastructure.png"
+                  src="/Telecom_IT_Infrastructure.webp"
                   alt="Telecom & IT Infrastructure"
+                  quality={75}
                   fill
                   className="object-cover"
                 />
@@ -1141,8 +1144,9 @@ export default function ServicesPage() {
             <div ref={service4Ref} className="grid lg:grid-cols-2 gap-16 items-center">
               <div className="service-image order-2 lg:order-1 aspect-square bg-gradient-to-br from-red-400 to-red-600 rounded-3xl overflow-hidden relative">
                 <Image
-                  src="/Security_Surveillance.png"
+                  src="/Security_Surveillance.webp"
                   alt="Security & Surveillance"
+                  quality={75}
                   fill
                   className="object-cover"
                 />
@@ -1217,8 +1221,9 @@ export default function ServicesPage() {
               </div>
               <div className="service-image aspect-square bg-gradient-to-br from-orange-400 to-orange-600 rounded-3xl overflow-hidden relative">
               <Image
-                  src="/Gemini_Generated_Image_swp1m0swp1m0swp1.png"
+                  src="/Gemini_Generated_Image_swp1m0swp1m0swp1.webp"
                   alt="Civil & Earthing Works"
+                  quality={75}
                   fill
                   className="object-cover"
                 />
@@ -1229,8 +1234,9 @@ export default function ServicesPage() {
             <div ref={service6Ref} className="grid lg:grid-cols-2 gap-16 items-center">
               <div className="service-image order-2 lg:order-1 aspect-square bg-gradient-to-br from-gray-400 to-gray-600 rounded-3xl overflow-hidden relative">
                 <Image
-                  src="/Earthing Solutions.png"
+                  src="/Earthing Solutions.webp"
                   alt="Earthing Solutions"
+                  quality={75}
                   fill
                   className="object-cover"
                 />
@@ -1309,8 +1315,9 @@ export default function ServicesPage() {
               </div>
               <div className="service-image aspect-square bg-gradient-to-br from-yellow-400 to-yellow-600 rounded-3xl overflow-hidden relative">
               <Image
-                  src="/company-managers-visiting-their-employees-factory-happy-african-american-businesswoman-is-shaking-hands-with-one-worker.jpg"
+                  src="/company-managers-visiting-their-employees-factory-happy-african-american-businesswoman-is-shaking-hands-with-one-worker.webp"
                   alt="Manpower Services"
+                  quality={75}
                   fill
                   className="object-cover"
                 />
@@ -1321,8 +1328,9 @@ export default function ServicesPage() {
             <div ref={service8Ref} className="grid lg:grid-cols-2 gap-16 items-center">
               <div className="service-image order-2 lg:order-1 aspect-square bg-gradient-to-br from-cyan-400 to-cyan-600 rounded-3xl overflow-hidden relative">
               <Image
-                  src="/man-florist-working-green-house.jpg"
+                  src="/man-florist-working-green-house.webp"
                   alt="ELV Systems"
+                  quality={75}
                   fill
                   className="object-cover"
                 />
@@ -1401,7 +1409,8 @@ export default function ServicesPage() {
               </div>
               <div className="service-image aspect-square bg-gradient-to-br from-indigo-400 to-indigo-600 rounded-3xl overflow-hidden relative">
               <Image
-                  src="/biometric.jpg"
+                  src="/biometric.webp"
+                  quality={75}
                   alt="Access Control Systems"
                   fill
                   className="object-cover"
