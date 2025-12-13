@@ -68,6 +68,8 @@
         "framer-motion": "^12.23.24",
         "gsap": "^3.13.0",
         "input-otp": "^1.4.2",
+        "isomorphic-dompurify": "^2.34.0",
+        "lru-cache": "^11.2.4",
         "lucide-react": "^0.552.0",
         "mini-svg-data-uri": "^1.4.4",
         "motion": "^12.23.24",

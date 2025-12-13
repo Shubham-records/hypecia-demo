@@ -2,7 +2,7 @@
 
 import Navigation from '@/components/Navigation'
 import Footer from '@/components/Footer'
-import { Mail, Phone, MapPin, Send } from 'lucide-react'
+import { Mail, Phone, MapPin, Send, AlertCircle } from 'lucide-react'
 import { useState, useEffect, useRef } from 'react'
 import { gsap } from 'gsap'
 import { ScrollTrigger } from 'gsap/ScrollTrigger'
@@ -17,11 +17,13 @@ export default function ContactPage() {
     company: '',
     phone: '',
     service: '',
-    message: ''
+    message: '',
+    website: ''
   })
   const [isSubmitting, setIsSubmitting] = useState(false)
   const [submitted, setSubmitted] = useState(false)
   const [error, setError] = useState('')
+  const [validationErrors, setValidationErrors] = useState<string[]>([])
 
   // Hero refs
   const heroTitleRef = useRef<HTMLHeadingElement>(null)
@@ -33,10 +35,98 @@ export default function ContactPage() {
   // CTA refs
   const ctaSectionRef = useRef<HTMLDivElement>(null)
 
+  // Client-side validation function
+  const validateForm = () => {
+    const errors: string[] = []
+    
+    // Name validation
+    if (formData.name.trim().length < 2 || formData.name.trim().length > 100) {
+      errors.push('Name must be between 2 and 100 characters')
+    }
+    if (!/^[a-zA-Z\s\-']+$/.test(formData.name.trim())) {
+      errors.push('Name can only contain letters, spaces, hyphens, and apostrophes')
+    }
+    
+    // Email validation
+    if (!/^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/.test(formData.email.trim())) {
+      errors.push('Please enter a valid email address')
+    }
+    
+    // Phone validation (if provided)
+    if (formData.phone && !/^[\d\s\+\-\(\)]{10,20}$/.test(formData.phone.trim())) {
+      errors.push('Please enter a valid phone number')
+    }
+    
+    // Service validation
+    if (!formData.service) {
+      errors.push('Please select a service')
+    }
+    
+    // Message validation
+    if (formData.message.trim().length < 10) {
+      errors.push('Message must be at least 10 characters')
+    }
+    if (formData.message.trim().length > 2000) {
+      errors.push('Message must not exceed 2000 characters')
+    }
+    
+    // Check for suspicious patterns
+    const suspiciousPatterns = [
+      /<script/i,
+      /javascript:/i,
+      /on\w+\s*=/i,
+      /<iframe/i,
+      /\bselect\b.*\bfrom\b/i,
+      /\bunion\b.*\bselect\b/i,
+      /\bdrop\b.*\btable\b/i,
+    ]
+    
+    const allText = `${formData.name} ${formData.email} ${formData.message}`
+    for (const pattern of suspiciousPatterns) {
+      if (pattern.test(allText)) {
+        errors.push('Invalid characters detected in your input')
+        break
+      }
+    }
+    
+    return errors
+  }
+
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
-    setIsSubmitting(true)
+    
+    // Check honeypot - if filled, it's a bot
+    if (formData.website) {
+      console.log('Bot detected')
+      // Show success to bot but don't actually submit
+      setSubmitted(true)
+      return
+    }
+    
+    // Clear previous errors
     setError('')
+    setValidationErrors([])
+    
+    // Client-side validation
+    const errors = validateForm()
+    if (errors.length > 0) {
+      setValidationErrors(errors)
+      return
+    }
+    
+    // Check rate limiting on client side (basic protection)
+    if (typeof window !== 'undefined') {
+      const lastSubmit = localStorage.getItem('lastContactSubmit')
+      if (lastSubmit) {
+        const timeSinceLastSubmit = Date.now() - parseInt(lastSubmit)
+        if (timeSinceLastSubmit < 60000) { // 1 minute cooldown
+          setError('Please wait a moment before submitting again')
+          return
+        }
+      }
+    }
+    
+    setIsSubmitting(true)
 
     try {
       const response = await fetch('/api/send-email', {
@@ -44,17 +134,40 @@ export default function ContactPage() {
         headers: {
           'Content-Type': 'application/json',
         },
-        body: JSON.stringify(formData),
+        body: JSON.stringify({
+          name: formData.name.trim(),
+          email: formData.email.trim().toLowerCase(),
+          company: formData.company.trim(),
+          phone: formData.phone.trim(),
+          service: formData.service,
+          message: formData.message.trim(),
+        }),
       })
 
       const data = await response.json()
 
       if (!response.ok) {
+        if (response.status === 429) {
+          throw new Error('Too many requests. Please try again in 15 minutes.')
+        }
         throw new Error(data.error || 'Failed to send email')
       }
 
+      // Store submission timestamp
+      if (typeof window !== 'undefined') {
+        localStorage.setItem('lastContactSubmit', Date.now().toString())
+      }
+      
       setSubmitted(true)
-      setFormData({ name: '', email: '', company: '', phone: '', service: '', message: '' })
+      setFormData({ 
+        name: '', 
+        email: '', 
+        company: '', 
+        phone: '', 
+        service: '', 
+        message: '',
+        website: ''
+      })
     } catch (err) {
       setError(err instanceof Error ? err.message : 'Something went wrong. Please try again.')
     } finally {
@@ -63,7 +176,14 @@ export default function ContactPage() {
   }
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
-    setFormData(prev => ({ ...prev, [e.target.name]: e.target.value }))
+    const { name, value } = e.target
+    
+    // Clear validation errors when user starts typing
+    if (validationErrors.length > 0) {
+      setValidationErrors([])
+    }
+    
+    setFormData(prev => ({ ...prev, [name]: value }))
   }
 
   useEffect(() => {
@@ -422,13 +542,47 @@ export default function ContactPage() {
                   </div>
                 ) : (
                   <form onSubmit={handleSubmit} className="space-y-6">
-                                        {error && (
-                      <div className="bg-red-50 border-2 border-red-200 text-red-700 px-4 py-3 rounded-xl">
-                        <p className="font-semibold">Error</p>
-                        <p className="text-sm">{error}</p>
+                    {/* Honeypot field - hidden from humans, visible to bots */}
+                    <div style={{ position: 'absolute', left: '-9999px' }} aria-hidden="true" tabIndex={-1}>
+                      <label htmlFor="website">Website (leave blank)</label>
+                      <input
+                        type="text"
+                        id="website"
+                        name="website"
+                        tabIndex={-1}
+                        autoComplete="off"
+                        value={formData.website}
+                        onChange={handleChange}
+                      />
+                    </div>
+
+                    {/* Error Messages */}
+                    {error && (
+                      <div className="bg-red-50 border-2 border-red-200 text-red-700 px-4 py-3 rounded-xl flex items-start gap-3">
+                        <AlertCircle className="flex-shrink-0 mt-0.5" size={20} />
+                        <div>
+                          <p className="font-semibold">Error</p>
+                          <p className="text-sm">{error}</p>
+                        </div>
                       </div>
                     )}
-                                        <div className="form-field">
+
+                    {/* Validation Errors */}
+                    {validationErrors.length > 0 && (
+                      <div className="bg-amber-50 border-2 border-amber-200 text-amber-700 px-4 py-3 rounded-xl">
+                        <p className="font-semibold mb-2 flex items-center gap-2">
+                          <AlertCircle size={18} />
+                          Please fix the following errors:
+                        </p>
+                        <ul className="text-sm space-y-1 ml-6 list-disc">
+                          {validationErrors.map((err, idx) => (
+                            <li key={idx}>{err}</li>
+                          ))}
+                        </ul>
+                      </div>
+                    )}
+
+                    <div className="form-field">
                       <label htmlFor="name" className="block text-sm font-semibold mb-2">
                         Full Name *
                       </label>
@@ -439,6 +593,7 @@ export default function ContactPage() {
                         value={formData.name}
                         onChange={handleChange}
                         required
+                        maxLength={100}
                         className="w-full px-4 py-3 border-2 border-gray-200 rounded-xl focus:border-blue-600 focus:outline-none transition-colors"
                         placeholder="John Doe"
                       />
@@ -471,6 +626,7 @@ export default function ContactPage() {
                           name="company"
                           value={formData.company}
                           onChange={handleChange}
+                          maxLength={100}
                           className="w-full px-4 py-3 border-2 border-gray-200 rounded-xl focus:border-blue-600 focus:outline-none transition-colors"
                           placeholder="Company Name"
                         />
@@ -514,15 +670,21 @@ export default function ContactPage() {
                     </div>
 
                     <div className="form-field">
-                      <label htmlFor="message" className="block text-sm font-semibold mb-2">
-                        Message *
-                      </label>
+                      <div className="flex justify-between items-center mb-2">
+                        <label htmlFor="message" className="text-sm font-semibold">
+                          Message *
+                        </label>
+                        <span className={`text-xs ${formData.message.length > 1900 ? 'text-red-600 font-semibold' : 'text-gray-500'}`}>
+                          {formData.message.length}/2000
+                        </span>
+                      </div>
                       <textarea
                         id="message"
                         name="message"
                         value={formData.message}
                         onChange={handleChange}
                         required
+                        maxLength={2000}
                         rows={5}
                         className="w-full px-4 py-3 border-2 border-gray-200 rounded-xl focus:border-blue-600 focus:outline-none transition-colors resize-none"
                         placeholder="Tell us about your project..."
@@ -534,9 +696,23 @@ export default function ContactPage() {
                       disabled={isSubmitting}
                       className="submit-button w-full bg-black book-call-btn text-white px-6 py-4 rounded-full text-lg font-semibold hover:bg-blue-600 transition-all disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-2"
                     >
-                      {isSubmitting ? 'Sending...' : 'Send Message'}
-                      <Send size={20} />
+                      {isSubmitting ? (
+                        <>
+                          <span className="animate-spin">⏳</span>
+                          Sending...
+                        </>
+                      ) : (
+                        <>
+                          Send Message
+                          <Send size={20} />
+                        </>
+                      )}
                     </button>
+
+                    {/* Security Notice */}
+                    <p className="text-xs text-gray-500 text-center mt-4">
+                      🔒 Your information is secure and will never be shared with third parties.
+                    </p>
                   </form>
                 )}
               </div>
