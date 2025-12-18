@@ -1045,10 +1045,12 @@ export default function ServicesPage() {
               </div>
               <div className="service-image aspect-square bg-gradient-to-br from-green-400 to-green-600 rounded-3xl overflow-hidden relative">
                 <Image
-                  src="/Green Energy Solutions.webp"
-                  alt="Green Energy Icon"
-                  quality={75}
+                  src="/green-energy-solutions.webp"
+                  alt="Green Energy Solutions - Solar panels and renewable energy infrastructure"
+                  quality={85}
                   fill
+                  priority
+                  sizes="(max-width: 768px) 100vw, (max-width: 1024px) 50vw, 600px"
                   className="object-cover"
                 />
               </div>
@@ -1058,10 +1060,12 @@ export default function ServicesPage() {
             <div ref={service2Ref} className="grid lg:grid-cols-2 gap-16 items-center">
               <div className="service-image order-2 lg:order-1 aspect-square bg-gradient-to-br from-blue-400 to-blue-600 rounded-3xl overflow-hidden relative">
                 <Image
-                  src="/Industrial Automation.webp"
-                  alt="Industrial Automation"
-                  quality={75}
+                  src="/industrial-automation.webp"
+                  alt="Industrial Automation - Smart factory systems and IoT integration"
+                  quality={85}
                   fill
+                  priority
+                  sizes="(max-width: 768px) 100vw, (max-width: 1024px) 50vw, 600px"
                   className="object-cover"
                 />
               </div>
@@ -1131,10 +1135,12 @@ export default function ServicesPage() {
               </div>
               <div className="service-image aspect-square bg-gradient-to-br from-purple-400 to-purple-600 rounded-3xl overflow-hidden relative">
                 <Image
-                  src="/Telecom_IT_Infrastructure.webp"
-                  alt="Telecom & IT Infrastructure"
-                  quality={75}
+                  src="/telecom-it-infrastructure.webp"
+                  alt="Telecom & IT Infrastructure - Network design and implementation"
+                  quality={70}
                   fill
+                  loading="lazy"
+                  sizes="(max-width: 768px) 100vw, (max-width: 1024px) 50vw, 600px"
                   className="object-cover"
                 />
               </div>
@@ -1145,9 +1151,11 @@ export default function ServicesPage() {
               <div className="service-image order-2 lg:order-1 aspect-square bg-gradient-to-br from-red-400 to-red-600 rounded-3xl overflow-hidden relative">
                 <Image
                   src="/Security_Surveillance.webp"
-                  alt="Security & Surveillance"
-                  quality={75}
+                  alt="Security & Surveillance - CCTV cameras and monitoring systems"
+                  quality={70}
                   fill
+                  loading="lazy"
+                  sizes="(max-width: 768px) 100vw, (max-width: 1024px) 50vw, 600px"
                   className="object-cover"
                 />
               </div>
@@ -1221,10 +1229,12 @@ export default function ServicesPage() {
               </div>
               <div className="service-image aspect-square bg-gradient-to-br from-orange-400 to-orange-600 rounded-3xl overflow-hidden relative">
               <Image
-                  src="/Gemini_Generated_Image_swp1m0swp1m0swp1.webp"
-                  alt="Civil & Earthing Works"
-                  quality={75}
+                  src="/electrical-contractor.webp"
+                  alt="Electrical Contracting - Professional electrical installation services"
+                  quality={70}
                   fill
+                  loading="lazy"
+                  sizes="(max-width: 768px) 100vw, (max-width: 1024px) 50vw, 600px"
                   className="object-cover"
                 />
               </div>
@@ -1234,10 +1244,12 @@ export default function ServicesPage() {
             <div ref={service6Ref} className="grid lg:grid-cols-2 gap-16 items-center">
               <div className="service-image order-2 lg:order-1 aspect-square bg-gradient-to-br from-gray-400 to-gray-600 rounded-3xl overflow-hidden relative">
                 <Image
-                  src="/Earthing Solutions.webp"
-                  alt="Earthing Solutions"
-                  quality={75}
+                  src="/earthing-solutions.webp"
+                  alt="Earthing Solutions - Lightning and grounding protection systems"
+                  quality={70} 
                   fill
+                  loading="lazy"
+                  sizes="(max-width: 768px) 100vw, (max-width: 1024px) 50vw, 600px"
                   className="object-cover"
                 />
               </div>
@@ -1315,10 +1327,12 @@ export default function ServicesPage() {
               </div>
               <div className="service-image aspect-square bg-gradient-to-br from-yellow-400 to-yellow-600 rounded-3xl overflow-hidden relative">
               <Image
-                  src="/company-managers-visiting-their-employees-factory-happy-african-american-businesswoman-is-shaking-hands-with-one-worker.webp"
-                  alt="Manpower Services"
-                  quality={75}
+                  src="/manpower-services.webp"
+                  alt="Manpower Services - Professional facility management and trained staff"
+                  quality={70}
                   fill
+                  loading="lazy"
+                  sizes="(max-width: 768px) 100vw, (max-width: 1024px) 50vw, 600px"
                   className="object-cover"
                 />
               </div>
@@ -1328,10 +1342,12 @@ export default function ServicesPage() {
             <div ref={service8Ref} className="grid lg:grid-cols-2 gap-16 items-center">
               <div className="service-image order-2 lg:order-1 aspect-square bg-gradient-to-br from-cyan-400 to-cyan-600 rounded-3xl overflow-hidden relative">
               <Image
-                  src="/man-florist-working-green-house.webp"
-                  alt="ELV Systems"
-                  quality={75}
+                  src="/elv-systems.webp"
+                  alt="ELV Systems - Extra low voltage solutions and building management"
+                  quality={70}
                   fill
+                  loading="lazy"
+                  sizes="(max-width: 768px) 100vw, (max-width: 1024px) 50vw, 600px"
                   className="object-cover"
                 />
               </div>
@@ -1409,10 +1425,12 @@ export default function ServicesPage() {
               </div>
               <div className="service-image aspect-square bg-gradient-to-br from-indigo-400 to-indigo-600 rounded-3xl overflow-hidden relative">
               <Image
-                  src="/biometric.webp"
-                  quality={75}
-                  alt="Access Control Systems"
+                  src="/access-control-biometric.webp"  
+                  alt="Access Control Systems - Biometric authentication and RFID solutions"
+                  quality={70}  
                   fill
+                  loading="lazy"  
+                  sizes="(max-width: 768px) 100vw, (max-width: 1024px) 50vw, 600px"  
                   className="object-cover"
                 />
               </div>

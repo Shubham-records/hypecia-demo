@@ -15,6 +15,9 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
+      <head>
+        <link rel="preconnect" href="https://hypeciaconnect.com" />
+      </head>
       <body className="antialiased">
         <ErrorReporter />
         <Script

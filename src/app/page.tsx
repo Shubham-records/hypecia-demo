@@ -151,675 +151,685 @@ export default function Home() {
 
   const handleLoaderComplete = () => {
     setStartFadeIn(true)
-    setTimeout(() => {
+    requestAnimationFrame(() => {
       setShowLoader(false)
-    }, 100)
+    })
   }
 
   useEffect(() => {
+    if (!videoRef.current || !startFadeIn) return
     const timer = setTimeout(() => {
       if (videoRef.current) {
-        videoRef.current.play()
+        videoRef.current.play().catch(() => {})
       }
-    }, 3300)
+    }, 700)
     return () => clearTimeout(timer)
-  }, [])
+  }, [startFadeIn])
+
 
 
   // UNIFIED GSAP ANIMATION
   useEffect(() => {
     if (!startFadeIn) return
 
-    const ctx = gsap.context(() => {
-      // ===== HERO ANIMATION =====
-      const heroTl = gsap.timeline({ delay: 0.5 })
-
-      heroTl.fromTo(
-        heroBoxRef.current,
-        { scale: 0.95, opacity: 0 },
-        { scale: 1, opacity: 1, duration: 0.8, ease: 'power2.out' }
-      )
-
-      if (heroTitleRef.current) {
-        const titleSplit = new SplitText(heroTitleRef.current, { type: 'words' })
-        gsap.set(heroTitleRef.current, { opacity: 1 })
+      const ctx = gsap.context(() => {
+        // ===== HERO ANIMATION =====
+        const heroTl = gsap.timeline({ delay: 0.5 })
 
         heroTl.fromTo(
-          titleSplit.words,
-          { y: 80, opacity: 0, rotationX: -90 },
-          {
-            y: 0,
-            opacity: 1,
-            rotationX: 0,
-            duration: 1,
-            ease: 'back.out(1.7)',
-            stagger: {
-              each: 0.05,
-              ease: 'sine.inOut'
-            }
-          },
-          '+=0.2'
+          heroBoxRef.current,
+          { scale: 0.95, opacity: 0 },
+          { scale: 1, opacity: 1, duration: 0.8, ease: 'power2.out' }
         )
-      }
 
-      if (heroDescRef.current) {
-        const descSplit = new SplitText(heroDescRef.current, { type: 'words' })
-        gsap.set(heroDescRef.current, { opacity: 1 })
+        if (heroTitleRef.current) {
+          const titleSplit = new SplitText(heroTitleRef.current, { type: 'words' })
+          gsap.set(heroTitleRef.current, { opacity: 1 })
 
-        heroTl.fromTo(
-          descSplit.words,
-          { y: 50, opacity: 0, scale: 0.8 },
-          {
-            y: 0,
-            opacity: 1,
-            scale: 1,
-            duration: 0.8,
-            ease: 'elastic.out(1, 0.6)',
-            stagger: {
-              each: 0.05,
-              ease: 'sine.inOut'
-            }
-          },
-          '-=0.5'
-        )
-      }
-
-      // ===== STATS SECTION ANIMATION =====
-      if (statsRef.current) {
-        const statItems = statsRef.current.querySelectorAll('.stat-item')
-
-        // Set initial state for stat items
-        gsap.set(statItems, { opacity: 0, y: 30 })
-
-        // Animate stat items
-        gsap.to(statItems, {
-          opacity: 1,
-          y: 0,
-          duration: 1,
-          ease: 'power3.out',
-          stagger: {
-            each: 0.2,
-            from: 'start'
-          },
-          scrollTrigger: {
-            trigger: statsRef.current,
-            start: 'top 60%',
-            end: 'top 40%',
-            toggleActions: 'play reverse play reverse',
-            scrub: 1
-          }
-        })
-
-        // Counter animations with proper reset handling
-        let counter1Tween: gsap.core.Tween | null = null
-        let counter2Tween: gsap.core.Tween | null = null
-        let counter3Tween: gsap.core.Tween | null = null
-
-        ScrollTrigger.create({
-          trigger: statsRef.current,
-          start: 'top 60%',
-          end: 'bottom 60%',
-          onEnter: () => {
-            // Kill any existing tweens
-            if (counter1Tween) counter1Tween.kill()
-            if (counter2Tween) counter2Tween.kill()
-            if (counter3Tween) counter3Tween.kill()
-
-            // Counter 1: 157+
-            const counterObj1 = { value: 0 }
-            counter1Tween = gsap.to(counterObj1, {
-              value: 157,
+          heroTl.fromTo(
+            titleSplit.words,
+            { y: 80, opacity: 0, rotationX: -90 },
+            {
+              y: 0,
+              opacity: 1,
+              rotationX: 0,
               duration: 1,
-              ease: 'power2.out',
-              onUpdate: () => {
-                if (counter1Ref.current) {
-                  counter1Ref.current.textContent = Math.floor(counterObj1.value).toString()
-                }
-              }
-            })
-
-            // Counter 2: 2400+
-            const counterObj2 = { value: 0 }
-            counter2Tween = gsap.to(counterObj2, {
-              value: 2400,
-              duration: 1,
-              ease: 'power2.out',
-              onUpdate: () => {
-                if (counter2Ref.current) {
-                  counter2Ref.current.textContent = Math.floor(counterObj2.value).toString()
-                }
-              }
-            })
-
-            // Counter 3: 95%
-            const counterObj3 = { value: 0 }
-            counter3Tween = gsap.to(counterObj3, {
-              value: 95,
-              duration: 1,
-              ease: 'power2.out',
-              onUpdate: () => {
-                if (counter3Ref.current) {
-                  counter3Ref.current.textContent = Math.floor(counterObj3.value).toString()
-                }
-              }
-            })
-          },
-          onLeaveBack: () => {
-            // Kill any existing tweens
-            if (counter1Tween) counter1Tween.kill()
-            if (counter2Tween) counter2Tween.kill()
-            if (counter3Tween) counter3Tween.kill()
-
-            // Reset all counters immediately when scrolling back up
-            if (counter1Ref.current) counter1Ref.current.textContent = '0'
-            if (counter2Ref.current) counter2Ref.current.textContent = '0'
-            if (counter3Ref.current) counter3Ref.current.textContent = '0'
-          },
-          onEnterBack: () => {
-            // Kill any existing tweens
-            if (counter1Tween) counter1Tween.kill()
-            if (counter2Tween) counter2Tween.kill()
-            if (counter3Tween) counter3Tween.kill()
-
-            // Reanimate when scrolling back down
-            const counterObj1 = { value: 0 }
-            counter1Tween = gsap.to(counterObj1, {
-              value: 157,
-              duration: 1,
-              ease: 'power2.out',
-              onUpdate: () => {
-                if (counter1Ref.current) {
-                  counter1Ref.current.textContent = Math.floor(counterObj1.value).toString()
-                }
-              }
-            })
-
-            const counterObj2 = { value: 0 }
-            counter2Tween = gsap.to(counterObj2, {
-              value: 2400,
-              duration: 1,
-              ease: 'power2.out',
-              onUpdate: () => {
-                if (counter2Ref.current) {
-                  counter2Ref.current.textContent = Math.floor(counterObj2.value).toString()
-                }
-              }
-            })
-
-            const counterObj3 = { value: 0 }
-            counter3Tween = gsap.to(counterObj3, {
-              value: 95,
-              duration: 1,
-              ease: 'power2.out',
-              onUpdate: () => {
-                if (counter3Ref.current) {
-                  counter3Ref.current.textContent = Math.floor(counterObj3.value).toString()
-                }
-              }
-            })
-          },
-          onLeave: () => {
-            // Keep the final values when scrolling down past the section
-            if (counter1Ref.current) counter1Ref.current.textContent = '157'
-            if (counter2Ref.current) counter2Ref.current.textContent = '2400'
-            if (counter3Ref.current) counter3Ref.current.textContent = '95'
-          }
-        })
-      }
-
-      // ===== ABOUT US SECTION ANIMATION =====
-      if (aboutContainerRef.current && aboutLeftRef.current && aboutRightRef.current) {
-        const leftText = aboutLeftRef.current.querySelector(".about-text")
-        const rightItems = aboutRightRef.current.querySelectorAll(".about-item")
-
-        // Check if mobile (width < 1024px)
-        const isMobile = window.innerWidth < 1024
-
-        const leftSplit = new SplitText(leftText, {
-          type: "words",
-          wordsClass: "split-word"
-        })
-
-        leftSplit.words.forEach(w => w.classList.add("text-gradient"))
-
-        const aboutTl = gsap.timeline({
-          scrollTrigger: {
-            trigger: aboutContainerRef.current,
-            start: "top 20%",
-            end: "+=280%",
-            scrub: 1,
-            pin: true,
-            pinSpacing: true,
-            anticipatePin: 1,
-          }
-        })
-
-        // FADE IN (same for both mobile and desktop)
-        aboutTl.from(leftSplit.words, {
-          opacity: 0,
-          x: -30,
-          y: 80,
-          stagger: 0.04,
-          ease: "power3.out",
-          duration: 1,
-        })
-
-        aboutTl.from(rightItems, {
-          opacity: 0,
-          x: 30,
-          y: 80,
-          stagger: 0.15,
-          ease: "power3.out",
-          duration: 1,
-        }, "<")
-
-        aboutTl.to({}, { duration: 0.5 })
-
-        // FADE OUT (only on desktop)
-        if (!isMobile) {
-          aboutTl.to(leftSplit.words, {
-            opacity: 0,
-            x: -80,
-            y: -80,
-            stagger: 0.04,
-            ease: "power3.in",
-            duration: 1,
-          })
-
-          aboutTl.to(rightItems, {
-            opacity: 0,
-            x: 80,
-            y: -80,
-            stagger: 0.15,
-            ease: "power3.in",
-            duration: 1,
-          }, "<")
-        }
-      }
-
-      // ===== SERVICES SECTION ANIMATION =====
-      if (servicesContainerRef.current && servicesCardsRef.current) {
-        const cards = servicesCardsRef.current.querySelectorAll('.service-card')
-
-        const containerWidth = servicesCardsRef.current.offsetWidth
-        const cardWidth = 320
-        const cardGap = 32
-
-        // Set initial positions with wrapping (to show cards on both sides)
-        cards.forEach((card, index) => {
-          const baseX = index * (cardWidth + cardGap)
-          let x = (containerWidth / 2) - (cardWidth / 2) + baseX
-
-          // Apply wrapping to initial position so cards appear on both sides
-          const totalWidth = services.length * (cardWidth + cardGap)
-          while (x < -(cardWidth * 2)) x += totalWidth
-          while (x > containerWidth + cardWidth) x -= totalWidth
-
-          const centerX = containerWidth / 2
-          const cardCenter = x + cardWidth / 2
-          const distanceFromCenter = Math.abs(cardCenter - centerX)
-          const normalizedDistance = distanceFromCenter / (containerWidth / 2)
-
-          const bendAmount = 60
-          const y = normalizedDistance * bendAmount * 1.5
-          const rotation = ((cardCenter - centerX) / (containerWidth / 2)) * 6
-          const scale = 1 - (normalizedDistance * 0.15)
-          const opacity = 1 - (normalizedDistance * 0.4)
-
-          gsap.set(card, {
-            x: x,
-            y: y,
-            rotationY: rotation,
-            scale: Math.max(scale, 0.7),
-            opacity: Math.max(opacity, 0.4),
-            zIndex: Math.round((1 - normalizedDistance) * 100)
-          })
-        })
-
-        ScrollTrigger.create({
-          trigger: servicesContainerRef.current,
-          start: window.innerWidth < 1024 ? "top 5%" : "top -10%",
-          end: () => `+=${services.length * 1200}`,
-          pin: true,
-          pinSpacing: true,
-          scrub: 1,
-          onUpdate: (self) => {
-            const progress = self.progress
-            const containerWidth = servicesCardsRef.current?.offsetWidth || 1000
-            const cardWidth = 320
-            const cardGap = 32
-            const totalScroll = services.length * (cardWidth + cardGap)
-            const currentScroll = progress * totalScroll
-
-            cards.forEach((card, index) => {
-              // Calculate position relative to center
-              const baseX = index * (cardWidth + cardGap)
-              let x = (containerWidth / 2) - (cardWidth / 2) + baseX - currentScroll
-
-              // Infinite loop wrapping
-              const totalWidth = services.length * (cardWidth + cardGap)
-              while (x < -(cardWidth * 2)) x += totalWidth
-              while (x > containerWidth + cardWidth) x -= totalWidth
-
-              // Calculate distance from center
-              const centerX = containerWidth / 2
-              const cardCenter = x + cardWidth / 2
-              const distanceFromCenter = Math.abs(cardCenter - centerX)
-              const normalizedDistance = distanceFromCenter / (containerWidth / 2)
-
-              const bendAmount = 60
-              const y = normalizedDistance * bendAmount * 1.5
-              const rotation = ((cardCenter - centerX) / (containerWidth / 2)) * 6
-              const scale = 1 - (normalizedDistance * 0.15)
-              const opacity = 1 - (normalizedDistance * 0.4)
-
-              gsap.set(card, {
-                x: x,
-                y: y,
-                rotationY: rotation,
-                scale: Math.max(scale, 0.7),
-                opacity: Math.max(opacity, 0.4),
-                zIndex: Math.round((1 - normalizedDistance) * 100)
-              })
-            })
-          }
-        })
-      }
-
-      // ===== CLIENT TRUST SECTION - CIRCLE REVEAL (BLACK BG) =====
-      if (clientTrustRef.current && circleRevealRef.current && clientContentRef.current) {
-        const tl = gsap.timeline({
-          scrollTrigger: {
-            trigger: clientTrustRef.current,
-            start: window.innerWidth < 1024 ? "top -15%" : "top top",
-            end: "+=120%",
-            scrub: 1,
-            pin: true,
-            pinSpacing: false,
-          }
-        })
-
-        gsap.set(circleRevealRef.current, {
-          clipPath: 'circle(0% at 50% 50%)'
-        })
-
-        tl.to(circleRevealRef.current, {
-          clipPath: 'circle(100% at 50% 50%)',
-          duration: 1,
-          ease: 'power2.out'
-        })
-
-        const clientItems = clientContentRef.current.querySelectorAll('.client-item')
-
-        tl.from(clientItems, {
-          y: 100,
-          opacity: 0,
-          stagger: {
-            each: 0.1,
-            from: 'start',
-            ease: 'sine.inOut'
-          },
-          duration: 0.8,
-          ease: 'back.out(1.7)'
-        }, '-=0.3')
-
-        tl.to({}, { duration: 0.5 })
-      }
-
-      // ===== TESTIMONIALS AUTO-SLIDE + DRAGGABLE (EVERY 2 SEC) =====
-      if (testimonialSectionRef.current && testimonialTrackRef.current) {
-        const track = testimonialTrackRef.current;
-        const cards = gsap.utils.toArray<HTMLElement>(".testimonial-card");
-
-        if (cards.length > 0) {
-          const cardWidth = cards[0].offsetWidth;
-          const total = cards.length;
-
-          // DUPLICATE cards for seamless loop
-          if (!track.hasAttribute("data-cloned")) {
-            track.innerHTML += track.innerHTML;
-            track.setAttribute("data-cloned", "true");
-          }
-
-          let currentIndex = 0;
-          let isDragging = false;
-
-          // Function to slide to next testimonial
-          const slideToNext = () => {
-            if (isDragging) return; // Don't auto-slide while dragging
-
-            currentIndex++;
-
-            gsap.to(track, {
-              x: -(currentIndex * cardWidth),
-              duration: 0.5,
-              ease: "power3.inOut",
-              onComplete: () => {
-                // Reset to beginning when reaching the end of original set
-                if (currentIndex >= total) {
-                  currentIndex = 0;
-                  gsap.set(track, { x: 0 });
-                }
-              }
-            });
-          };
-
-          // Initialize Draggable
-          const draggableInstance = Draggable.create(track, {
-            type: "x",
-            inertia: true,
-            throwProps: true,
-            onDragStart: () => {
-              isDragging = true;
-              // Pause auto-slide while dragging
-              if (testimonialInterval.current) {
-                clearInterval(testimonialInterval.current);
-                testimonialInterval.current = null;
+              ease: 'back.out(1.7)',
+              stagger: {
+                each: 0.05,
+                ease: 'sine.inOut'
               }
             },
-            onDragEnd: function () {
-              const currentX = gsap.getProperty(track, "x") as number;
+            '+=0.2'
+          )
+        }
 
-              // Calculate which card we're closest to
-              const snapIndex = Math.round(Math.abs(currentX) / cardWidth);
-              const snapPosition = -(snapIndex * cardWidth);
+        if (heroDescRef.current) {
+          const descSplit = new SplitText(heroDescRef.current, { type: 'words' })
+          gsap.set(heroDescRef.current, { opacity: 1 })
 
-              // Animate to snapped position
+          heroTl.fromTo(
+            descSplit.words,
+            { y: 50, opacity: 0, scale: 0.8 },
+            {
+              y: 0,
+              opacity: 1,
+              scale: 1,
+              duration: 0.8,
+              ease: 'elastic.out(1, 0.6)',
+              stagger: {
+                each: 0.05,
+                ease: 'sine.inOut'
+              }
+            },
+            '-=0.5'
+          )
+        }
+      const idleId = requestIdleCallback(() => {
+        const delayedCtx = gsap.context(() => {
+          // ===== STATS SECTION ANIMATION =====
+        if (statsRef.current) {
+          const statItems = statsRef.current.querySelectorAll('.stat-item')
+
+          // Set initial state for stat items
+          gsap.set(statItems, { opacity: 0, y: 30 })
+
+          // Animate stat items
+          gsap.to(statItems, {
+            opacity: 1,
+            y: 0,
+            duration: 1,
+            ease: 'power3.out',
+            stagger: {
+              each: 0.2,
+              from: 'start'
+            },
+            scrollTrigger: {
+              trigger: statsRef.current,
+              start: 'top 60%',
+              end: 'top 40%',
+              toggleActions: 'play reverse play reverse',
+              scrub: 1
+            }
+          })
+
+          // Counter animations with proper reset handling
+          let counter1Tween: gsap.core.Tween | null = null
+          let counter2Tween: gsap.core.Tween | null = null
+          let counter3Tween: gsap.core.Tween | null = null
+
+          ScrollTrigger.create({
+            trigger: statsRef.current,
+            start: 'top 60%',
+            end: 'bottom 60%',
+            onEnter: () => {
+              // Kill any existing tweens
+              if (counter1Tween) counter1Tween.kill()
+              if (counter2Tween) counter2Tween.kill()
+              if (counter3Tween) counter3Tween.kill()
+
+              // Counter 1: 157+
+              const counterObj1 = { value: 0 }
+              counter1Tween = gsap.to(counterObj1, {
+                value: 157,
+                duration: 1,
+                ease: 'power2.out',
+                onUpdate: () => {
+                  if (counter1Ref.current) {
+                    counter1Ref.current.textContent = Math.floor(counterObj1.value).toString()
+                  }
+                }
+              })
+
+              // Counter 2: 2400+
+              const counterObj2 = { value: 0 }
+              counter2Tween = gsap.to(counterObj2, {
+                value: 2400,
+                duration: 1,
+                ease: 'power2.out',
+                onUpdate: () => {
+                  if (counter2Ref.current) {
+                    counter2Ref.current.textContent = Math.floor(counterObj2.value).toString()
+                  }
+                }
+              })
+
+              // Counter 3: 95%
+              const counterObj3 = { value: 0 }
+              counter3Tween = gsap.to(counterObj3, {
+                value: 95,
+                duration: 1,
+                ease: 'power2.out',
+                onUpdate: () => {
+                  if (counter3Ref.current) {
+                    counter3Ref.current.textContent = Math.floor(counterObj3.value).toString()
+                  }
+                }
+              })
+            },
+            onLeaveBack: () => {
+              // Kill any existing tweens
+              if (counter1Tween) counter1Tween.kill()
+              if (counter2Tween) counter2Tween.kill()
+              if (counter3Tween) counter3Tween.kill()
+
+              // Reset all counters immediately when scrolling back up
+              if (counter1Ref.current) counter1Ref.current.textContent = '0'
+              if (counter2Ref.current) counter2Ref.current.textContent = '0'
+              if (counter3Ref.current) counter3Ref.current.textContent = '0'
+            },
+            onEnterBack: () => {
+              // Kill any existing tweens
+              if (counter1Tween) counter1Tween.kill()
+              if (counter2Tween) counter2Tween.kill()
+              if (counter3Tween) counter3Tween.kill()
+
+              // Reanimate when scrolling back down
+              const counterObj1 = { value: 0 }
+              counter1Tween = gsap.to(counterObj1, {
+                value: 157,
+                duration: 1,
+                ease: 'power2.out',
+                onUpdate: () => {
+                  if (counter1Ref.current) {
+                    counter1Ref.current.textContent = Math.floor(counterObj1.value).toString()
+                  }
+                }
+              })
+
+              const counterObj2 = { value: 0 }
+              counter2Tween = gsap.to(counterObj2, {
+                value: 2400,
+                duration: 1,
+                ease: 'power2.out',
+                onUpdate: () => {
+                  if (counter2Ref.current) {
+                    counter2Ref.current.textContent = Math.floor(counterObj2.value).toString()
+                  }
+                }
+              })
+
+              const counterObj3 = { value: 0 }
+              counter3Tween = gsap.to(counterObj3, {
+                value: 95,
+                duration: 1,
+                ease: 'power2.out',
+                onUpdate: () => {
+                  if (counter3Ref.current) {
+                    counter3Ref.current.textContent = Math.floor(counterObj3.value).toString()
+                  }
+                }
+              })
+            },
+            onLeave: () => {
+              // Keep the final values when scrolling down past the section
+              if (counter1Ref.current) counter1Ref.current.textContent = '157'
+              if (counter2Ref.current) counter2Ref.current.textContent = '2400'
+              if (counter3Ref.current) counter3Ref.current.textContent = '95'
+            }
+          })
+        }
+
+        // ===== ABOUT US SECTION ANIMATION =====
+        if (aboutContainerRef.current && aboutLeftRef.current && aboutRightRef.current) {
+          const leftText = aboutLeftRef.current.querySelector(".about-text")
+          const rightItems = aboutRightRef.current.querySelectorAll(".about-item")
+
+          // Check if mobile (width < 1024px)
+          const isMobile = window.innerWidth < 1024
+
+          const leftSplit = new SplitText(leftText, {
+            type: "words",
+            wordsClass: "split-word"
+          })
+
+          leftSplit.words.forEach(w => w.classList.add("text-gradient"))
+
+          const aboutTl = gsap.timeline({
+            scrollTrigger: {
+              trigger: aboutContainerRef.current,
+              start: "top 20%",
+              end: "+=280%",
+              scrub: 1,
+              pin: true,
+              pinSpacing: true,
+              anticipatePin: 1,
+            }
+          })
+
+          // FADE IN (same for both mobile and desktop)
+          aboutTl.from(leftSplit.words, {
+            opacity: 0,
+            x: -30,
+            y: 80,
+            stagger: 0.04,
+            ease: "power3.out",
+            duration: 1,
+          })
+
+          aboutTl.from(rightItems, {
+            opacity: 0,
+            x: 30,
+            y: 80,
+            stagger: 0.15,
+            ease: "power3.out",
+            duration: 1,
+          }, "<")
+
+          aboutTl.to({}, { duration: 0.5 })
+
+          // FADE OUT (only on desktop)
+          if (!isMobile) {
+            aboutTl.to(leftSplit.words, {
+              opacity: 0,
+              x: -80,
+              y: -80,
+              stagger: 0.04,
+              ease: "power3.in",
+              duration: 1,
+            })
+
+            aboutTl.to(rightItems, {
+              opacity: 0,
+              x: 80,
+              y: -80,
+              stagger: 0.15,
+              ease: "power3.in",
+              duration: 1,
+            }, "<")
+          }
+        }
+
+        // ===== SERVICES SECTION ANIMATION =====
+        if (servicesContainerRef.current && servicesCardsRef.current) {
+          const cards = servicesCardsRef.current.querySelectorAll('.service-card')
+
+          const containerWidth = servicesCardsRef.current.offsetWidth
+          const cardWidth = 320
+          const cardGap = 32
+
+          // Set initial positions with wrapping (to show cards on both sides)
+          cards.forEach((card, index) => {
+            const baseX = index * (cardWidth + cardGap)
+            let x = (containerWidth / 2) - (cardWidth / 2) + baseX
+
+            // Apply wrapping to initial position so cards appear on both sides
+            const totalWidth = services.length * (cardWidth + cardGap)
+            while (x < -(cardWidth * 2)) x += totalWidth
+            while (x > containerWidth + cardWidth) x -= totalWidth
+
+            const centerX = containerWidth / 2
+            const cardCenter = x + cardWidth / 2
+            const distanceFromCenter = Math.abs(cardCenter - centerX)
+            const normalizedDistance = distanceFromCenter / (containerWidth / 2)
+
+            const bendAmount = 60
+            const y = normalizedDistance * bendAmount * 1.5
+            const rotation = ((cardCenter - centerX) / (containerWidth / 2)) * 6
+            const scale = 1 - (normalizedDistance * 0.15)
+            const opacity = 1 - (normalizedDistance * 0.4)
+
+            gsap.set(card, {
+              x: x,
+              y: y,
+              rotationY: rotation,
+              scale: Math.max(scale, 0.7),
+              opacity: Math.max(opacity, 0.4),
+              zIndex: Math.round((1 - normalizedDistance) * 100)
+            })
+          })
+
+          ScrollTrigger.create({
+            trigger: servicesContainerRef.current,
+            start: window.innerWidth < 1024 ? "top 5%" : "top -10%",
+            end: () => `+=${services.length * 1200}`,
+            pin: true,
+            pinSpacing: true,
+            scrub: 1,
+            onUpdate: (self) => {
+              const progress = self.progress
+              const containerWidth = servicesCardsRef.current?.offsetWidth || 1000
+              const cardWidth = 320
+              const cardGap = 32
+              const totalScroll = services.length * (cardWidth + cardGap)
+              const currentScroll = progress * totalScroll
+
+              cards.forEach((card, index) => {
+                // Calculate position relative to center
+                const baseX = index * (cardWidth + cardGap)
+                let x = (containerWidth / 2) - (cardWidth / 2) + baseX - currentScroll
+
+                // Infinite loop wrapping
+                const totalWidth = services.length * (cardWidth + cardGap)
+                while (x < -(cardWidth * 2)) x += totalWidth
+                while (x > containerWidth + cardWidth) x -= totalWidth
+
+                // Calculate distance from center
+                const centerX = containerWidth / 2
+                const cardCenter = x + cardWidth / 2
+                const distanceFromCenter = Math.abs(cardCenter - centerX)
+                const normalizedDistance = distanceFromCenter / (containerWidth / 2)
+
+                const bendAmount = 60
+                const y = normalizedDistance * bendAmount * 1.5
+                const rotation = ((cardCenter - centerX) / (containerWidth / 2)) * 6
+                const scale = 1 - (normalizedDistance * 0.15)
+                const opacity = 1 - (normalizedDistance * 0.4)
+
+                gsap.set(card, {
+                  x: x,
+                  y: y,
+                  rotationY: rotation,
+                  scale: Math.max(scale, 0.7),
+                  opacity: Math.max(opacity, 0.4),
+                  zIndex: Math.round((1 - normalizedDistance) * 100)
+                })
+              })
+            }
+          })
+        }
+
+        // ===== CLIENT TRUST SECTION - CIRCLE REVEAL (BLACK BG) =====
+        if (clientTrustRef.current && circleRevealRef.current && clientContentRef.current) {
+          const tl = gsap.timeline({
+            scrollTrigger: {
+              trigger: clientTrustRef.current,
+              start: window.innerWidth < 1024 ? "top -15%" : "top top",
+              end: "+=120%",
+              scrub: 1,
+              pin: true,
+              pinSpacing: false,
+            }
+          })
+
+          gsap.set(circleRevealRef.current, {
+            clipPath: 'circle(0% at 50% 50%)'
+          })
+
+          tl.to(circleRevealRef.current, {
+            clipPath: 'circle(100% at 50% 50%)',
+            duration: 1,
+            ease: 'power2.out'
+          })
+
+          const clientItems = clientContentRef.current.querySelectorAll('.client-item')
+
+          tl.from(clientItems, {
+            y: 100,
+            opacity: 0,
+            stagger: {
+              each: 0.1,
+              from: 'start',
+              ease: 'sine.inOut'
+            },
+            duration: 0.8,
+            ease: 'back.out(1.7)'
+          }, '-=0.3')
+
+          tl.to({}, { duration: 0.5 })
+        }
+
+        // ===== TESTIMONIALS AUTO-SLIDE + DRAGGABLE (EVERY 2 SEC) =====
+        if (testimonialSectionRef.current && testimonialTrackRef.current) {
+          const track = testimonialTrackRef.current;
+          const cards = gsap.utils.toArray<HTMLElement>(".testimonial-card");
+
+          if (cards.length > 0) {
+            const cardWidth = cards[0].offsetWidth;
+            const total = cards.length;
+
+            // DUPLICATE cards for seamless loop
+            if (!track.hasAttribute("data-cloned")) {
+              track.innerHTML += track.innerHTML;
+              track.setAttribute("data-cloned", "true");
+            }
+
+            let currentIndex = 0;
+            let isDragging = false;
+
+            // Function to slide to next testimonial
+            const slideToNext = () => {
+              if (isDragging) return; // Don't auto-slide while dragging
+
+              currentIndex++;
+
               gsap.to(track, {
-                x: snapPosition,
-                duration: 0.4,
-                ease: "power2.out",
+                x: -(currentIndex * cardWidth),
+                duration: 0.5,
+                ease: "power3.inOut",
                 onComplete: () => {
-                  isDragging = false;
-                  currentIndex = snapIndex;
-
-                  // Handle infinite loop wrapping
+                  // Reset to beginning when reaching the end of original set
                   if (currentIndex >= total) {
                     currentIndex = 0;
                     gsap.set(track, { x: 0 });
-                  } else if (currentIndex < 0) {
-                    currentIndex = total - 1;
-                    gsap.set(track, { x: -(currentIndex * cardWidth) });
                   }
-
-                  // Resume auto-slide after 3 seconds of inactivity
-                  setTimeout(() => {
-                    if (!isDragging && !testimonialInterval.current) {
-                      testimonialInterval.current = setInterval(slideToNext, 2000);
-                    }
-                  }, 3000);
                 }
               });
-            }
-          })[0];
+            };
 
-          // Start the interval - slide every 2 seconds
-          const intervalId = setInterval(slideToNext, 2000);
-          testimonialInterval.current = intervalId;
+            // Initialize Draggable
+            const draggableInstance = Draggable.create(track, {
+              type: "x",
+              inertia: true,
+              throwProps: true,
+              onDragStart: () => {
+                isDragging = true;
+                // Pause auto-slide while dragging
+                if (testimonialInterval.current) {
+                  clearInterval(testimonialInterval.current);
+                  testimonialInterval.current = null;
+                }
+              },
+              onDragEnd: function () {
+                const currentX = gsap.getProperty(track, "x") as number;
 
-          // Pause on hover
-          track.addEventListener('mouseenter', () => {
-            if (testimonialInterval.current && !isDragging) {
-              clearInterval(testimonialInterval.current);
-              testimonialInterval.current = null;
-            }
-          });
+                // Calculate which card we're closest to
+                const snapIndex = Math.round(Math.abs(currentX) / cardWidth);
+                const snapPosition = -(snapIndex * cardWidth);
 
-          track.addEventListener('mouseleave', () => {
-            if (!testimonialInterval.current && !isDragging) {
-              testimonialInterval.current = setInterval(slideToNext, 2000);
-            }
-          });
+                // Animate to snapped position
+                gsap.to(track, {
+                  x: snapPosition,
+                  duration: 0.4,
+                  ease: "power2.out",
+                  onComplete: () => {
+                    isDragging = false;
+                    currentIndex = snapIndex;
+
+                    // Handle infinite loop wrapping
+                    if (currentIndex >= total) {
+                      currentIndex = 0;
+                      gsap.set(track, { x: 0 });
+                    } else if (currentIndex < 0) {
+                      currentIndex = total - 1;
+                      gsap.set(track, { x: -(currentIndex * cardWidth) });
+                    }
+
+                    // Resume auto-slide after 3 seconds of inactivity
+                    setTimeout(() => {
+                      if (!isDragging && !testimonialInterval.current) {
+                        testimonialInterval.current = setInterval(slideToNext, 2000);
+                      }
+                    }, 3000);
+                  }
+                });
+              }
+            })[0];
+
+            // Start the interval - slide every 2 seconds
+            const intervalId = setInterval(slideToNext, 2000);
+            testimonialInterval.current = intervalId;
+
+            // Pause on hover
+            track.addEventListener('mouseenter', () => {
+              if (testimonialInterval.current && !isDragging) {
+                clearInterval(testimonialInterval.current);
+                testimonialInterval.current = null;
+              }
+            });
+
+            track.addEventListener('mouseleave', () => {
+              if (!testimonialInterval.current && !isDragging) {
+                testimonialInterval.current = setInterval(slideToNext, 2000);
+              }
+            });
+          }
         }
-      }
 
-      // ===== PROJECT SECTION - PIN → TITLE ANIMATE → CARDS ANIMATE → UNPIN =====
-      if (projectSectionRef.current && projectTitleRef.current && projectCardsRef.current) {
-        const projectCards = projectCardsRef.current.querySelectorAll('.project-card')
+        // ===== PROJECT SECTION - PIN → TITLE ANIMATE → CARDS ANIMATE → UNPIN =====
+        if (projectSectionRef.current && projectTitleRef.current && projectCardsRef.current) {
+          const projectCards = projectCardsRef.current.querySelectorAll('.project-card')
 
-        // Single timeline with one ScrollTrigger that pins the whole section
-        const projectTl = gsap.timeline({
-          scrollTrigger: {
-            trigger: projectSectionRef.current,
-            start: "top top",
-            end: "+=150%",
-            scrub: 1,
-            pin: true,
-            pinSpacing: true
-          }
-        })
+          // Single timeline with one ScrollTrigger that pins the whole section
+          const projectTl = gsap.timeline({
+            scrollTrigger: {
+              trigger: projectSectionRef.current,
+              start: "top top",
+              end: "+=150%",
+              scrub: 1,
+              pin: true,
+              pinSpacing: true
+            }
+          })
 
-        // Step 1: Animate title from bottom
-        projectTl.from(projectTitleRef.current, {
-          opacity: 0,
-          y: 80,
-          duration: 0.5,
-          ease: 'power3.out'
-        })
-
-        // Step 2: Hold for a moment
-        projectTl.to({}, { duration: 0.3 })
-
-        // Step 3: Animate cards from bottom with stagger
-        projectTl.fromTo(projectCards,
-          {
-            y: 100,
-            opacity: 0
-          },
-          {
-            y: 0,
-            opacity: 1,
-            stagger: 0.15,
-            duration: 0.6,
-            ease: 'power3.out'
-          }
-        )
-
-        // Step 4: Hold at the end before unpin
-        projectTl.to({}, { duration: 0.4 })
-      }
-
-      // ===== PROCESS SECTION - TITLE AND CARDS ANIMATION =====
-      if (processSectionRef.current && processTitleRef.current && processCardsRef.current) {
-
-        const tl = gsap.timeline({
-          scrollTrigger: {
-            trigger: processSectionRef.current,
-            start: window.innerWidth < 1024 ? "top 10%" : "top top",
-            end: "+=60%",
-            scrub: 1,
-            pin: true,
-            pinSpacing: true
-          }
-        });
-
-        // TITLE FIRST
-        const titleText = processTitleRef.current.querySelector('.process-title-text');
-
-        if (titleText) {
-          const titleSplit = new SplitText(titleText, { type: 'words' });
-          titleSplit.words.forEach(w => w.classList.add("text-gradient-v2"));
-
-          tl.from(titleSplit.words, {
+          // Step 1: Animate title from bottom
+          projectTl.from(projectTitleRef.current, {
             opacity: 0,
-            x: -80,
             y: 80,
-            stagger: 0.05,
+            duration: 0.5,
+            ease: 'power3.out'
+          })
+
+          // Step 2: Hold for a moment
+          projectTl.to({}, { duration: 0.3 })
+
+          // Step 3: Animate cards from bottom with stagger
+          projectTl.fromTo(projectCards,
+            {
+              y: 100,
+              opacity: 0
+            },
+            {
+              y: 0,
+              opacity: 1,
+              stagger: 0.15,
+              duration: 0.6,
+              ease: 'power3.out'
+            }
+          )
+
+          // Step 4: Hold at the end before unpin
+          projectTl.to({}, { duration: 0.4 })
+        }
+
+        // ===== PROCESS SECTION - TITLE AND CARDS ANIMATION =====
+        if (processSectionRef.current && processTitleRef.current && processCardsRef.current) {
+
+          const tl = gsap.timeline({
+            scrollTrigger: {
+              trigger: processSectionRef.current,
+              start: window.innerWidth < 1024 ? "top 10%" : "top top",
+              end: "+=60%",
+              scrub: 1,
+              pin: true,
+              pinSpacing: true
+            }
+          });
+
+          // TITLE FIRST
+          const titleText = processTitleRef.current.querySelector('.process-title-text');
+
+          if (titleText) {
+            const titleSplit = new SplitText(titleText, { type: 'words' });
+            titleSplit.words.forEach(w => w.classList.add("text-gradient-v2"));
+
+            tl.from(titleSplit.words, {
+              opacity: 0,
+              x: -80,
+              y: 80,
+              stagger: 0.05,
+              duration: 1.2,
+              ease: "power3.out"
+            });
+          }
+
+          // THEN 3 COLUMNS
+          const processCards = processCardsRef.current.querySelectorAll('.process-card');
+
+          tl.from(processCards, {
+            opacity: 0,
+            y: 120,
+            stagger: 0.3,
             duration: 1.2,
             ease: "power3.out"
-          });
+          }, "+=0.3");
         }
 
-        // THEN 3 COLUMNS
-        const processCards = processCardsRef.current.querySelectorAll('.process-card');
+        // ===== CTA SECTION - SIMPLE FADE IN (NO PIN) =====
+        const ctaSection = document.querySelector(".cta-section")
+        if (ctaSection) {
+          const ctaTitle = ctaSection.querySelector("h2")
+          const ctaPara = ctaSection.querySelector("p")
+          const ctaBtn = ctaSection.querySelector("a")
 
-        tl.from(processCards, {
-          opacity: 0,
-          y: 120,
-          stagger: 0.3,
-          duration: 1.2,
-          ease: "power3.out"
-        }, "+=0.3");
+          // Set initial state explicitly
+          gsap.set([ctaTitle, ctaPara, ctaBtn], {
+            opacity: 0,
+            y: 60
+          })
+
+          gsap.to([ctaTitle, ctaPara, ctaBtn], {
+            opacity: 1,
+            y: 0,
+            stagger: 0.15,
+            duration: 0.9,
+            ease: "power3.out",
+            scrollTrigger: {
+              trigger: ctaSection,
+              start: "top 80%",
+              end: "top 20%",
+              toggleActions: "play none none reverse",
+            },
+          })
+        }
+
+        // ===== FOOTER SECTION ANIMATION =====
+        const footerSection = document.querySelector(".footer-section")
+        if (footerSection) {
+          const footerItems = footerSection.querySelectorAll('.footer-animate')
+
+          // Set initial state explicitly
+          gsap.set(footerItems, {
+            opacity: 0,
+            y: 60
+          })
+
+          gsap.to(footerItems, {
+            opacity: 1,
+            y: 0,
+            stagger: 0.15,
+            duration: 0.9,
+            ease: "power3.out",
+            scrollTrigger: {
+              trigger: footerSection,
+              start: "top 65%",
+              end: "top 40%",
+              toggleActions: "play none none reverse",
+            },
+          })
+        }
+
+        })
+        return () => delayedCtx.revert()
+      })
+        
+
+      return () => {
+        ctx.revert()
+        if (idleId) cancelIdleCallback(idleId)
       }
-
-      // ===== CTA SECTION - SIMPLE FADE IN (NO PIN) =====
-      const ctaSection = document.querySelector(".cta-section")
-      if (ctaSection) {
-        const ctaTitle = ctaSection.querySelector("h2")
-        const ctaPara = ctaSection.querySelector("p")
-        const ctaBtn = ctaSection.querySelector("a")
-
-        // Set initial state explicitly
-        gsap.set([ctaTitle, ctaPara, ctaBtn], {
-          opacity: 0,
-          y: 60
-        })
-
-        gsap.to([ctaTitle, ctaPara, ctaBtn], {
-          opacity: 1,
-          y: 0,
-          stagger: 0.15,
-          duration: 0.9,
-          ease: "power3.out",
-          scrollTrigger: {
-            trigger: ctaSection,
-            start: "top 80%",
-            end: "top 20%",
-            toggleActions: "play none none reverse",
-          },
-        })
-      }
-
-      // ===== FOOTER SECTION ANIMATION =====
-      const footerSection = document.querySelector(".footer-section")
-      if (footerSection) {
-        const footerItems = footerSection.querySelectorAll('.footer-animate')
-
-        // Set initial state explicitly
-        gsap.set(footerItems, {
-          opacity: 0,
-          y: 60
-        })
-
-        gsap.to(footerItems, {
-          opacity: 1,
-          y: 0,
-          stagger: 0.15,
-          duration: 0.9,
-          ease: "power3.out",
-          scrollTrigger: {
-            trigger: footerSection,
-            start: "top 65%",
-            end: "top 40%",
-            toggleActions: "play none none reverse",
-          },
-        })
-      }
-
-    })
-
-    return () => ctx.revert()
-  }, [startFadeIn, services.length])
+    }, [startFadeIn, services.length])
+  })
 
 
   return (
@@ -839,12 +849,14 @@ export default function Home() {
             >
               <video
                 ref={videoRef}
-                loop
                 muted
+                loop
                 playsInline
+                preload="auto"
+                poster="/video_proster.webp"
                 className="w-full h-full object-cover"
               >
-                <source src="/promo_video.mp4" type="video/mp4" />
+                <source src="/promo_video_hls/playlist.m3u8" type="application/x-mpegURL" />
               </video>
               <div className="absolute inset-0 bg-white/15 mix-blend-overlay pointer-events-none" />
 
@@ -952,7 +964,7 @@ export default function Home() {
                   <CheckCircle className="text-green-500 flex-shrink-0 mt-1" size={22} />
                   <div>
                     <h3 className="font-bold text-xl mb-2">End-to-End Lifecycle Support</h3>
-                    <p className="text-gray-600">From design to deployment to 24/7 maintenance—we're with you every step</p>
+                    <p className="text-gray-600">From design to deployment to 24/7 maintenanceâ€”we're with you every step</p>
                   </div>
                 </div>
               </div>
@@ -1315,7 +1327,7 @@ export default function Home() {
               <div className="process-card">
                 <h3 className="text-2xl font-semibold mb-6">Lightning Fast Delivery</h3>
                 <p className="text-gray-500 mb-8 font-semibold leading-relaxed">
-                  From site survey to commissioning—we handle every phase with precision, meeting project timelines consistently across all deployments.
+                  From site survey to commissioningâ€”we handle every phase with precision, meeting project timelines consistently across all deployments.
                 </p>
                 <div className="process-stats space-y-4">
                   <div className="flex items-baseline gap-3">
