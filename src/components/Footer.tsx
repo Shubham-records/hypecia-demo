@@ -21,7 +21,8 @@ export default function Footer({ animate = false }: FooterProps) {
               alt="HYPECIA Logo"
               width={124}
               height={48}
-              priority
+              loading="lazy"
+              quality={100} 
               className="h-10 w-auto invert mb-2"
             />
             <p className="text-gray-400 text-sm leading-relaxed">

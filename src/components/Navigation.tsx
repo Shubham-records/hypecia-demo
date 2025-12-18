@@ -343,6 +343,7 @@ export default function Navigation({ animate = false, isHomepage = false }: Navi
               width={124}
               height={48}
               priority
+              quality={100}
               className={`transition-all duration-300 ${getLogoFilter('left')}`}
               style={{
                 height: 'clamp(2rem, 4vh, 2.5rem)',
