@@ -1137,7 +1137,7 @@ export default function ServicesPage() {
                 <Image
                   src="/telecom-it-infrastructure.webp"
                   alt="Telecom & IT Infrastructure - Network design and implementation"
-                  quality={70}
+                  quality={85}
                   fill
                   loading="lazy"
                   sizes="(max-width: 768px) 100vw, (max-width: 1024px) 50vw, 600px"
@@ -1152,7 +1152,7 @@ export default function ServicesPage() {
                 <Image
                   src="/Security_Surveillance.webp"
                   alt="Security & Surveillance - CCTV cameras and monitoring systems"
-                  quality={70}
+                  quality={85}
                   fill
                   loading="lazy"
                   sizes="(max-width: 768px) 100vw, (max-width: 1024px) 50vw, 600px"
@@ -1231,7 +1231,7 @@ export default function ServicesPage() {
               <Image
                   src="/electrical-contractor.webp"
                   alt="Electrical Contracting - Professional electrical installation services"
-                  quality={70}
+                  quality={85}
                   fill
                   loading="lazy"
                   sizes="(max-width: 768px) 100vw, (max-width: 1024px) 50vw, 600px"
@@ -1246,7 +1246,7 @@ export default function ServicesPage() {
                 <Image
                   src="/earthing-solutions.webp"
                   alt="Earthing Solutions - Lightning and grounding protection systems"
-                  quality={70} 
+                  quality={85} 
                   fill
                   loading="lazy"
                   sizes="(max-width: 768px) 100vw, (max-width: 1024px) 50vw, 600px"
@@ -1329,7 +1329,7 @@ export default function ServicesPage() {
               <Image
                   src="/manpower-services.webp"
                   alt="Manpower Services - Professional facility management and trained staff"
-                  quality={70}
+                  quality={85}
                   fill
                   loading="lazy"
                   sizes="(max-width: 768px) 100vw, (max-width: 1024px) 50vw, 600px"
@@ -1344,7 +1344,7 @@ export default function ServicesPage() {
               <Image
                   src="/elv-systems.webp"
                   alt="ELV Systems - Extra low voltage solutions and building management"
-                  quality={70}
+                  quality={85}
                   fill
                   loading="lazy"
                   sizes="(max-width: 768px) 100vw, (max-width: 1024px) 50vw, 600px"
@@ -1427,7 +1427,7 @@ export default function ServicesPage() {
               <Image
                   src="/access-control-biometric.webp"  
                   alt="Access Control Systems - Biometric authentication and RFID solutions"
-                  quality={70}  
+                  quality={85}  
                   fill
                   loading="lazy"  
                   sizes="(max-width: 768px) 100vw, (max-width: 1024px) 50vw, 600px"  
