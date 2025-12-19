@@ -19,7 +19,22 @@ export default function RootLayout({
         <link rel="preconnect" href="https://hypeciaconnect.com" />
       </head>
       <body className="antialiased">
+        {/* Google Analytics */}
+        <Script
+          src="https://www.googletagmanager.com/gtag/js?id=G-3FWDBGCV4X"
+          strategy="afterInteractive"
+        />
+        <Script id="google-analytics" strategy="afterInteractive">
+          {`
+            window.dataLayer = window.dataLayer || [];
+            function gtag(){dataLayer.push(arguments);}
+            gtag('js', new Date());
+            gtag('config', 'G-3FWDBGCV4X');
+          `}
+        </Script>
+
         <ErrorReporter />
+        
         <Script
           src="https://slelguoygbfzlpylpxfs.supabase.co/storage/v1/object/public/scripts//route-messenger.js"
           strategy="afterInteractive"
@@ -30,6 +45,7 @@ export default function RootLayout({
           data-debug="true"
           data-custom-data='{"appName": "YourApp", "version": "1.0.0", "greeting": "hi"}'
         />
+        
         {children}
       </body>
     </html>
