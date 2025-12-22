@@ -2,6 +2,7 @@ import { NextRequest, NextResponse } from 'next/server'
 import nodemailer from 'nodemailer'
 import { rateLimit } from '@/lib/rate-limit'
 import DOMPurify from 'isomorphic-dompurify'
+import { addToGoogleSheets } from '@/lib/google-sheets'
 
 // Rate limiter: 5 requests per 15 minutes per IP
 const limiter = rateLimit({
@@ -261,7 +262,25 @@ ${message}
       )
     ])
 
-    // Log successful submission (consider adding to database)
+    await Promise.race([
+      transporter.sendMail(mailOptions),
+      new Promise((_, reject) => 
+        setTimeout(() => reject(new Error('Email timeout')), 30000)
+      )
+    ])
+
+    addToGoogleSheets({
+      name,
+      email,
+      company,
+      phone,
+      service,
+      message,
+      ipAddress: ip,
+    }).catch(err => {
+      console.error('Google Sheets failed (non-critical):', err);
+    });
+
     console.log(`Contact form submitted successfully from ${email} (${ip})`)
 
     return NextResponse.json(
@@ -271,7 +290,6 @@ ${message}
   } catch (error) {
     console.error('Error sending email:', error)
     
-    // Don't expose internal error details to client
     return NextResponse.json(
       { error: 'Failed to send email. Please try again later.' },
       { status: 500 }
