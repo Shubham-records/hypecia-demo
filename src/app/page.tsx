@@ -9,6 +9,7 @@ import { gsap } from 'gsap'
 import { SplitText } from 'gsap/SplitText'
 import { ScrollTrigger } from 'gsap/ScrollTrigger'
 import { Draggable } from 'gsap/Draggable'
+import Hls from 'hls.js'
 
 gsap.registerPlugin(SplitText, ScrollTrigger, Draggable)
 
@@ -157,13 +158,28 @@ export default function Home() {
   }
 
   useEffect(() => {
-    const timer = setTimeout(() => {
-      if (videoRef.current) {
-        videoRef.current.play()
-      }
-    }, 3300)
-    return () => clearTimeout(timer)
-  }, [])
+    const video = videoRef.current;
+    if (!video) return;
+
+    if (Hls.isSupported()) {
+      const hls = new Hls({ maxBufferLength: 30 });
+      hls.loadSource('/promo_video_hls/playlist.m3u8'); // Just playlist.m3u8
+      hls.attachMedia(video);
+      
+      hls.on(Hls.Events.MANIFEST_PARSED, () => {
+        setTimeout(() => {
+          video.play().catch(e => console.log('Autoplay failed:', e));
+        }, 3300);
+      });
+      
+      return () => hls.destroy();
+    } else if (video.canPlayType('application/vnd.apple.mpegurl')) {
+      video.src = '/promo_video_hls/playlist.m3u8';
+      setTimeout(() => {
+        video.play().catch(e => console.log('Autoplay failed:', e));
+      }, 3300);
+    }
+  }, []);
 
 
   // UNIFIED GSAP ANIMATION
@@ -841,13 +857,11 @@ export default function Home() {
                 ref={videoRef}
                 muted
                 loop
-                playsInline
-                preload="auto"
+                playsInline  
+                preload="metadata" 
                 poster="/video_proster.webp"
                 className="w-full h-full object-cover"
-              >
-                <source src="/promo_video_hls/playlist.m3u8" type="application/x-mpegURL" />
-              </video>
+              />
               <div className="absolute inset-0 bg-white/15 mix-blend-overlay pointer-events-none" />
 
               <div className="absolute inset-0 bg-gradient-to-t from-black/50 via-transparent to-transparent" />
