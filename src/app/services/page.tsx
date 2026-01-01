@@ -1045,7 +1045,7 @@ export default function ServicesPage() {
               </div>
               <div className="service-image aspect-square bg-gradient-to-br from-green-400 to-green-600 rounded-3xl overflow-hidden relative">
                 <Image
-                  src="/green-energy-solutions.webp"
+                  src="/green-energy-solutions.jpg"
                   alt="Green Energy Solutions - Solar panels and renewable energy infrastructure"
                   quality={85}
                   fill
@@ -1060,9 +1060,9 @@ export default function ServicesPage() {
             <div ref={service2Ref} className="grid lg:grid-cols-2 gap-16 items-center">
               <div className="service-image order-2 lg:order-1 aspect-square bg-gradient-to-br from-blue-400 to-blue-600 rounded-3xl overflow-hidden relative">
                 <Image
-                  src="/industrial-automation.webp"
+                  src="/industrial-automation_3.webp"
                   alt="Industrial Automation - Smart factory systems and IoT integration"
-                  quality={85}
+                  // quality={85}
                   fill
                   priority
                   sizes="(max-width: 768px) 100vw, (max-width: 1024px) 50vw, 600px"
@@ -1427,7 +1427,7 @@ export default function ServicesPage() {
               <Image
                   src="/access-control-biometric.webp"  
                   alt="Access Control Systems - Biometric authentication and RFID solutions"
-                  quality={85}  
+                  // quality={85}  
                   fill
                   loading="lazy"  
                   sizes="(max-width: 768px) 100vw, (max-width: 1024px) 50vw, 600px"  
