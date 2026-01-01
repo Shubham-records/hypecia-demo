@@ -1139,7 +1139,6 @@ export default function ServicesPage() {
                   alt="Telecom & IT Infrastructure - Network design and implementation"
                   quality={85}
                   fill
-                  loading="lazy"
                   sizes="(max-width: 768px) 100vw, (max-width: 1024px) 50vw, 600px"
                   className="object-cover"
                 />
@@ -1154,7 +1153,6 @@ export default function ServicesPage() {
                   alt="Security & Surveillance - CCTV cameras and monitoring systems"
                   quality={85}
                   fill
-                  loading="lazy"
                   sizes="(max-width: 768px) 100vw, (max-width: 1024px) 50vw, 600px"
                   className="object-cover"
                 />
@@ -1233,7 +1231,6 @@ export default function ServicesPage() {
                   alt="Electrical Contracting - Professional electrical installation services"
                   quality={85}
                   fill
-                  loading="lazy"
                   sizes="(max-width: 768px) 100vw, (max-width: 1024px) 50vw, 600px"
                   className="object-cover"
                 />
@@ -1248,7 +1245,6 @@ export default function ServicesPage() {
                   alt="Earthing Solutions - Lightning and grounding protection systems"
                   quality={85} 
                   fill
-                  loading="lazy"
                   sizes="(max-width: 768px) 100vw, (max-width: 1024px) 50vw, 600px"
                   className="object-cover"
                 />
@@ -1331,7 +1327,6 @@ export default function ServicesPage() {
                   alt="Manpower Services - Professional facility management and trained staff"
                   quality={85}
                   fill
-                  loading="lazy"
                   sizes="(max-width: 768px) 100vw, (max-width: 1024px) 50vw, 600px"
                   className="object-cover"
                 />
@@ -1346,7 +1341,6 @@ export default function ServicesPage() {
                   alt="ELV Systems - Extra low voltage solutions and building management"
                   quality={85}
                   fill
-                  loading="lazy"
                   sizes="(max-width: 768px) 100vw, (max-width: 1024px) 50vw, 600px"
                   className="object-cover"
                 />
