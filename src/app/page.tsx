@@ -162,8 +162,14 @@ export default function Home() {
     if (!video) return;
 
     if (Hls.isSupported()) {
-      const hls = new Hls({ maxBufferLength: 30 });
-      hls.loadSource('/promo_video_hls/playlist.m3u8'); // Just playlist.m3u8
+      const hls = new Hls({
+        maxBufferLength: 60,
+        maxMaxBufferLength: 90,
+        startFragPrefetch: true,
+        fragLoadingTimeOut: 20000,
+        lowLatencyMode: false,
+      });
+      hls.loadSource('/promo_video_hls/playlist.m3u8');
       hls.attachMedia(video);
       
       hls.on(Hls.Events.MANIFEST_PARSED, () => {
