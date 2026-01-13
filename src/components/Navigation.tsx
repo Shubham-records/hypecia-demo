@@ -307,7 +307,7 @@ export default function Navigation({ animate = false, isHomepage = false }: Navi
         <div
           ref={headerCardRef}
           className="header-card flex items-center justify-between relative w-full"
-          style={{ 
+          style={{
             opacity: animate ? 0 : 1,
             gap: 'clamp(1rem, 3vw, 2rem)',
             padding: 'clamp(0.5rem, 1.5vh, 1rem) clamp(1rem, 2vw, 1.5rem)'
@@ -332,7 +332,7 @@ export default function Navigation({ animate = false, isHomepage = false }: Navi
             ref={logoRef}
             href="/"
             className={`header-logo flex items-center select-none relative z-10 transition-all duration-300 ${getThemeClasses('left')}`}
-            style={{ 
+            style={{
               opacity: animate ? 0 : 1,
               gap: 'clamp(0.5rem, 1vw, 0.75rem)'
             }}
@@ -346,7 +346,7 @@ export default function Navigation({ animate = false, isHomepage = false }: Navi
               quality={100}
               className={`transition-all duration-300 ${getLogoFilter('left')}`}
               style={{
-                height: 'clamp(2rem, 4vh, 2.5rem)',
+                height: 'clamp(2rem, 4.5vh, 2.5rem)',
                 width: 'auto'
               }}
             />
@@ -380,9 +380,9 @@ export default function Navigation({ animate = false, isHomepage = false }: Navi
                               after:duration-300
                               hover:after:w-full
                           `}
-                  style={{ 
+                  style={{
                     opacity: animate ? 0 : 1,
-                    fontSize: 'clamp(0.875rem, 1.25vw, 0.9375rem)'
+                    fontSize: 'clamp(1.05rem, 1.5vw, 1.125rem)'
                   }}
                 >
                   {link.label}
@@ -415,10 +415,10 @@ export default function Navigation({ animate = false, isHomepage = false }: Navi
             href="/contact"
             onClick={handleBookCallClick}
             className={`hidden md:inline-flex book-call-btn items-center justify-center rounded-full font-medium whitespace-nowrap transition-all duration-300 hover:opacity-90 relative z-10 ${getButtonClasses('right')}`}
-            style={{ 
+            style={{
               opacity: animate ? 0 : 1,
               padding: 'clamp(0.75rem, 1.5vh, 1rem) clamp(1.25rem, 2vw, 1.75rem)',
-              fontSize: 'clamp(0.875rem, 1.25vw, 0.9375rem)',
+              fontSize: 'clamp(1.05rem, 1.5vw, 1.125rem)',
               gap: 'clamp(0.375rem, 0.75vw, 0.5rem)'
             }}
           >

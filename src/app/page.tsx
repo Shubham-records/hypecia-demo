@@ -171,13 +171,13 @@ export default function Home() {
       });
       hls.loadSource('/promo_video_hls/playlist.m3u8');
       hls.attachMedia(video);
-      
+
       hls.on(Hls.Events.MANIFEST_PARSED, () => {
         setTimeout(() => {
           video.play().catch(e => console.log('Autoplay failed:', e));
         }, 3300);
       });
-      
+
       return () => hls.destroy();
     } else if (video.canPlayType('application/vnd.apple.mpegurl')) {
       video.src = '/promo_video_hls/playlist.m3u8';
@@ -863,18 +863,18 @@ export default function Home() {
                 ref={videoRef}
                 muted
                 loop
-                playsInline  
-                preload="metadata" 
+                playsInline
+                preload="metadata"
                 poster="/video_proster.webp"
                 className="w-full h-full object-cover"
               />
               <div className="absolute inset-0 bg-white/15 mix-blend-overlay pointer-events-none" />
 
-              <div className="absolute inset-0 bg-gradient-to-t from-black/50 via-transparent to-transparent" />
-              <div className="absolute bottom-0 left-0 right-0 p-8 md:p-12 text-white">
+              <div className="absolute inset-0 bg-black/40" />
+              <div className="absolute inset-0 flex flex-col justify-center items-center text-center p-8 md:p-12 text-white">
                 <h2
                   ref={heroTitleRef}
-                  className="mb-6 text-3xl md:text-5xl font-bold leading-tight"
+                  className="mb-6 text-5xl md:text-7xl font-bold leading-tight"
                   style={{ opacity: 0 }}
                 >
                   The Infrastructure You Can Trust<br />
@@ -882,7 +882,7 @@ export default function Home() {
                 </h2>
                 <p
                   ref={heroDescRef}
-                  className="text-base md:text-xl text-white/90 max-w-3xl"
+                  className="text-lg md:text-2xl text-white/90 max-w-4xl mx-auto leading-relaxed"
                   style={{ opacity: 0 }}
                 >
                   Carrier-grade networks. AI-powered security. Industrial automation.<br />
@@ -940,7 +940,7 @@ export default function Home() {
           <div ref={aboutContainerRef} className="container-custom">
             <div className="grid lg:grid-cols-[3fr_2fr] gap-16 items-center">
               <div ref={aboutLeftRef}>
-                <h4 className="about-text headline-display text-balance text-gradient">
+                <h4 className="about-text headline-display text-balance text-gradient !leading-[1.1]">
                   Your trusted partner for mission-critical infrastructure. Delivering carrier-grade
                   networks, <br />
                   <span className="text-gradient opacity-40">AI-powered security, and industrial automation.
@@ -948,33 +948,33 @@ export default function Home() {
                 </h4>
               </div>
 
-              <div ref={aboutRightRef} className="space-y-6">
+              <div ref={aboutRightRef} className="space-y-10">
                 <div className="about-item flex items-start gap-4">
-                  <CheckCircle className="text-green-500 flex-shrink-0 mt-1" size={22} />
+                  <CheckCircle className="text-green-500 flex-shrink-0 mt-2" size={28} />
                   <div>
-                    <h3 className="font-bold text-xl mb-2">157+ Sites. Zero Compromise</h3>
-                    <p className="text-gray-600">Successfully deployed across Airtel's MSC and TNG infrastructure</p>
+                    <h3 className="font-bold text-2xl mb-2">157+ Sites. Zero Compromise</h3>
+                    <p className="text-gray-600 text-lg">Successfully deployed across Airtel's MSC and TNG infrastructure</p>
                   </div>
                 </div>
                 <div className="about-item flex items-start gap-4">
-                  <CheckCircle className="text-green-500 flex-shrink-0 mt-1" size={22} />
+                  <CheckCircle className="text-green-500 flex-shrink-0 mt-2" size={28} />
                   <div>
-                    <h3 className="font-bold text-xl mb-2">AI-Powered Security Solutions</h3>
-                    <p className="text-gray-600">2,400+ cameras with intelligent analytics, facial recognition, and real-time threat detection</p>
+                    <h3 className="font-bold text-2xl mb-2">AI-Powered Security Solutions</h3>
+                    <p className="text-gray-600 text-lg">2,400+ cameras with intelligent analytics, facial recognition, and real-time threat detection</p>
                   </div>
                 </div>
                 <div className="about-item flex items-start gap-4">
-                  <CheckCircle className="text-green-500 flex-shrink-0 mt-1" size={22} />
+                  <CheckCircle className="text-green-500 flex-shrink-0 mt-2" size={28} />
                   <div>
-                    <h3 className="font-bold text-xl mb-2">40% Security Enhancement</h3>
-                    <p className="text-gray-600">Proven reduction in site vulnerabilities with 95% uptime across all installations</p>
+                    <h3 className="font-bold text-2xl mb-2">40% Security Enhancement</h3>
+                    <p className="text-gray-600 text-lg">Proven reduction in site vulnerabilities with 95% uptime across all installations</p>
                   </div>
                 </div>
                 <div className="about-item flex items-start gap-4">
-                  <CheckCircle className="text-green-500 flex-shrink-0 mt-1" size={22} />
+                  <CheckCircle className="text-green-500 flex-shrink-0 mt-2" size={28} />
                   <div>
-                    <h3 className="font-bold text-xl mb-2">End-to-End Lifecycle Support</h3>
-                    <p className="text-gray-600">From design to deployment to 24/7 maintenance. We're with you every step</p>
+                    <h3 className="font-bold text-2xl mb-2">End-to-End Lifecycle Support</h3>
+                    <p className="text-gray-600 text-lg">From design to deployment to 24/7 maintenance. We're with you every step</p>
                   </div>
                 </div>
               </div>
@@ -986,7 +986,7 @@ export default function Home() {
         <section ref={servicesContainerRef} className="section-padding bg-light-gray relative overflow-hidden" style={{ minHeight: '120vh' }}>
           <div className="container-custom">
             <div className="relative">
-              <div className="relative flex flex-col w-full items-center items-stretch mb-[-5%]" style={{ mask: 'linear-gradient(black, transparent)' }}>
+              <div className="relative flex flex-col w-full items-center items-stretch mb-[-3%]" style={{ mask: 'linear-gradient(black, transparent)' }}>
                 <svg
                   width="100%"
                   height="auto"
@@ -1001,7 +1001,7 @@ export default function Home() {
                       <text x="50%" y="70%" textAnchor="middle" fontFamily="Manrope, sans-serif" fontWeight="800" fontSize="14.4rem" letterSpacing="-0.03em">SERVICES</text>
                     </clipPath>
                     <linearGradient id="services-gradient" x1="0" y1="0" x2="0" y2="1">
-                      <stop offset="0%" stopColor="#D8D8D8" />
+                      <stop offset="30%" stopColor="#D8D8D8" />
                       <stop offset="100%" stopColor="#F5F5F5" />
                     </linearGradient>
                   </defs>
@@ -1054,8 +1054,8 @@ export default function Home() {
           >
             <div ref={clientContentRef} className="h-full flex items-center justify-center">
               <div className="container-custom text-center">
-                <div className="max-w-4xl mx-auto mb-16 md:mb-20" style={{ marginTop: '-35%' }}>
-                  <h2 className="text-4xl md:text-5xl font-bold mb-2 text-white">
+                <div className="max-w-5xl mx-auto mb-16 md:mb-20" style={{ marginTop: '-35%' }}>
+                  <h2 className="text-5xl md:text-7xl font-bold mb-2 text-white">
                     Trusted by Industry Leaders
                   </h2>
                 </div>
@@ -1194,7 +1194,7 @@ export default function Home() {
                     </text>
                   </clipPath>
                   <linearGradient id="projects-gradient" x1="0" y1="0" x2="0" y2="1">
-                    <stop offset="0%" stopColor="#D8D8D8" />
+                    <stop offset="30%" stopColor="#D8D8D8" />
                     <stop offset="100%" stopColor="#F5F5F5" />
                   </linearGradient>
                 </defs>
@@ -1309,9 +1309,9 @@ export default function Home() {
           <div className="container-custom">
             <div className='mb-28'>
               <h1 ref={processTitleRef} className="headline-display text-balance">
-                <span className="process-title-text text-5xl md:text-6xl lg:text-7xl xl:text-7xl mt-[20%]">
-                  We keep the process flexible<br />
-                  <span className="opacity-40">and the results extraordinary.</span>
+                <span className="process-title-text text-6xl md:text-7xl lg:text-7xl xl:text-7xl mt-[15%]">
+                  We keep the process flexible
+                  <span className="opacity-40"> and the results <br />extraordinary.</span>
                 </span>
               </h1>
             </div>
@@ -1373,10 +1373,7 @@ export default function Home() {
         <section className="section-padding bg-black cta-section text-white dark-bg relative overflow-hidden" style={{ minHeight: '100vh' }}>
           <div className="container-custom">
             <div className="max-w-3xl mx-auto text-center">
-              <div className="inline-flex items-center gap-2 bg-green-600 text-white px-4 py-2 rounded-full text-sm font-semibold mb-8">
-                <span className="w-2 h-2 bg-white rounded-full animate-pulse" />
-                Available for new projects
-              </div>
+              <div className="mb-20" />
               <h2 className="text-5xl md:text-7xl font-bold mb-6">
                 Ready to transform your infrastructure?
               </h2>
