@@ -32,9 +32,10 @@ export default function Footer({ animate = false }: FooterProps) {
         <div className="w-full h-px bg-gray-800 mb-16 footer-animate" />
 
         {/* Bottom Section: Links, Legal, Contact */}
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-12 mb-16 text-center md:text-left">
+        <div className="grid grid-cols-1 md:grid-cols-12 gap-12 mb-16 text-center md:text-left">
+          <div className="md:col-span-2"></div>
           {/* Quick Links */}
-          <div className="footer-animate flex flex-col items-center md:items-start">
+          <div className="footer-animate flex flex-col items-center md:items-start md:col-span-3">
             <h4 className="text-sm font-bold mb-6 uppercase tracking-wider text-white">Quick Links</h4>
             <ul className="space-y-4">
               <li><Link href="/" className="text-gray-400 hover:text-white transition-colors text-base">Home</Link></li>
@@ -46,7 +47,7 @@ export default function Footer({ animate = false }: FooterProps) {
           </div>
 
           {/* Legal */}
-          <div className="footer-animate flex flex-col items-center md:items-start">
+          <div className="footer-animate flex flex-col items-center md:items-start md:col-span-3">
             <h4 className="text-sm font-bold mb-6 uppercase tracking-wider text-white">Legal</h4>
             <ul className="space-y-4">
               <li><Link href="/privacy" className="text-gray-400 hover:text-white transition-colors text-base">Privacy Policy</Link></li>
@@ -55,7 +56,7 @@ export default function Footer({ animate = false }: FooterProps) {
           </div>
 
           {/* Contact */}
-          <div className="footer-animate flex flex-col items-center md:items-start">
+          <div className="footer-animate flex flex-col items-center md:items-start md:col-span-3">
             <h4 className="text-sm font-bold mb-6 uppercase tracking-wider text-white">Contact</h4>
             <ul className="space-y-4">
               <li className="flex items-center gap-3 text-gray-400 text-base justify-center md:justify-start">
@@ -79,6 +80,7 @@ export default function Footer({ animate = false }: FooterProps) {
               </li>
             </ul>
           </div>
+          <div className="md:col-span-1"></div>
         </div>
 
         {/* Bottom Bar */}
