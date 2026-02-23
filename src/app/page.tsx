@@ -1097,6 +1097,19 @@ export default function Home() {
                     />
                     <p className="text-sm text-gray-400">HVAC Solutions Partner</p>
                   </div>
+
+                  {/* Vertical divider (hidden on desktop) */}
+                  <div className="client-item hidden md:block lg:hidden w-px h-16 bg-gray-600" />
+
+                  {/* VVDN Technologies */}
+                  <div className="client-item flex flex-col items-center gap-4">
+                    <img
+                      src="/vvdn-logo.png"
+                      alt="VVDN Technologies"
+                      className="h-16 md:h-20 w-auto object-contain"
+                    />
+                    <p className="text-sm text-gray-400">Trusted Technology Partner</p>
+                  </div>
                 </div>
               </div>
             </div>
