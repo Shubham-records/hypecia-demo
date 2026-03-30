@@ -10,6 +10,8 @@ import { SplitText } from 'gsap/SplitText'
 import { ScrollTrigger } from 'gsap/ScrollTrigger'
 import { Draggable } from 'gsap/Draggable'
 import Hls from 'hls.js'
+import { JsonLd } from '@/components/JsonLd'
+import { organizationSchema } from '@/lib/schema'
 
 gsap.registerPlugin(SplitText, ScrollTrigger, Draggable)
 
@@ -846,6 +848,7 @@ export default function Home() {
 
   return (
     <>
+      <JsonLd data={organizationSchema} />
       {showLoader && (
         <HypeciaLoader onComplete={handleLoaderComplete} />
       )}
@@ -899,8 +902,9 @@ export default function Home() {
             <div className="flex flex-wrap items-center justify-center gap-8 md:gap-12 text-center">
               <div className="stat-item flex items-center gap-3">
                 <span className="text-4xl md:text-5xl font-bold text-black flex items-baseline gap-1">
-                  <span ref={counter1Ref}>0</span>
-                  <span>+</span>
+                  <span className="sr-only">157+</span>
+                  <span ref={counter1Ref} aria-hidden="true">0</span>
+                  <span aria-hidden="true">+</span>
                 </span>
                 <span className="text-lg md:text-xl text-gray-600">Sites Secured</span>
               </div>
@@ -909,8 +913,9 @@ export default function Home() {
 
               <div className="stat-item flex items-center gap-3">
                 <span className="text-4xl md:text-5xl font-bold text-black flex items-baseline gap-1">
-                  <span ref={counter2Ref}>0</span>
-                  <span>+</span>
+                  <span className="sr-only">2400+</span>
+                  <span ref={counter2Ref} aria-hidden="true">0</span>
+                  <span aria-hidden="true">+</span>
                 </span>
                 <span className="text-lg md:text-xl text-gray-600">CCTV Systems</span>
               </div>
@@ -919,8 +924,9 @@ export default function Home() {
 
               <div className="stat-item flex items-center gap-3">
                 <span className="text-4xl md:text-5xl font-bold text-black flex items-baseline gap-1">
-                  <span ref={counter3Ref}>0</span>
-                  <span>%</span>
+                  <span className="sr-only">95%</span>
+                  <span ref={counter3Ref} aria-hidden="true">0</span>
+                  <span aria-hidden="true">%</span>
                 </span>
                 <span className="text-lg md:text-xl text-gray-600">Uptime Delivered</span>
               </div>

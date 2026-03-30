@@ -9,6 +9,8 @@ import { ScrollTrigger } from 'gsap/ScrollTrigger'
 import { SplitText } from 'gsap/SplitText'
 import Image from 'next/image'
 import { ArrowRight, MapPin, Calendar, TrendingUp, Shield, Zap, Network } from 'lucide-react'
+import { JsonLd } from '@/components/JsonLd'
+import { caseStudySchema } from '@/lib/schema'
 
 gsap.registerPlugin(ScrollTrigger, SplitText)
 
@@ -275,6 +277,7 @@ export default function CaseStudiesPage() {
 
   return (
     <>
+      <JsonLd data={caseStudySchema} />
       <div className="min-h-screen">
         <Navigation isHomepage={true} />
 

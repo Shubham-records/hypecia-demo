@@ -7,6 +7,8 @@ import { useState, useEffect, useRef } from 'react'
 import { gsap } from 'gsap'
 import { ScrollTrigger } from 'gsap/ScrollTrigger'
 import { SplitText } from 'gsap/SplitText'
+import { JsonLd } from '@/components/JsonLd'
+import { organizationSchema } from '@/lib/schema'
 
 gsap.registerPlugin(ScrollTrigger, SplitText)
 
@@ -440,6 +442,7 @@ export default function ContactPage() {
 
   return (
     <>
+      <JsonLd data={organizationSchema} />
       <div className="min-h-screen">
         <Navigation />
 

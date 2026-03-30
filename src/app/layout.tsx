@@ -4,8 +4,12 @@ import ErrorReporter from "@/components/ErrorReporter";
 import Script from "next/script";
 
 export const metadata: Metadata = {
-  title: "Hypecia Connect Services - Sustainable Energy & Infrastructure Solutions",
-  description: "Transforming industries through intelligent energy solutions, industrial automation, and digital infrastructure. Expert providers of green energy, telecom, and security solutions.",
+  metadataBase: new URL('https://hypeciaconnect.com'),
+  title: {
+    default: "Hypecia Connect — Carrier-Grade Infrastructure & AI Security Solutions",
+    template: "%s | Hypecia Connect"
+  },
+  description: "Hypecia Connect delivers carrier-grade telecom networks, AI-powered security systems, and green energy solutions. Trusted by Airtel across 157+ mission-critical sites.",
 };
 
 export default function RootLayout({

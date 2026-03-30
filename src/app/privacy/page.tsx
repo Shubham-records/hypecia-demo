@@ -4,6 +4,8 @@ import Navigation from '@/components/Navigation'
 import Footer from '@/components/Footer'
 import { useEffect } from 'react'
 import { gsap } from 'gsap'
+import { JsonLd } from '@/components/JsonLd'
+import { organizationSchema } from '@/lib/schema'
 
 
 export default function PrivacyPage() {
@@ -47,6 +49,7 @@ export default function PrivacyPage() {
       }, [])
   return (
     <>
+      <JsonLd data={organizationSchema} />
       <div className={`min-h-screen`}>
         <Navigation />
         

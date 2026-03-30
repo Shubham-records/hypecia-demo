@@ -3,7 +3,7 @@ import fs from 'fs';
 import path from 'path';
 
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
-    const baseUrl = process.env.NEXT_PUBLIC_BASE_URL || 'https://www.hypeciaconnect.com';
+    const baseUrl = process.env.NEXT_PUBLIC_BASE_URL || 'https://hypeciaconnect.com';
 
     // Helper to recursively find all page.tsx files
     function getPageFiles(dir: string, fileList: string[] = []): string[] {
