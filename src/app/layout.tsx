@@ -10,7 +10,55 @@ export const metadata: Metadata = {
     template: "%s | Hypecia Connect"
   },
   description: "Hypecia Connect delivers carrier-grade telecom networks, AI-powered security systems, and green energy solutions. Trusted by Airtel across 157+ mission-critical sites.",
+  keywords: [
+    'telecom infrastructure India',
+    'AI security surveillance',
+    'CCTV installation Airtel',
+    'green energy solutions',
+    'industrial automation',
+    'MEP engineering',
+    'ELV systems',
+    'Hypecia Connect',
+    'infrastructure solutions company India',
+  ],
+  alternates: {
+    canonical: 'https://hypeciaconnect.com',
+  },
+  openGraph: {
+    title: 'Hypecia Connect — Carrier-Grade Infrastructure & AI Security Solutions',
+    description: 'Delivering carrier-grade telecom networks, AI-powered security systems, and green energy solutions. Trusted by Airtel across 157+ mission-critical sites.',
+    url: 'https://hypeciaconnect.com',
+    siteName: 'Hypecia Connect',
+    locale: 'en_IN',
+    type: 'website',
+    images: [
+      {
+        url: 'https://hypeciaconnect.com/logo.webp',
+        width: 1200,
+        height: 630,
+        alt: 'Hypecia Connect Services — Infrastructure Solutions',
+      },
+    ],
+  },
+  twitter: {
+    card: 'summary_large_image',
+    title: 'Hypecia Connect — Infrastructure & AI Security Solutions',
+    description: 'Carrier-grade telecom, AI surveillance, green energy. Trusted by Airtel across 157+ sites.',
+    images: ['https://hypeciaconnect.com/logo.webp'],
+  },
+  robots: {
+    index: true,
+    follow: true,
+    googleBot: {
+      index: true,
+      follow: true,
+      'max-video-preview': -1,
+      'max-image-preview': 'large',
+      'max-snippet': -1,
+    },
+  },
 };
+
 
 export default function RootLayout({
   children,
