@@ -399,12 +399,19 @@ export default function Home() {
         // Check if mobile (width < 1024px)
         const isMobile = window.innerWidth < 1024
 
+        // Hide the h4 so ghost remnants (<br>, nested <span>) are invisible
+        gsap.set(leftText, { visibility: 'hidden' })
+
         const leftSplit = new SplitText(leftText, {
           type: "words",
           wordsClass: "split-word"
         })
 
-        leftSplit.words.forEach(w => w.classList.add("text-gradient"))
+        // Make only the generated word spans visible — ghosts stay hidden
+        leftSplit.words.forEach(w => {
+          w.classList.add("text-gradient")
+          w.style.visibility = 'visible'
+        })
 
         const aboutTl = gsap.timeline({
           scrollTrigger: {
