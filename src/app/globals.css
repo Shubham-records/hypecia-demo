@@ -397,6 +397,46 @@
 
 
 
+  /* Scattered logo bubble floating effect */
+  .client-bubble {
+    will-change: transform;
+  }
+
+  .client-bubble:nth-child(odd) {
+    animation: bubble-float-1 6s ease-in-out infinite;
+  }
+
+  .client-bubble:nth-child(even) {
+    animation: bubble-float-2 7s ease-in-out infinite;
+  }
+
+  .client-bubble:nth-child(3n) {
+    animation: bubble-float-3 8s ease-in-out infinite;
+  }
+
+  @keyframes bubble-float-1 {
+    0%, 100% { transform: translateY(0px) rotate(0deg); }
+    50% { transform: translateY(-12px) rotate(2deg); }
+  }
+
+  @keyframes bubble-float-2 {
+    0%, 100% { transform: translateY(0px) rotate(0deg); }
+    50% { transform: translateY(10px) rotate(-2deg); }
+  }
+
+  @keyframes bubble-float-3 {
+    0%, 100% { transform: translateY(0px) translateX(0px); }
+    33% { transform: translateY(-8px) translateX(5px); }
+    66% { transform: translateY(6px) translateX(-3px); }
+  }
+
+  /* Blur text word styles */
+  .trust-blur-title .word {
+    display: inline-block;
+    will-change: transform, filter, opacity;
+  }
+
+
 }
 
 nextjs-portal {

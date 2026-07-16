@@ -6,18 +6,19 @@ import Script from "next/script";
 export const metadata: Metadata = {
   metadataBase: new URL('https://hypeciaconnect.com'),
   title: {
-    default: "Hypecia Connect — Carrier-Grade Infrastructure & AI Security Solutions",
+    default: "Hypecia Connect — Infrastructure, Security & IT Hardware Supply",
     template: "%s | Hypecia Connect"
   },
-  description: "Hypecia Connect delivers carrier-grade telecom networks, AI-powered security systems, and green energy solutions. Trusted by Airtel across 157+ mission-critical sites.",
+  description: "Hypecia Connect delivers carrier-grade networks, AI security systems, and enterprise IT hardware. Trusted by Airtel across 157+ sites and a premier supplier for NVIDIA, Intel, and DDR5 memory.",
   keywords: [
     'telecom infrastructure India',
     'AI security surveillance',
     'CCTV installation Airtel',
-    'green energy solutions',
-    'industrial automation',
-    'MEP engineering',
-    'ELV systems',
+    'enterprise IT hardware',
+    'NVIDIA GPU supplier',
+    'Intel CPU distributor',
+    'DDR5 server memory',
+    'Nivetti hardware partner',
     'Hypecia Connect',
     'infrastructure solutions company India',
   ],
@@ -25,8 +26,8 @@ export const metadata: Metadata = {
     canonical: 'https://hypeciaconnect.com',
   },
   openGraph: {
-    title: 'Hypecia Connect — Carrier-Grade Infrastructure & AI Security Solutions',
-    description: 'Delivering carrier-grade telecom networks, AI-powered security systems, and green energy solutions. Trusted by Airtel across 157+ mission-critical sites.',
+    title: 'Hypecia Connect — Infrastructure, Security & IT Hardware Supply',
+    description: 'Delivering carrier-grade networks, AI security, and enterprise IT hardware. Trusted by Airtel across 157+ sites and inventory partner for top-tier components.',
     url: 'https://hypeciaconnect.com',
     siteName: 'Hypecia Connect',
     locale: 'en_IN',
@@ -42,8 +43,8 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: 'summary_large_image',
-    title: 'Hypecia Connect — Infrastructure & AI Security Solutions',
-    description: 'Carrier-grade telecom, AI surveillance, green energy. Trusted by Airtel across 157+ sites.',
+    title: 'Hypecia Connect — Infrastructure, Security & IT Hardware Supply',
+    description: 'Carrier-grade telecom, AI surveillance, and IT hardware supply. Trusted by Airtel, supplying NVIDIA, Intel, and enterprise components.',
     images: ['https://hypeciaconnect.com/logo.webp'],
   },
   robots: {

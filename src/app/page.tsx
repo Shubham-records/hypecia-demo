@@ -109,48 +109,43 @@ export default function Home() {
       description: "Biometric, RFID, and integrated access management for secure facility operations",
       icon: "🔐",
       color: "from-indigo-400 to-indigo-600",
+    },
+    {
+      title: "IT Components & Enterprise Hardware",
+      description: "Ready inventory of DDR5 memory, GPUs, CPUs, chipsets, and storage solutions (SSDs & HDDs) from leading brands",
+      icon: "🖥️",
+      color: "from-emerald-400 to-teal-600",
     }
   ])
 
-  // Testimonials data
+  // Testimonials data - Expanded for marquee
   const testimonials = [
-    {
-      quote: "Hypecia delivers reliable, innovative solutions with technical excellence. Their expertise transformed our infrastructure.",
-      author: "Rajeev Sharma",
-      role: "Technical Director, Hypecia Connect Services",
-      initials: "RS"
-    },
-    {
-      quote: "Outstanding execution on our CCTV infrastructure project. 157 sites deployed flawlessly with zero downtime.",
-      author: "Vikram Singh",
-      role: "Operations Head, Airtel",
-      initials: "VS"
-    },
-    {
-      quote: "Their industrial automation solutions increased our efficiency by 40%. Truly a game-changer for our manufacturing unit.",
-      author: "Priya Sharma",
-      role: "Plant Manager, EPACK PREFAB",
-      initials: "PS"
-    },
-    {
-      quote: "Professional, punctual, and precise. Hypecia's team handled our complete MEP requirements with exceptional quality.",
-      author: "Amit Patel",
-      role: "",
-      initials: "AP"
-    },
-    {
-      quote: "Best-in-class security solutions with AI integration. Their 24/7 monitoring system gives us complete peace of mind.",
-      author: "Neha Gupta",
-      role: "",
-      initials: "NG"
-    },
-    {
-      quote: "From planning to execution, Hypecia exceeded expectations. Their green energy solutions reduced our costs by 35%.",
-      author: "Rajesh Kumar",
-      role: "",
-      initials: "RK"
-    }
-  ]
+    { quote: "Hypecia Connect delivered reliable, innovative hardware solutions with technical excellence. Their expertise completely transformed our enterprise infrastructure.", author: "Michael Chen", role: "CTO, TechSolutions", initials: "MC" },
+    { quote: "Outstanding execution on our CCTV infrastructure project. Over 150 sites deployed flawlessly with zero downtime and perfect synchronization.", author: "Sarah Jenkins", role: "Operations Director", initials: "SJ" },
+    { quote: "Their industrial automation solutions increased our efficiency by 40%. Truly a game-changer for our main manufacturing unit.", author: "Elena Rodriguez", role: "Plant Manager", initials: "ER" },
+    { quote: "Professional, punctual, and precise. The Hypecia team handled our complete MEP requirements with exceptional quality and attention to detail.", author: "David Thorne", role: "VP of Engineering", initials: "DT" },
+    { quote: "Best-in-class security solutions with AI integration. Their 24/7 monitoring system gives our nationwide branches complete peace of mind.", author: "Aisha Rahman", role: "Security Head", initials: "AR" },
+    { quote: "From planning to execution, Hypecia exceeded expectations. Their green energy solutions reduced our operational costs by nearly 35%.", author: "James Wilson", role: "Facility Director", initials: "JW" },
+    { quote: "The level of detail and precision they bring to IT hardware procurement is unmatched. Their responsiveness is exactly what our enterprise needed.", author: "Olivia Brooks", role: "Procurement Lead", initials: "OB" },
+    { quote: "Integrating their advanced network solutions helped us scale rapidly across multiple regions. Highly recommended for complex setups.", author: "Marcus Vance", role: "Head of Infrastructure", initials: "MV" },
+    { quote: "We saw immediate ROI after they revamped our data center cooling. Their HVAC implementation team was absolutely phenomenal.", author: "Robert Hayes", role: "Data Center Manager", initials: "RH" },
+    { quote: "Incredible support and flawless component supply chain. Our enterprise hardware upgrade was completed weeks ahead of schedule.", author: "Sophia Martinez", role: "IT Director", initials: "SM" },
+    { quote: "Their end-to-end service covers everything from hardware supply to installation. We no longer have to manage a dozen different vendors.", author: "Thomas Wright", role: "Operations Manager", initials: "TW" },
+    { quote: "Top-tier enterprise hardware supply. They managed our large-scale server and memory procurement seamlessly from start to finish.", author: "Kevin O'Connor", role: "Systems Architect", initials: "KO" }
+  ];
+
+  const getCardStyle = (index: number) => {
+    if (index % 5 === 0) return { bg: "bg-[#F5F5F5]", text: "text-black", border: "border border-black/10", star: "text-black", circle: "bg-black/10" };
+    if (index % 3 === 0) return { bg: "bg-[#111111]", text: "text-white", border: "", star: "text-[#EAE1D3]", circle: "bg-white/10" };
+    return { bg: "bg-[#222222]", text: "text-white", border: "", star: "text-[#EAE1D3]", circle: "bg-white/10" };
+  };
+
+  const getCardWidth = (quote: string) => {
+    const len = quote.length;
+    if (len < 100) return 290;
+    if (len < 140) return 340;
+    return 400;
+  };
 
   const handleLoaderComplete = () => {
     setStartFadeIn(true)
@@ -557,7 +552,7 @@ export default function Home() {
         })
       }
 
-      // ===== CLIENT TRUST SECTION - CIRCLE REVEAL (BLACK BG) =====
+      // ===== CLIENT TRUST SECTION - CIRCLE REVEAL + BLUR TEXT + SCATTERED BUBBLES =====
       if (clientTrustRef.current && circleRevealRef.current && clientContentRef.current) {
         const tl = gsap.timeline({
           scrollTrigger: {
@@ -574,134 +569,107 @@ export default function Home() {
           clipPath: 'circle(0% at 50% 50%)'
         })
 
+        // Step 1: Circle reveal
         tl.to(circleRevealRef.current, {
           clipPath: 'circle(100% at 50% 50%)',
           duration: 1,
           ease: 'power2.out'
         })
 
-        const clientItems = clientContentRef.current.querySelectorAll('.client-item')
+        // Step 2: Blur text animation for the heading (per-CHARACTER)
+        const trustTitle = clientContentRef.current.querySelector('.trust-blur-title')
+        if (trustTitle) {
+          const trustSplit = new SplitText(trustTitle, { type: 'chars' })
 
-        tl.from(clientItems, {
-          y: 100,
-          opacity: 0,
+          // Set initial state: each char is blurred + invisible + slightly offset
+          gsap.set(trustSplit.chars, {
+            opacity: 0,
+            filter: 'blur(14px)',
+            y: 20
+          })
+
+          // Animate each character sequentially: blur → clear
+          tl.to(trustSplit.chars, {
+            opacity: 1,
+            filter: 'blur(0px)',
+            y: 0,
+            stagger: 0.025,
+            duration: 0.5,
+            ease: 'power2.out'
+          }, '-=0.3')
+        }
+
+        // Step 3: Animate logo items — scale up from 0 with stagger from random directions
+        const clientBubbles = clientContentRef.current.querySelectorAll('.client-bubble')
+
+        gsap.set(clientBubbles, {
+          scale: 0,
+          opacity: 0
+        })
+
+        tl.to(clientBubbles, {
+          scale: 1,
+          opacity: 1,
           stagger: {
-            each: 0.1,
-            from: 'start',
-            ease: 'sine.inOut'
+            each: 0.06,
+            from: 'random'
           },
-          duration: 0.8,
-          ease: 'back.out(1.7)'
-        }, '-=0.3')
+          duration: 0.7,
+          ease: 'back.out(1.4)'
+        }, '-=0.4')
 
         tl.to({}, { duration: 0.5 })
+
+        // Step 4: Make each logo draggable — bounded to the section container
+        Draggable.create(clientBubbles, {
+          type: 'x,y',
+          bounds: clientContentRef.current,
+          cursor: 'grab',
+          activeCursor: 'grabbing',
+          zIndexBoost: true,
+        })
       }
 
-      // ===== TESTIMONIALS AUTO-SLIDE + DRAGGABLE (EVERY 2 SEC) =====
-      if (testimonialSectionRef.current && testimonialTrackRef.current) {
-        const track = testimonialTrackRef.current;
-        const cards = gsap.utils.toArray<HTMLElement>(".testimonial-card");
+      // ===== TESTIMONIALS CONTINUOUS MARQUEE =====
+      const marquee1 = document.querySelector('.marquee-track-1');
+      const marquee2 = document.querySelector('.marquee-track-2');
 
-        if (cards.length > 0) {
-          const cardWidth = cards[0].offsetWidth;
-          const total = cards.length;
-
-          // DUPLICATE cards for seamless loop
-          if (!track.hasAttribute("data-cloned")) {
-            track.innerHTML += track.innerHTML;
-            track.setAttribute("data-cloned", "true");
+      if (marquee1 && marquee2) {
+        gsap.to(marquee1, {
+          xPercent: -50,
+          repeat: -1,
+          duration: 40,
+          ease: "none"
+        });
+        
+        gsap.fromTo(marquee2, 
+          { xPercent: -50 },
+          {
+            xPercent: 0,
+            repeat: -1,
+            duration: 45,
+            ease: "none"
           }
+        );
+      }
 
-          let currentIndex = 0;
-          let isDragging = false;
-
-          // Function to slide to next testimonial
-          const slideToNext = () => {
-            if (isDragging) return; // Don't auto-slide while dragging
-
-            currentIndex++;
-
-            gsap.to(track, {
-              x: -(currentIndex * cardWidth),
-              duration: 0.5,
-              ease: "power3.inOut",
-              onComplete: () => {
-                // Reset to beginning when reaching the end of original set
-                if (currentIndex >= total) {
-                  currentIndex = 0;
-                  gsap.set(track, { x: 0 });
-                }
-              }
-            });
-          };
-
-          // Initialize Draggable
-          const draggableInstance = Draggable.create(track, {
-            type: "x",
-            inertia: true,
-            throwProps: true,
-            onDragStart: () => {
-              isDragging = true;
-              // Pause auto-slide while dragging
-              if (testimonialInterval.current) {
-                clearInterval(testimonialInterval.current);
-                testimonialInterval.current = null;
-              }
-            },
-            onDragEnd: function () {
-              const currentX = gsap.getProperty(track, "x") as number;
-
-              // Calculate which card we're closest to
-              const snapIndex = Math.round(Math.abs(currentX) / cardWidth);
-              const snapPosition = -(snapIndex * cardWidth);
-
-              // Animate to snapped position
-              gsap.to(track, {
-                x: snapPosition,
-                duration: 0.4,
-                ease: "power2.out",
-                onComplete: () => {
-                  isDragging = false;
-                  currentIndex = snapIndex;
-
-                  // Handle infinite loop wrapping
-                  if (currentIndex >= total) {
-                    currentIndex = 0;
-                    gsap.set(track, { x: 0 });
-                  } else if (currentIndex < 0) {
-                    currentIndex = total - 1;
-                    gsap.set(track, { x: -(currentIndex * cardWidth) });
-                  }
-
-                  // Resume auto-slide after 3 seconds of inactivity
-                  setTimeout(() => {
-                    if (!isDragging && !testimonialInterval.current) {
-                      testimonialInterval.current = setInterval(slideToNext, 2000);
-                    }
-                  }, 3000);
-                }
-              });
-            }
-          })[0];
-
-          // Start the interval - slide every 2 seconds
-          const intervalId = setInterval(slideToNext, 2000);
-          testimonialInterval.current = intervalId;
-
-          // Pause on hover
-          track.addEventListener('mouseenter', () => {
-            if (testimonialInterval.current && !isDragging) {
-              clearInterval(testimonialInterval.current);
-              testimonialInterval.current = null;
-            }
-          });
-
-          track.addEventListener('mouseleave', () => {
-            if (!testimonialInterval.current && !isDragging) {
-              testimonialInterval.current = setInterval(slideToNext, 2000);
-            }
-          });
-        }
+      // Testimonial title blur animation
+      if (testimonialSectionRef.current) {
+        const splitTestimonial = new SplitText(".testimonial-blur-title", { type: "chars" });
+        gsap.set(splitTestimonial.chars, { filter: "blur(14px)", opacity: 0, y: 20 });
+        
+        gsap.to(splitTestimonial.chars, {
+          scrollTrigger: {
+            trigger: testimonialSectionRef.current,
+            start: "top 70%",
+          },
+          filter: "blur(0px)",
+          opacity: 1,
+          y: 0,
+          stagger: 0.05,
+          duration: 0.8,
+          ease: "power2.out"
+        });
       }
 
       // ===== PROJECT SECTION - PIN → TITLE ANIMATE → CARDS ANIMATE → UNPIN =====
@@ -887,16 +855,16 @@ export default function Home() {
                   className="mb-6 text-5xl md:text-7xl font-bold leading-tight"
                   style={{ opacity: 0 }}
                 >
-                  The Infrastructure You Can Trust<br />
-                  <span>The Results You Demand</span>
+                  Next-Gen Infrastructure<br />
+                  <span>& Enterprise IT Supply</span>
                 </h2>
                 <p
                   ref={heroDescRef}
                   className="text-lg md:text-2xl text-white/90 max-w-4xl mx-auto leading-relaxed"
                   style={{ opacity: 0 }}
                 >
-                  Carrier-grade networks. AI-powered security. Industrial automation.<br />
-                  Trusted by tier-1 operators for mission-critical deployments.
+                  From carrier-grade security networks to mission-critical hardware.<br />
+                  Powering global enterprises with Tier-1 infrastructure and IT components.
                 </p>
               </div>
             </div>
@@ -906,43 +874,45 @@ export default function Home() {
         {/* STATS SECTION */}
         <section ref={statsRef} className="section-padding py-12 bg-light-gray relative overflow-hidden" style={{ minHeight: '40vh', alignContent: 'center' }}>
           <div className="container-custom">
-            <div className="flex flex-wrap items-center justify-center gap-8 md:gap-12 text-center">
-              <div className="stat-item flex items-center gap-3">
-                <span className="text-4xl md:text-5xl font-bold text-black flex items-baseline gap-1">
-                  <span className="sr-only">157+</span>
+            <div className="flex flex-wrap items-center justify-center gap-6 md:gap-8 text-center">
+              <div className="stat-item flex items-center gap-2">
+                <span className="text-3xl md:text-4xl font-bold text-black flex items-baseline gap-1">
+                  <span className="sr-only">150+</span>
                   <span ref={counter1Ref} aria-hidden="true">0</span>
                   <span aria-hidden="true">+</span>
                 </span>
-                <span className="text-lg md:text-xl text-gray-600">Sites Secured</span>
+                <span className="text-base md:text-lg text-gray-600">Enterprise Sites</span>
               </div>
 
-              <div className="hidden md:block w-px h-12 bg-gray-300" />
+              <div className="hidden md:block w-px h-10 bg-gray-300" />
 
-              <div className="stat-item flex items-center gap-3">
-                <span className="text-4xl md:text-5xl font-bold text-black flex items-baseline gap-1">
-                  <span className="sr-only">2400+</span>
+              <div className="stat-item flex items-center gap-2">
+                <span className="text-3xl md:text-4xl font-bold text-black flex items-baseline gap-1">
+                  <span className="sr-only">50k+</span>
                   <span ref={counter2Ref} aria-hidden="true">0</span>
-                  <span aria-hidden="true">+</span>
+                  <span aria-hidden="true">k+</span>
                 </span>
-                <span className="text-lg md:text-xl text-gray-600">CCTV Systems</span>
+                <span className="text-base md:text-lg text-gray-600">IT Components</span>
               </div>
 
-              <div className="hidden md:block w-px h-12 bg-gray-300" />
+              <div className="hidden md:block w-px h-10 bg-gray-300" />
 
-              <div className="stat-item flex items-center gap-3">
-                <span className="text-4xl md:text-5xl font-bold text-black flex items-baseline gap-1">
-                  <span className="sr-only">95%</span>
+              <div className="stat-item flex items-center gap-2">
+                <span className="text-3xl md:text-4xl font-bold text-black flex items-baseline gap-1">
+                  <span className="sr-only">99.9%</span>
                   <span ref={counter3Ref} aria-hidden="true">0</span>
                   <span aria-hidden="true">%</span>
                 </span>
-                <span className="text-lg md:text-xl text-gray-600">Uptime Delivered</span>
+                <span className="text-base md:text-lg text-gray-600">Systems Uptime</span>
               </div>
 
-              <div className="hidden md:block w-px h-12 bg-gray-300" />
+              <div className="hidden md:block w-px h-10 bg-gray-300" />
 
-              <div className="stat-item flex items-center gap-3">
-                <span className="text-lg md:text-xl text-gray-600">Trusted by</span>
-                <span className="text-4xl md:text-5xl font-bold text-black">Airtel</span>
+              <div className="stat-item flex items-center gap-2">
+                <span className="text-base md:text-lg text-gray-600">Trusted by</span>
+                <span className="text-3xl md:text-4xl font-bold text-black flex items-baseline gap-1">
+                  Tier-1 <span className="text-xl md:text-2xl">Brands</span>
+                </span>
               </div>
             </div>
           </div>
@@ -954,9 +924,9 @@ export default function Home() {
             <div className="grid lg:grid-cols-[3fr_2fr] gap-16 items-center">
               <div ref={aboutLeftRef}>
                 <h4 className="about-text headline-display text-balance text-gradient !leading-[1.1]">
-                  Your trusted partner for mission-critical infrastructure. Delivering carrier-grade
+                  Powering digital transformation globally. Delivering robust carrier-grade
                   networks, <br />
-                  <span className="text-gradient opacity-40">AI-powered security, and industrial automation.
+                  <span className="text-gradient opacity-40">AI-driven security, and enterprise IT hardware.
                     Proven at scale. Executed with precision.</span>
                 </h4>
               </div>
@@ -965,29 +935,29 @@ export default function Home() {
                 <div className="about-item flex items-start gap-4">
                   <CheckCircle className="text-green-500 flex-shrink-0 mt-2" size={28} />
                   <div>
-                    <h3 className="font-bold text-2xl mb-2">157+ Sites. Zero Compromise</h3>
-                    <p className="text-gray-600 text-lg">Successfully deployed across Airtel's MSC and TNG infrastructure</p>
+                    <h3 className="font-bold text-2xl mb-2">Carrier-Grade Infrastructure</h3>
+                    <p className="text-gray-600 text-lg">Successfully deployed comprehensive network and telecom solutions across Airtel, Tejas, and Nivetti environments.</p>
                   </div>
                 </div>
                 <div className="about-item flex items-start gap-4">
                   <CheckCircle className="text-green-500 flex-shrink-0 mt-2" size={28} />
                   <div>
-                    <h3 className="font-bold text-2xl mb-2">AI-Powered Security Solutions</h3>
-                    <p className="text-gray-600 text-lg">2,400+ cameras with intelligent analytics, facial recognition, and real-time threat detection</p>
+                    <h3 className="font-bold text-2xl mb-2">Enterprise IT Hardware Supply</h3>
+                    <p className="text-gray-600 text-lg">Ready inventory for global technology leaders including NVIDIA, Samsung, Micron, Intel, and Broadcom.</p>
                   </div>
                 </div>
                 <div className="about-item flex items-start gap-4">
                   <CheckCircle className="text-green-500 flex-shrink-0 mt-2" size={28} />
                   <div>
-                    <h3 className="font-bold text-2xl mb-2">40% Security Enhancement</h3>
-                    <p className="text-gray-600 text-lg">Proven reduction in site vulnerabilities with 95% uptime across all installations</p>
+                    <h3 className="font-bold text-2xl mb-2">AI-Powered Security</h3>
+                    <p className="text-gray-600 text-lg">Thousands of intelligent endpoints delivering real-time threat detection and zero-compromise operational continuity.</p>
                   </div>
                 </div>
                 <div className="about-item flex items-start gap-4">
                   <CheckCircle className="text-green-500 flex-shrink-0 mt-2" size={28} />
                   <div>
-                    <h3 className="font-bold text-2xl mb-2">End-to-End Lifecycle Support</h3>
-                    <p className="text-gray-600 text-lg">From design to deployment to 24/7 maintenance. We're with you every step</p>
+                    <h3 className="font-bold text-2xl mb-2">Core Processing & Storage</h3>
+                    <p className="text-gray-600 text-lg">Supplying mission-critical DDR5 memory, advanced GPUs/CPUs, and high-capacity storage systems.</p>
                   </div>
                 </div>
               </div>
@@ -1053,77 +1023,90 @@ export default function Home() {
                     </div>
                   </div>
                 ))}
-              </div>
+               </div>
             </div>
           </div>
         </section>
 
-        {/* CLIENT TRUST SECTION - BLACK BG */}
-        <section ref={clientTrustRef} className="section-padding bg-light-gray relative overflow-hidden" style={{ minHeight: '150vh' }}>
+        {/* CLIENT TRUST SECTION - BLACK BG, SCATTERED FLOATING LOGOS */}
+        <section ref={clientTrustRef} className="bg-light-gray relative overflow-hidden" style={{ height: '120vh' }}>
           <div
             ref={circleRevealRef}
             className="absolute inset-0 bg-black"
             style={{ clipPath: 'circle(0% at 50% 50%)' }}
           >
-            <div ref={clientContentRef} className="h-full flex items-center justify-center">
-              <div className="container-custom text-center">
-                <div className="max-w-5xl mx-auto mb-16 md:mb-20" style={{ marginTop: '-35%' }}>
-                  <h2 className="text-5xl md:text-7xl font-bold mb-2 text-white">
-                    Trusted by Industry Leaders
-                  </h2>
-                </div>
+            <div ref={clientContentRef} className="h-full w-full relative">
+              {/* Full-viewport scattered layout — exactly 120vh */}
+              <div className="relative w-full" style={{ height: '120vh' }}>
 
-                {/* Mobile: 2-Column Grid Layout, Desktop: Flex Layout */}
-                <div className="grid grid-cols-2 gap-8 md:flex md:flex-wrap md:items-center md:justify-center md:gap-x-16 md:gap-y-12 max-w-6xl mx-auto">
-                  {/* Airtel */}
-                  <div className="client-item flex flex-col items-center gap-4">
-                    <img
-                      src="/Airtel-Logo-PNG-High-Quality-Image.webp"
-                      alt="Airtel"
-                      className="h-16 md:h-20 w-auto object-contain"
-                    />
-                    <p className="text-sm text-gray-400">157+ Sites Deployed</p>
-                  </div>
-
-                  {/* Vertical divider */}
-                  <div className="client-item hidden md:block w-px h-16 bg-gray-600" />
-
-                  {/* EPACK PREFAB */}
-                  <div className="client-item flex flex-col items-center gap-4">
-                    <img
-                      src="/epack-logo.webp"
-                      alt="epack"
-                      className="h-16 md:h-20 w-auto object-contain"
-                    />
-                    <p className="text-sm text-gray-400">Premium Infrastructure Partner</p>
-                  </div>
-
-                  {/* Vertical divider */}
-                  <div className="client-item hidden md:block w-px h-16 bg-gray-600" />
-
-                  {/* Voltas */}
-                  <div className="client-item flex flex-col items-center gap-4 col-span-2 md:col-span-1">
-                    <img
-                      src="/voltas.webp"
-                      alt="Voltas"
-                      className="h-16 md:h-20 w-auto object-contain"
-                    />
-                    <p className="text-sm text-gray-400">HVAC Solutions Partner</p>
-                  </div>
-
-                  {/* Vertical divider (hidden on desktop) */}
-                  <div className="client-item hidden md:block lg:hidden w-px h-16 bg-gray-600" />
-
-                  {/* VVDN Technologies */}
-                  <div className="client-item flex flex-col items-center gap-4">
-                    <img
-                      src="/vvdn-logo.png"
-                      alt="VVDN Technologies"
-                      className="h-16 md:h-20 w-auto object-contain"
-                    />
-                    <p className="text-sm text-gray-400">Trusted Technology Partner</p>
+                {/* Center title — blur text animation */}
+                <div className="absolute inset-0 flex items-center justify-center z-10 pointer-events-none">
+                  <div className="text-center px-4 max-w-4xl" style={{ paddingBottom: '6%'}}>
+                    <h2 className="trust-blur-title text-4xl md:text-6xl lg:text-7xl font-bold text-white leading-tight">
+                      Trusted by Industry<br />Leaders
+                    </h2>
                   </div>
                 </div>
+
+                {/* Scattered logos — no container, raw images */}
+                {/* Top row */}
+                <div className="client-bubble absolute flex flex-col items-center gap-1 z-50 pointer-events-auto" style={{ top: '20%', left: '10%', cursor: 'grab' }}>
+                  <img src="/Airtel-Logo-PNG-High-Quality-Image.webp" alt="Airtel" style={{ height: 'clamp(36px, 5vh, 60px)', width: 'auto', objectFit: 'contain' }} />
+                  <p className="text-[9px] text-gray-400 text-center select-none">157+ Sites</p>
+                </div>
+
+                <div className="client-bubble absolute flex flex-col items-center gap-1 z-50 pointer-events-auto" style={{ top: '16%', left: '32%', cursor: 'grab' }}>
+                  <img src="/epack-logo.webp" alt="EPACK PREFAB" style={{ height: 'clamp(36px, 5vh, 60px)', width: 'auto', objectFit: 'contain' }} />
+                  <p className="text-[9px] text-gray-400 text-center select-none">Infrastructure</p>
+                </div>
+
+                <div className="client-bubble absolute flex flex-col items-center gap-1 z-50 pointer-events-auto" style={{ top: '19%', right: '29%', cursor: 'grab' }}>
+                  <img src="/voltas.webp" alt="Voltas" style={{ height: 'clamp(36px, 5vh, 60px)', width: 'auto', objectFit: 'contain' }} />
+                  <p className="text-[9px] text-gray-400 text-center select-none">HVAC</p>
+                </div>
+
+                <div className="client-bubble absolute flex flex-col items-center gap-1 z-50 pointer-events-auto" style={{ top: '19%', right: '8%', cursor: 'grab' }}>
+                  <img src="/vvdn-logo.png" alt="VVDN Technologies" style={{ height: 'clamp(36px, 5vh, 60px)', width: 'auto', objectFit: 'contain' }} />
+                  <p className="text-[9px] text-gray-400 text-center select-none">Technology</p>
+                </div>
+
+                {/* Middle row — flanking the title */}
+                <div className="client-bubble absolute flex flex-col items-center gap-1 z-50 pointer-events-auto" style={{ top: '36%', left: '7%', cursor: 'grab' }}>
+                  <img src="/Nivetti.webp" alt="Nivetti" style={{ height: 'clamp(32px, 4.5vh, 52px)', width: 'auto', objectFit: 'contain' }} />
+                  <p className="text-[9px] text-gray-400 text-center select-none">Networking</p>
+                </div>
+
+                <div className="client-bubble absolute flex flex-col items-center gap-1 z-50 pointer-events-auto" style={{ top: '39%', right: '8%', cursor: 'grab' }}>
+                  <img src="/tejas-networks.webp" alt="Tejas Networks" style={{ height: 'clamp(36px, 5vh, 60px)', width: 'auto', objectFit: 'contain' }} />
+                  <p className="text-[9px] text-gray-400 text-center select-none">Optical Network</p>
+                </div>
+
+                {/* Bottom row */}
+                <div className="client-bubble absolute flex flex-col items-center gap-1 z-50 pointer-events-auto" style={{ top: '59%', left: '11%', cursor: 'grab' }}>
+                  <img src="/nvidia.webp" alt="NVIDIA" style={{ height: 'clamp(36px, 5vh, 60px)', width: 'auto', objectFit: 'contain' }} />
+                  <p className="text-[9px] text-gray-400 text-center select-none">GPU & AI</p>
+                </div>
+
+                <div className="client-bubble absolute flex flex-col items-center gap-1 z-50 pointer-events-auto" style={{ top: '63%', left: '29%', cursor: 'grab' }}>
+                  <img src="/samsung.webp" alt="Samsung" style={{ height: 'clamp(36px, 5vh, 60px)', width: 'auto', objectFit: 'contain' }} />
+                  <p className="text-[9px] text-gray-400 text-center select-none">Memory</p>
+                </div>
+
+                <div className="client-bubble absolute flex flex-col items-center gap-1 z-50 pointer-events-auto" style={{ top: '65%', right: '29%', cursor: 'grab' }}>
+                  <img src="/intel.webp" alt="Intel" style={{ height: 'clamp(36px, 5vh, 60px)', width: 'auto', objectFit: 'contain' }} />
+                  <p className="text-[9px] text-gray-400 text-center select-none">Processors</p>
+                </div>
+
+                <div className="client-bubble absolute flex flex-col items-center gap-1 z-50 pointer-events-auto" style={{ top: '59%', right: '11%', cursor: 'grab' }}>
+                  <img src="/Micron.webp" alt="Micron" style={{ height: 'clamp(36px, 5vh, 60px)', width: 'auto', objectFit: 'contain' }} />
+                  <p className="text-[9px] text-gray-400 text-center select-none">DDR5</p>
+                </div>
+
+                <div className="client-bubble absolute flex flex-col items-center gap-1 z-50 pointer-events-auto" style={{ top: '71%', left: '45%', cursor: 'grab' }}>
+                  <img src="/Broadcom.webp" alt="Broadcom" style={{ height: 'clamp(36px, 5vh, 60px)', width: 'auto', objectFit: 'contain' }} />
+                  <p className="text-[9px] text-gray-400 text-center select-none">Semiconductors</p>
+                </div>
+
               </div>
             </div>
           </div>
@@ -1136,52 +1119,64 @@ export default function Home() {
           </div>
         </section>
 
-        {/* SECTION 5: CONVERSATIONAL TESTIMONIAL - Circle Reveal */}
-        <section ref={testimonialSectionRef} className="bg-light-gray relative overflow-hidden" style={{ minHeight: '100vh' }}>
-          <div
-            className="sticky top-0 h-screen flex items-center justify-center"
-            ref={(el) => {
-              if (el) {
-                el.dataset.testimonialReveal = 'true'
-              }
-            }}
-          >
-            <div
-              className="absolute inset-0 bg-light-gray flex items-center justify-center"
-              style={{ clipPath: 'none' }}
-            >
-              <div className="w-full h-full flex items-center justify-center">
-                <div className="relative overflow-hidden w-full">
-                  <div
-                    ref={testimonialTrackRef}
-                    className="flex items-center"
-                    style={{ width: `${testimonials.length * 100}vw` }}
-                  >
-                    {testimonials.map((testimonial, index) => (
-                      <div
-                        key={index}
-                        className="testimonial-card flex-shrink-0 px-4 md:px-8 flex items-center justify-center"
-                        style={{ width: '100vw', height: '100%' }}
-                      >
-                        <div className="max-w-4xl mx-auto text-center">
-                          <p className="text-2xl md:text-3xl lg:text-5xl font-bold leading-tight mb-8 px-4">
-                            "{testimonial.quote.split('.')[0]}.{' '}
-                            <span className="text-green-600">{testimonial.quote.split('.')[1] ? testimonial.quote.split('.')[1] + '."' : '"'}</span>
-                          </p>
-                          <div className="flex items-center justify-center gap-4">
-                            <div className="w-12 h-12 rounded-full bg-gradient-to-br from-blue-400 to-blue-600 flex items-center justify-center text-white text-lg font-black">
-                              {testimonial.initials}
-                            </div>
-                            <div className="text-left">
-                              <p className="font-bold">{testimonial.author}</p>
-                              <p className="text-gray-600 text-sm">{testimonial.role}</p>
-                            </div>
-                          </div>
+        {/* SECTION 5: TESTIMONIALS - CONTINUOUS MARQUEE */}
+        <section ref={testimonialSectionRef} className="bg-white pt-32 pb-20 relative overflow-hidden flex flex-col justify-center" style={{ minHeight: '80vh', top: '80%' }}>
+          <div className="mb-12 text-center px-4 relative z-10">
+            <h2 className="testimonial-blur-title text-3xl md:text-5xl lg:text-6xl font-bold text-gray-900 mb-4">
+              What Our Clients Say
+            </h2>
+          </div>
+          
+          <div className="flex flex-col gap-6 relative z-10 w-full overflow-hidden">
+            {/* Row 1 - Left to Right */}
+            <div className="flex whitespace-nowrap">
+              <div className="marquee-track-1 flex gap-6 w-max px-3">
+                {[...testimonials.slice(0, 6), ...testimonials.slice(0, 6)].map((testimonial, index) => {
+                  const originalIndex = index % 6;
+                  const style = getCardStyle(originalIndex);
+                  const cardWidth = getCardWidth(testimonial.quote);
+                  return (
+                    <div key={`row1-${index}`} className={`flex flex-col justify-between p-6 rounded-3xl shrink-0 ${style.bg} ${style.text} ${style.border}`} style={{ height: '270px', width: `${cardWidth}px` }}>
+                      <div>
+                        <div className={`flex ${style.star} mb-4 text-lg tracking-widest`}>★★★★★</div>
+                        <p className="text-sm md:text-base font-medium leading-relaxed whitespace-normal">"{testimonial.quote}"</p>
+                      </div>
+                      <div className="flex items-center gap-3 mt-4 pt-3 border-t border-current/10">
+                        <div className={`w-10 h-10 rounded-full ${style.circle} flex items-center justify-center font-bold text-base`}>{testimonial.initials}</div>
+                        <div>
+                          <p className="font-bold text-xs md:text-sm leading-tight">{testimonial.author}</p>
+                          <p className="opacity-60 text-[10px] mt-0.5 uppercase tracking-wider font-semibold">{testimonial.role}</p>
                         </div>
                       </div>
-                    ))}
-                  </div>
-                </div>
+                    </div>
+                  );
+                })}
+              </div>
+            </div>
+
+            {/* Row 2 - Right to Left */}
+            <div className="flex whitespace-nowrap">
+              <div className="marquee-track-2 flex gap-6 w-max px-3">
+                {[...testimonials.slice(6), ...testimonials.slice(6)].map((testimonial, index) => {
+                  const originalIndex = 6 + (index % 6);
+                  const style = getCardStyle(originalIndex);
+                  const cardWidth = getCardWidth(testimonial.quote);
+                  return (
+                    <div key={`row2-${index}`} className={`flex flex-col justify-between p-6 rounded-3xl shrink-0 ${style.bg} ${style.text} ${style.border}`} style={{ height: '270px', width: `${cardWidth}px` }}>
+                      <div>
+                        <div className={`flex ${style.star} mb-4 text-lg tracking-widest`}>★★★★★</div>
+                        <p className="text-sm md:text-base font-medium leading-relaxed whitespace-normal">"{testimonial.quote}"</p>
+                      </div>
+                      <div className="flex items-center gap-3 mt-4 pt-3 border-t border-current/10">
+                        <div className={`w-10 h-10 rounded-full ${style.circle} flex items-center justify-center font-bold text-base`}>{testimonial.initials}</div>
+                        <div>
+                          <p className="font-bold text-xs md:text-sm leading-tight">{testimonial.author}</p>
+                          <p className="opacity-60 text-[10px] mt-0.5 uppercase tracking-wider font-semibold">{testimonial.role}</p>
+                        </div>
+                      </div>
+                    </div>
+                  );
+                })}
               </div>
             </div>
           </div>
