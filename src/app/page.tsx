@@ -18,6 +18,14 @@ gsap.registerPlugin(SplitText, ScrollTrigger, Draggable)
 export default function Home() {
   const [showLoader, setShowLoader] = useState(true)
   const [startFadeIn, setStartFadeIn] = useState(false)
+  const [isMobile, setIsMobile] = useState(false)
+
+  useEffect(() => {
+    const handleResize = () => setIsMobile(window.innerWidth < 768)
+    handleResize()
+    window.addEventListener('resize', handleResize)
+    return () => window.removeEventListener('resize', handleResize)
+  }, [])
   const videoRef = useRef<HTMLVideoElement>(null)
   const heroBoxRef = useRef<HTMLDivElement>(null)
   const heroTitleRef = useRef<HTMLHeadingElement>(null)
@@ -872,46 +880,46 @@ export default function Home() {
         </section>
 
         {/* STATS SECTION */}
-        <section ref={statsRef} className="section-padding py-12 bg-light-gray relative overflow-hidden" style={{ minHeight: '40vh', alignContent: 'center' }}>
-          <div className="container-custom">
-            <div className="flex flex-wrap items-center justify-center gap-6 md:gap-8 text-center">
-              <div className="stat-item flex items-center gap-2">
+        <section ref={statsRef} className="section-padding py-12 bg-light-gray relative overflow-hidden max-md:!px-0" style={{ minHeight: '40vh', alignContent: 'center' }}>
+          <div className="container-custom max-md:!px-0">
+            <div className="grid grid-cols-2 md:flex md:flex-wrap md:items-center md:justify-center md:gap-8 text-center" style={isMobile ? { rowGap: '56px', columnGap: '0px' } : {}}>
+              <div className="stat-item flex flex-col md:flex-row items-center justify-center gap-1 md:gap-2">
                 <span className="text-3xl md:text-4xl font-bold text-black flex items-baseline gap-1">
                   <span className="sr-only">150+</span>
                   <span ref={counter1Ref} aria-hidden="true">0</span>
                   <span aria-hidden="true">+</span>
                 </span>
-                <span className="text-base md:text-lg text-gray-600">Enterprise Sites</span>
+                <span className="text-sm sm:text-base md:text-lg text-gray-600">Enterprise Sites</span>
               </div>
 
               <div className="hidden md:block w-px h-10 bg-gray-300" />
 
-              <div className="stat-item flex items-center gap-2">
+              <div className="stat-item flex flex-col md:flex-row items-center justify-center gap-1 md:gap-2">
                 <span className="text-3xl md:text-4xl font-bold text-black flex items-baseline gap-1">
                   <span className="sr-only">50k+</span>
                   <span ref={counter2Ref} aria-hidden="true">0</span>
                   <span aria-hidden="true">k+</span>
                 </span>
-                <span className="text-base md:text-lg text-gray-600">IT Components</span>
+                <span className="text-sm sm:text-base md:text-lg text-gray-600">IT Components</span>
               </div>
 
               <div className="hidden md:block w-px h-10 bg-gray-300" />
 
-              <div className="stat-item flex items-center gap-2">
+              <div className="stat-item flex flex-col md:flex-row items-center justify-center gap-1 md:gap-2">
                 <span className="text-3xl md:text-4xl font-bold text-black flex items-baseline gap-1">
                   <span className="sr-only">99.9%</span>
                   <span ref={counter3Ref} aria-hidden="true">0</span>
                   <span aria-hidden="true">%</span>
                 </span>
-                <span className="text-base md:text-lg text-gray-600">Systems Uptime</span>
+                <span className="text-sm sm:text-base md:text-lg text-gray-600">Systems Uptime</span>
               </div>
 
               <div className="hidden md:block w-px h-10 bg-gray-300" />
 
-              <div className="stat-item flex items-center gap-2">
-                <span className="text-base md:text-lg text-gray-600">Trusted by</span>
-                <span className="text-3xl md:text-4xl font-bold text-black flex items-baseline gap-1">
-                  Tier-1 <span className="text-xl md:text-2xl">Brands</span>
+              <div className="stat-item flex flex-col md:flex-row items-center justify-center gap-1 md:gap-2">
+                <span className="text-sm sm:text-base md:text-lg text-gray-600">Trusted by</span>
+                <span className="text-2xl sm:text-3xl md:text-4xl font-bold text-black flex items-baseline gap-1">
+                  Tier-1 <span className="text-lg sm:text-xl md:text-2xl">Brands</span>
                 </span>
               </div>
             </div>
@@ -921,7 +929,7 @@ export default function Home() {
         {/* SECTION 3: ABOUT US */}
         <section className="section-padding bg-light-gray md:min-h-[220vh] min-h-[auto]">
           <div ref={aboutContainerRef} className="container-custom">
-            <div className="grid lg:grid-cols-[3fr_2fr] gap-16 items-center">
+            <div className="grid lg:grid-cols-[3fr_2fr] gap-8 lg:gap-16 items-center">
               <div ref={aboutLeftRef}>
                 <h4 className="about-text headline-display text-balance text-gradient !leading-[1.1]">
                   Powering digital transformation globally. Delivering robust carrier-grade
@@ -931,33 +939,33 @@ export default function Home() {
                 </h4>
               </div>
 
-              <div ref={aboutRightRef} className="space-y-10">
-                <div className="about-item flex items-start gap-4">
-                  <CheckCircle className="text-green-500 flex-shrink-0 mt-2" size={28} />
+              <div ref={aboutRightRef} className="space-y-6 lg:space-y-10 mt-2 lg:mt-0">
+                <div className="about-item flex items-start gap-3 lg:gap-4">
+                  <CheckCircle className="text-green-500 flex-shrink-0 mt-1 lg:mt-2 w-5 h-5 lg:w-7 lg:h-7" />
                   <div>
-                    <h3 className="font-bold text-2xl mb-2">Carrier-Grade Infrastructure</h3>
-                    <p className="text-gray-600 text-lg">Successfully deployed comprehensive network and telecom solutions across Airtel, Tejas, and Nivetti environments.</p>
+                    <h3 className="font-bold text-lg lg:text-2xl mb-1 lg:mb-2">Carrier-Grade Infrastructure</h3>
+                    <p className="text-gray-600 text-sm lg:text-lg">Successfully deployed comprehensive network and telecom solutions across Airtel, Tejas, and Nivetti environments.</p>
                   </div>
                 </div>
-                <div className="about-item flex items-start gap-4">
-                  <CheckCircle className="text-green-500 flex-shrink-0 mt-2" size={28} />
+                <div className="about-item flex items-start gap-3 lg:gap-4">
+                  <CheckCircle className="text-green-500 flex-shrink-0 mt-1 lg:mt-2 w-5 h-5 lg:w-7 lg:h-7" />
                   <div>
-                    <h3 className="font-bold text-2xl mb-2">Enterprise IT Hardware Supply</h3>
-                    <p className="text-gray-600 text-lg">Ready inventory for global technology leaders including NVIDIA, Samsung, Micron, Intel, and Broadcom.</p>
+                    <h3 className="font-bold text-lg lg:text-2xl mb-1 lg:mb-2">Enterprise IT Hardware Supply</h3>
+                    <p className="text-gray-600 text-sm lg:text-lg">Ready inventory for global technology leaders including NVIDIA, Samsung, Micron, Intel, and Broadcom.</p>
                   </div>
                 </div>
-                <div className="about-item flex items-start gap-4">
-                  <CheckCircle className="text-green-500 flex-shrink-0 mt-2" size={28} />
+                <div className="about-item flex items-start gap-3 lg:gap-4">
+                  <CheckCircle className="text-green-500 flex-shrink-0 mt-1 lg:mt-2 w-5 h-5 lg:w-7 lg:h-7" />
                   <div>
-                    <h3 className="font-bold text-2xl mb-2">AI-Powered Security</h3>
-                    <p className="text-gray-600 text-lg">Thousands of intelligent endpoints delivering real-time threat detection and zero-compromise operational continuity.</p>
+                    <h3 className="font-bold text-lg lg:text-2xl mb-1 lg:mb-2">AI-Powered Security</h3>
+                    <p className="text-gray-600 text-sm lg:text-lg">Thousands of intelligent endpoints delivering real-time threat detection and zero-compromise operational continuity.</p>
                   </div>
                 </div>
-                <div className="about-item flex items-start gap-4">
-                  <CheckCircle className="text-green-500 flex-shrink-0 mt-2" size={28} />
+                <div className="about-item flex items-start gap-3 lg:gap-4">
+                  <CheckCircle className="text-green-500 flex-shrink-0 mt-1 lg:mt-2 w-5 h-5 lg:w-7 lg:h-7" />
                   <div>
-                    <h3 className="font-bold text-2xl mb-2">Core Processing & Storage</h3>
-                    <p className="text-gray-600 text-lg">Supplying mission-critical DDR5 memory, advanced GPUs/CPUs, and high-capacity storage systems.</p>
+                    <h3 className="font-bold text-lg lg:text-2xl mb-1 lg:mb-2">Core Processing & Storage</h3>
+                    <p className="text-gray-600 text-sm lg:text-lg">Supplying mission-critical DDR5 memory, advanced GPUs/CPUs, and high-capacity storage systems.</p>
                   </div>
                 </div>
               </div>
@@ -1050,61 +1058,61 @@ export default function Home() {
 
                 {/* Scattered logos — no container, raw images */}
                 {/* Top row */}
-                <div className="client-bubble absolute flex flex-col items-center gap-1 z-50 pointer-events-auto" style={{ top: '20%', left: '10%', cursor: 'grab' }}>
-                  <img src="/Airtel-Logo-PNG-High-Quality-Image.webp" alt="Airtel" style={{ height: 'clamp(36px, 5vh, 60px)', width: 'auto', objectFit: 'contain' }} />
-                  <p className="text-[9px] text-gray-400 text-center select-none">157+ Sites</p>
+                <div className="client-bubble absolute flex flex-col items-center gap-1 z-50 pointer-events-auto top-[24%] left-[8%] md:top-[20%] md:left-[10%] cursor-grab">
+                  <img src="/Airtel-Logo-PNG-High-Quality-Image.webp" alt="Airtel" className="h-7 sm:h-9 md:h-[clamp(36px,5vh,60px)] w-auto object-contain" />
+                  <p className="text-[7px] md:text-[9px] text-gray-400 text-center select-none">157+ Sites</p>
                 </div>
 
-                <div className="client-bubble absolute flex flex-col items-center gap-1 z-50 pointer-events-auto" style={{ top: '16%', left: '32%', cursor: 'grab' }}>
-                  <img src="/epack-logo.webp" alt="EPACK PREFAB" style={{ height: 'clamp(36px, 5vh, 60px)', width: 'auto', objectFit: 'contain' }} />
-                  <p className="text-[9px] text-gray-400 text-center select-none">Infrastructure</p>
+                <div className="client-bubble absolute flex flex-col items-center gap-1 z-50 pointer-events-auto top-[22%] right-[8%] md:top-[16%] md:left-[32%] md:right-auto cursor-grab">
+                  <img src="/epack-logo.webp" alt="EPACK PREFAB" className="h-7 sm:h-9 md:h-[clamp(36px,5vh,60px)] w-auto object-contain" />
+                  <p className="text-[7px] md:text-[9px] text-gray-400 text-center select-none">Infrastructure</p>
                 </div>
 
-                <div className="client-bubble absolute flex flex-col items-center gap-1 z-50 pointer-events-auto" style={{ top: '19%', right: '29%', cursor: 'grab' }}>
-                  <img src="/voltas.webp" alt="Voltas" style={{ height: 'clamp(36px, 5vh, 60px)', width: 'auto', objectFit: 'contain' }} />
-                  <p className="text-[9px] text-gray-400 text-center select-none">HVAC</p>
+                <div className="client-bubble absolute flex flex-col items-center gap-1 z-50 pointer-events-auto top-[32%] left-[25%] md:top-[19%] md:right-[29%] md:left-auto cursor-grab">
+                  <img src="/voltas.webp" alt="Voltas" className="h-7 sm:h-9 md:h-[clamp(36px,5vh,60px)] w-auto object-contain" />
+                  <p className="text-[7px] md:text-[9px] text-gray-400 text-center select-none">HVAC</p>
                 </div>
 
-                <div className="client-bubble absolute flex flex-col items-center gap-1 z-50 pointer-events-auto" style={{ top: '19%', right: '8%', cursor: 'grab' }}>
-                  <img src="/vvdn-logo.png" alt="VVDN Technologies" style={{ height: 'clamp(36px, 5vh, 60px)', width: 'auto', objectFit: 'contain' }} />
-                  <p className="text-[9px] text-gray-400 text-center select-none">Technology</p>
+                <div className="client-bubble absolute flex flex-col items-center gap-1 z-50 pointer-events-auto top-[30%] right-[25%] md:top-[19%] md:right-[8%] cursor-grab">
+                  <img src="/vvdn-logo.png" alt="VVDN Technologies" className="h-7 sm:h-9 md:h-[clamp(36px,5vh,60px)] w-auto object-contain" />
+                  <p className="text-[7px] md:text-[9px] text-gray-400 text-center select-none">Technology</p>
                 </div>
 
                 {/* Middle row — flanking the title */}
-                <div className="client-bubble absolute flex flex-col items-center gap-1 z-50 pointer-events-auto" style={{ top: '36%', left: '7%', cursor: 'grab' }}>
-                  <img src="/Nivetti.webp" alt="Nivetti" style={{ height: 'clamp(32px, 4.5vh, 52px)', width: 'auto', objectFit: 'contain' }} />
-                  <p className="text-[9px] text-gray-400 text-center select-none">Networking</p>
+                <div className="client-bubble absolute flex flex-col items-center gap-1 z-50 pointer-events-auto top-[40%] left-[8%] md:top-[36%] md:left-[7%] cursor-grab">
+                  <img src="/Nivetti.webp" alt="Nivetti" className="h-6 sm:h-8 md:h-[clamp(32px,4.5vh,52px)] w-auto object-contain" />
+                  <p className="text-[7px] md:text-[9px] text-gray-400 text-center select-none">Networking</p>
                 </div>
 
-                <div className="client-bubble absolute flex flex-col items-center gap-1 z-50 pointer-events-auto" style={{ top: '39%', right: '8%', cursor: 'grab' }}>
-                  <img src="/tejas-networks.webp" alt="Tejas Networks" style={{ height: 'clamp(36px, 5vh, 60px)', width: 'auto', objectFit: 'contain' }} />
-                  <p className="text-[9px] text-gray-400 text-center select-none">Optical Network</p>
+                <div className="client-bubble absolute flex flex-col items-center gap-1 z-50 pointer-events-auto top-[38%] right-[8%] md:top-[39%] md:right-[8%] cursor-grab">
+                  <img src="/tejas-networks.webp" alt="Tejas Networks" className="h-7 sm:h-9 md:h-[clamp(36px,5vh,60px)] w-auto object-contain" />
+                  <p className="text-[7px] md:text-[9px] text-gray-400 text-center select-none">Optical Network</p>
                 </div>
 
                 {/* Bottom row */}
-                <div className="client-bubble absolute flex flex-col items-center gap-1 z-50 pointer-events-auto" style={{ top: '59%', left: '11%', cursor: 'grab' }}>
-                  <img src="/nvidia.webp" alt="NVIDIA" style={{ height: 'clamp(36px, 5vh, 60px)', width: 'auto', objectFit: 'contain' }} />
-                  <p className="text-[9px] text-gray-400 text-center select-none">GPU & AI</p>
+                <div className="client-bubble absolute flex flex-col items-center gap-1 z-50 pointer-events-auto top-[56%] left-[20%] md:top-[59%] md:left-[11%] cursor-grab">
+                  <img src="/nvidia.webp" alt="NVIDIA" className="h-7 sm:h-9 md:h-[clamp(36px,5vh,60px)] w-auto object-contain" />
+                  <p className="text-[7px] md:text-[9px] text-gray-400 text-center select-none">GPU & AI</p>
                 </div>
 
-                <div className="client-bubble absolute flex flex-col items-center gap-1 z-50 pointer-events-auto" style={{ top: '63%', left: '29%', cursor: 'grab' }}>
-                  <img src="/samsung.webp" alt="Samsung" style={{ height: 'clamp(36px, 5vh, 60px)', width: 'auto', objectFit: 'contain' }} />
-                  <p className="text-[9px] text-gray-400 text-center select-none">Memory</p>
+                <div className="client-bubble absolute flex flex-col items-center gap-1 z-50 pointer-events-auto top-[58%] right-[20%] md:top-[63%] md:left-[29%] md:right-auto cursor-grab">
+                  <img src="/samsung.webp" alt="Samsung" className="h-7 sm:h-9 md:h-[clamp(36px,5vh,60px)] w-auto object-contain" />
+                  <p className="text-[7px] md:text-[9px] text-gray-400 text-center select-none">Memory</p>
                 </div>
 
-                <div className="client-bubble absolute flex flex-col items-center gap-1 z-50 pointer-events-auto" style={{ top: '65%', right: '29%', cursor: 'grab' }}>
-                  <img src="/intel.webp" alt="Intel" style={{ height: 'clamp(36px, 5vh, 60px)', width: 'auto', objectFit: 'contain' }} />
-                  <p className="text-[9px] text-gray-400 text-center select-none">Processors</p>
+                <div className="client-bubble absolute flex flex-col items-center gap-1 z-50 pointer-events-auto top-[66%] left-[10%] md:top-[65%] md:right-[29%] md:left-auto cursor-grab">
+                  <img src="/intel.webp" alt="Intel" className="h-7 sm:h-9 md:h-[clamp(36px,5vh,60px)] w-auto object-contain" />
+                  <p className="text-[7px] md:text-[9px] text-gray-400 text-center select-none">Processors</p>
                 </div>
 
-                <div className="client-bubble absolute flex flex-col items-center gap-1 z-50 pointer-events-auto" style={{ top: '59%', right: '11%', cursor: 'grab' }}>
-                  <img src="/Micron.webp" alt="Micron" style={{ height: 'clamp(36px, 5vh, 60px)', width: 'auto', objectFit: 'contain' }} />
-                  <p className="text-[9px] text-gray-400 text-center select-none">DDR5</p>
+                <div className="client-bubble absolute flex flex-col items-center gap-1 z-50 pointer-events-auto top-[64%] right-[10%] md:top-[59%] md:right-[11%] cursor-grab">
+                  <img src="/Micron.webp" alt="Micron" className="h-7 sm:h-9 md:h-[clamp(36px,5vh,60px)] w-auto object-contain" />
+                  <p className="text-[7px] md:text-[9px] text-gray-400 text-center select-none">DDR5</p>
                 </div>
 
-                <div className="client-bubble absolute flex flex-col items-center gap-1 z-50 pointer-events-auto" style={{ top: '71%', left: '45%', cursor: 'grab' }}>
-                  <img src="/Broadcom.webp" alt="Broadcom" style={{ height: 'clamp(36px, 5vh, 60px)', width: 'auto', objectFit: 'contain' }} />
-                  <p className="text-[9px] text-gray-400 text-center select-none">Semiconductors</p>
+                <div className="client-bubble absolute flex flex-col items-center gap-1 z-50 pointer-events-auto top-[74%] left-[50%] -translate-x-1/2 md:top-[71%] md:left-[45%] md:translate-x-0 cursor-grab">
+                  <img src="/Broadcom.webp" alt="Broadcom" className="h-7 sm:h-9 md:h-[clamp(36px,5vh,60px)] w-auto object-contain" />
+                  <p className="text-[7px] md:text-[9px] text-gray-400 text-center select-none">Semiconductors</p>
                 </div>
 
               </div>
@@ -1121,34 +1129,34 @@ export default function Home() {
 
         {/* SECTION 5: TESTIMONIALS - CONTINUOUS MARQUEE */}
         <section ref={testimonialSectionRef} className="bg-white pt-32 pb-20 relative overflow-hidden flex flex-col justify-center" style={{ minHeight: '80vh', top: '80%' }}>
-          <div className="text-center px-4 relative z-10">
+          <div className="text-center px-4 relative z-10 mt-12 md:mt-0">
             <h2 className="testimonial-blur-title text-3xl md:text-5xl lg:text-6xl font-bold text-gray-900">
               What Our Clients Say
             </h2>
           </div>
           
-          <div className="flex flex-col gap-8 relative z-10 w-full -mt-16" style={{ perspective: "1200px" }}>
+          <div className="flex flex-col gap-8 relative z-10 w-full -mt-4 md:-mt-16" style={{ perspective: "1200px" }}>
             <div className="flex flex-col gap-12 w-full items-center justify-center" style={{ transformStyle: "preserve-3d", transform: "translateZ(300px)" }}>
               {/* Row 1 - Left to Right */}
-              <div className="relative w-full" style={{ height: '350px', transformStyle: 'preserve-3d' }}>
+              <div className="relative w-full" style={{ height: isMobile ? '280px' : '350px', transformStyle: 'preserve-3d' }}>
                 <div className="marquee-track-1 absolute inset-0" style={{ transformStyle: 'preserve-3d' }}>
                   {[...testimonials.slice(0, 6), ...testimonials.slice(0, 6)].map((testimonial, index) => {
                     const originalIndex = index % 6;
                     const style = getCardStyle(originalIndex);
                     return (
-                      <div key={`row1-${index}`} className={`absolute top-0 left-1/2 -translate-x-1/2 flex flex-col justify-between p-8 rounded-3xl shrink-0 ${style.bg} ${style.text} ${style.border}`} 
+                      <div key={`row1-${index}`} className={`absolute top-0 left-1/2 -translate-x-1/2 flex flex-col justify-between p-6 md:p-8 rounded-3xl shrink-0 ${style.bg} ${style.text} ${style.border}`} 
                            style={{ 
-                             height: '350px', 
-                             width: '455px',
-                             transform: `rotateY(${index * 30}deg) translateZ(-900px)`,
+                             height: isMobile ? '280px' : '350px', 
+                             width: isMobile ? '340px' : '455px',
+                             transform: `rotateY(${index * 30}deg) translateZ(${isMobile ? '-650px' : '-900px'})`,
                              backfaceVisibility: 'hidden'
                            }}>
                         <div>
-                          <div className={`flex ${style.star} mb-5 text-xl tracking-widest`}>★★★★★</div>
+                          <div className={`flex ${style.star} mb-3 md:mb-5 text-lg md:text-xl tracking-widest`}>★★★★★</div>
                           <p className="text-base md:text-lg font-medium leading-relaxed whitespace-normal">"{testimonial.quote}"</p>
                         </div>
-                        <div className="flex items-center gap-4 mt-6 pt-4 border-t border-current/10">
-                          <div className={`w-12 h-12 rounded-full ${style.circle} flex items-center justify-center font-bold text-lg`}>{testimonial.initials}</div>
+                        <div className="flex items-center gap-4 mt-4 md:mt-6 pt-4 border-t border-current/10">
+                          <div className={`w-10 h-10 md:w-12 md:h-12 rounded-full ${style.circle} flex items-center justify-center font-bold text-base md:text-lg`}>{testimonial.initials}</div>
                           <div>
                             <p className="font-bold text-sm md:text-base leading-tight">{testimonial.author}</p>
                             <p className="opacity-60 text-xs mt-1 uppercase tracking-wider font-semibold">{testimonial.role}</p>
@@ -1161,25 +1169,25 @@ export default function Home() {
               </div>
 
               {/* Row 2 - Right to Left */}
-              <div className="relative w-full" style={{ height: '350px', transformStyle: 'preserve-3d' }}>
+              <div className="relative w-full" style={{ height: isMobile ? '280px' : '350px', transformStyle: 'preserve-3d' }}>
                 <div className="marquee-track-2 absolute inset-0" style={{ transformStyle: 'preserve-3d' }}>
                   {[...testimonials.slice(6), ...testimonials.slice(6)].map((testimonial, index) => {
                     const originalIndex = 6 + (index % 6);
                     const style = getCardStyle(originalIndex);
                     return (
-                      <div key={`row2-${index}`} className={`absolute top-0 left-1/2 -translate-x-1/2 flex flex-col justify-between p-8 rounded-3xl shrink-0 ${style.bg} ${style.text} ${style.border}`} 
+                      <div key={`row2-${index}`} className={`absolute top-0 left-1/2 -translate-x-1/2 flex flex-col justify-between p-6 md:p-8 rounded-3xl shrink-0 ${style.bg} ${style.text} ${style.border}`} 
                            style={{ 
-                             height: '350px', 
-                             width: '455px',
-                             transform: `rotateY(${index * 30}deg) translateZ(-900px)`,
+                             height: isMobile ? '280px' : '350px', 
+                             width: isMobile ? '340px' : '455px',
+                             transform: `rotateY(${index * 30}deg) translateZ(${isMobile ? '-650px' : '-900px'})`,
                              backfaceVisibility: 'hidden'
                            }}>
                         <div>
-                          <div className={`flex ${style.star} mb-5 text-xl tracking-widest`}>★★★★★</div>
+                          <div className={`flex ${style.star} mb-3 md:mb-5 text-lg md:text-xl tracking-widest`}>★★★★★</div>
                           <p className="text-base md:text-lg font-medium leading-relaxed whitespace-normal">"{testimonial.quote}"</p>
                         </div>
-                        <div className="flex items-center gap-4 mt-6 pt-4 border-t border-current/10">
-                          <div className={`w-12 h-12 rounded-full ${style.circle} flex items-center justify-center font-bold text-lg`}>{testimonial.initials}</div>
+                        <div className="flex items-center gap-4 mt-4 md:mt-6 pt-4 border-t border-current/10">
+                          <div className={`w-10 h-10 md:w-12 md:h-12 rounded-full ${style.circle} flex items-center justify-center font-bold text-base md:text-lg`}>{testimonial.initials}</div>
                           <div>
                             <p className="font-bold text-sm md:text-base leading-tight">{testimonial.author}</p>
                             <p className="opacity-60 text-xs mt-1 uppercase tracking-wider font-semibold">{testimonial.role}</p>
