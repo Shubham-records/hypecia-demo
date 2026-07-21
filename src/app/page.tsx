@@ -636,18 +636,18 @@ export default function Home() {
 
       if (marquee1 && marquee2) {
         gsap.to(marquee1, {
-          xPercent: -50,
+          rotationY: 360,
           repeat: -1,
-          duration: 40,
+          duration: 80,
           ease: "none"
         });
         
         gsap.fromTo(marquee2, 
-          { xPercent: -50 },
+          { rotationY: 360 },
           {
-            xPercent: 0,
+            rotationY: 0,
             repeat: -1,
-            duration: 45,
+            duration: 90,
             ease: "none"
           }
         );
@@ -1121,62 +1121,74 @@ export default function Home() {
 
         {/* SECTION 5: TESTIMONIALS - CONTINUOUS MARQUEE */}
         <section ref={testimonialSectionRef} className="bg-white pt-32 pb-20 relative overflow-hidden flex flex-col justify-center" style={{ minHeight: '80vh', top: '80%' }}>
-          <div className="mb-12 text-center px-4 relative z-10">
-            <h2 className="testimonial-blur-title text-3xl md:text-5xl lg:text-6xl font-bold text-gray-900 mb-4">
+          <div className="text-center px-4 relative z-10">
+            <h2 className="testimonial-blur-title text-3xl md:text-5xl lg:text-6xl font-bold text-gray-900">
               What Our Clients Say
             </h2>
           </div>
           
-          <div className="flex flex-col gap-6 relative z-10 w-full overflow-hidden">
-            {/* Row 1 - Left to Right */}
-            <div className="flex whitespace-nowrap">
-              <div className="marquee-track-1 flex gap-6 w-max px-3">
-                {[...testimonials.slice(0, 6), ...testimonials.slice(0, 6)].map((testimonial, index) => {
-                  const originalIndex = index % 6;
-                  const style = getCardStyle(originalIndex);
-                  const cardWidth = getCardWidth(testimonial.quote);
-                  return (
-                    <div key={`row1-${index}`} className={`flex flex-col justify-between p-6 rounded-3xl shrink-0 ${style.bg} ${style.text} ${style.border}`} style={{ height: '270px', width: `${cardWidth}px` }}>
-                      <div>
-                        <div className={`flex ${style.star} mb-4 text-lg tracking-widest`}>★★★★★</div>
-                        <p className="text-sm md:text-base font-medium leading-relaxed whitespace-normal">"{testimonial.quote}"</p>
-                      </div>
-                      <div className="flex items-center gap-3 mt-4 pt-3 border-t border-current/10">
-                        <div className={`w-10 h-10 rounded-full ${style.circle} flex items-center justify-center font-bold text-base`}>{testimonial.initials}</div>
+          <div className="flex flex-col gap-8 relative z-10 w-full -mt-16" style={{ perspective: "1200px" }}>
+            <div className="flex flex-col gap-12 w-full items-center justify-center" style={{ transformStyle: "preserve-3d", transform: "translateZ(300px)" }}>
+              {/* Row 1 - Left to Right */}
+              <div className="relative w-full" style={{ height: '350px', transformStyle: 'preserve-3d' }}>
+                <div className="marquee-track-1 absolute inset-0" style={{ transformStyle: 'preserve-3d' }}>
+                  {[...testimonials.slice(0, 6), ...testimonials.slice(0, 6)].map((testimonial, index) => {
+                    const originalIndex = index % 6;
+                    const style = getCardStyle(originalIndex);
+                    return (
+                      <div key={`row1-${index}`} className={`absolute top-0 left-1/2 -translate-x-1/2 flex flex-col justify-between p-8 rounded-3xl shrink-0 ${style.bg} ${style.text} ${style.border}`} 
+                           style={{ 
+                             height: '350px', 
+                             width: '455px',
+                             transform: `rotateY(${index * 30}deg) translateZ(-900px)`,
+                             backfaceVisibility: 'hidden'
+                           }}>
                         <div>
-                          <p className="font-bold text-xs md:text-sm leading-tight">{testimonial.author}</p>
-                          <p className="opacity-60 text-[10px] mt-0.5 uppercase tracking-wider font-semibold">{testimonial.role}</p>
+                          <div className={`flex ${style.star} mb-5 text-xl tracking-widest`}>★★★★★</div>
+                          <p className="text-base md:text-lg font-medium leading-relaxed whitespace-normal">"{testimonial.quote}"</p>
+                        </div>
+                        <div className="flex items-center gap-4 mt-6 pt-4 border-t border-current/10">
+                          <div className={`w-12 h-12 rounded-full ${style.circle} flex items-center justify-center font-bold text-lg`}>{testimonial.initials}</div>
+                          <div>
+                            <p className="font-bold text-sm md:text-base leading-tight">{testimonial.author}</p>
+                            <p className="opacity-60 text-xs mt-1 uppercase tracking-wider font-semibold">{testimonial.role}</p>
+                          </div>
                         </div>
                       </div>
-                    </div>
-                  );
-                })}
+                    );
+                  })}
+                </div>
               </div>
-            </div>
 
-            {/* Row 2 - Right to Left */}
-            <div className="flex whitespace-nowrap">
-              <div className="marquee-track-2 flex gap-6 w-max px-3">
-                {[...testimonials.slice(6), ...testimonials.slice(6)].map((testimonial, index) => {
-                  const originalIndex = 6 + (index % 6);
-                  const style = getCardStyle(originalIndex);
-                  const cardWidth = getCardWidth(testimonial.quote);
-                  return (
-                    <div key={`row2-${index}`} className={`flex flex-col justify-between p-6 rounded-3xl shrink-0 ${style.bg} ${style.text} ${style.border}`} style={{ height: '270px', width: `${cardWidth}px` }}>
-                      <div>
-                        <div className={`flex ${style.star} mb-4 text-lg tracking-widest`}>★★★★★</div>
-                        <p className="text-sm md:text-base font-medium leading-relaxed whitespace-normal">"{testimonial.quote}"</p>
-                      </div>
-                      <div className="flex items-center gap-3 mt-4 pt-3 border-t border-current/10">
-                        <div className={`w-10 h-10 rounded-full ${style.circle} flex items-center justify-center font-bold text-base`}>{testimonial.initials}</div>
+              {/* Row 2 - Right to Left */}
+              <div className="relative w-full" style={{ height: '350px', transformStyle: 'preserve-3d' }}>
+                <div className="marquee-track-2 absolute inset-0" style={{ transformStyle: 'preserve-3d' }}>
+                  {[...testimonials.slice(6), ...testimonials.slice(6)].map((testimonial, index) => {
+                    const originalIndex = 6 + (index % 6);
+                    const style = getCardStyle(originalIndex);
+                    return (
+                      <div key={`row2-${index}`} className={`absolute top-0 left-1/2 -translate-x-1/2 flex flex-col justify-between p-8 rounded-3xl shrink-0 ${style.bg} ${style.text} ${style.border}`} 
+                           style={{ 
+                             height: '350px', 
+                             width: '455px',
+                             transform: `rotateY(${index * 30}deg) translateZ(-900px)`,
+                             backfaceVisibility: 'hidden'
+                           }}>
                         <div>
-                          <p className="font-bold text-xs md:text-sm leading-tight">{testimonial.author}</p>
-                          <p className="opacity-60 text-[10px] mt-0.5 uppercase tracking-wider font-semibold">{testimonial.role}</p>
+                          <div className={`flex ${style.star} mb-5 text-xl tracking-widest`}>★★★★★</div>
+                          <p className="text-base md:text-lg font-medium leading-relaxed whitespace-normal">"{testimonial.quote}"</p>
+                        </div>
+                        <div className="flex items-center gap-4 mt-6 pt-4 border-t border-current/10">
+                          <div className={`w-12 h-12 rounded-full ${style.circle} flex items-center justify-center font-bold text-lg`}>{testimonial.initials}</div>
+                          <div>
+                            <p className="font-bold text-sm md:text-base leading-tight">{testimonial.author}</p>
+                            <p className="opacity-60 text-xs mt-1 uppercase tracking-wider font-semibold">{testimonial.role}</p>
+                          </div>
                         </div>
                       </div>
-                    </div>
-                  );
-                })}
+                    );
+                  })}
+                </div>
               </div>
             </div>
           </div>
