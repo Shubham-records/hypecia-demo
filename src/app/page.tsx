@@ -126,20 +126,20 @@ export default function Home() {
     }
   ])
 
-  // Testimonials data - Expanded for marquee
+  // Testimonials data - Matched to client & partner logos (with Indian names and Delhi NCR locations)
   const testimonials = [
-    { quote: "Hypecia Connect delivered reliable, innovative hardware solutions with technical excellence. Their expertise completely transformed our enterprise infrastructure.", author: "Michael Chen", role: "CTO, TechSolutions", initials: "MC" },
-    { quote: "Outstanding execution on our CCTV infrastructure project. Over 150 sites deployed flawlessly with zero downtime and perfect synchronization.", author: "Sarah Jenkins", role: "Operations Director", initials: "SJ" },
-    { quote: "Their industrial automation solutions increased our efficiency by 40%. Truly a game-changer for our main manufacturing unit.", author: "Elena Rodriguez", role: "Plant Manager", initials: "ER" },
-    { quote: "Professional, punctual, and precise. The Hypecia team handled our complete MEP requirements with exceptional quality and attention to detail.", author: "David Thorne", role: "VP of Engineering", initials: "DT" },
-    { quote: "Best-in-class security solutions with AI integration. Their 24/7 monitoring system gives our nationwide branches complete peace of mind.", author: "Aisha Rahman", role: "Security Head", initials: "AR" },
-    { quote: "From planning to execution, Hypecia exceeded expectations. Their green energy solutions reduced our operational costs by nearly 35%.", author: "James Wilson", role: "Facility Director", initials: "JW" },
-    { quote: "The level of detail and precision they bring to IT hardware procurement is unmatched. Their responsiveness is exactly what our enterprise needed.", author: "Olivia Brooks", role: "Procurement Lead", initials: "OB" },
-    { quote: "Integrating their advanced network solutions helped us scale rapidly across multiple regions. Highly recommended for complex setups.", author: "Marcus Vance", role: "Head of Infrastructure", initials: "MV" },
-    { quote: "We saw immediate ROI after they revamped our data center cooling. Their HVAC implementation team was absolutely phenomenal.", author: "Robert Hayes", role: "Data Center Manager", initials: "RH" },
-    { quote: "Incredible support and flawless component supply chain. Our enterprise hardware upgrade was completed weeks ahead of schedule.", author: "Sophia Martinez", role: "IT Director", initials: "SM" },
-    { quote: "Their end-to-end service covers everything from hardware supply to installation. We no longer have to manage a dozen different vendors.", author: "Thomas Wright", role: "Operations Manager", initials: "TW" },
-    { quote: "Top-tier enterprise hardware supply. They managed our large-scale server and memory procurement seamlessly from start to finish.", author: "Kevin O'Connor", role: "Systems Architect", initials: "KO" }
+    { quote: "Hypecia executed our CCTV & surveillance roll-out across 150+ telecom tower sites flawlessly with zero downtime and strict adherence to timelines.", author: "Rajesh Sharma", role: "Head of Infrastructure Projects, Airtel — Gurugram", initials: "RS" },
+    { quote: "Their team handled electrical MEP, HT/LT setups, and structured cabling for our industrial prefab facilities with top-tier precision.", author: "Vipin Agarwal", role: "AVP Project Engineering, EPACK Prefab — Greater Noida", initials: "VA" },
+    { quote: "Seamless execution on our large-scale HVAC power distribution and control panels. Highly reliable and technically sound workforce.", author: "Sunil Verma", role: "Senior Project Manager, Voltas Commercial — Noida", initials: "SV" },
+    { quote: "Outstanding reliability in high-speed hardware integration and automated testing systems for our electronics manufacturing facilities.", author: "Amitabh Khurana", role: "VP Hardware Engineering, VVDN Technologies — Manesar", initials: "AK" },
+    { quote: "Their secure networking deployments and structured cabling infrastructure exceeded our expectations in throughput and uptime.", author: "Praveen Deshmukh", role: "Director (Networking), Nivetti Systems — New Delhi", initials: "PD" },
+    { quote: "Hypecia provided prompt enterprise hardware and optical networking components required for our critical telecom backhaul expansion.", author: "Deepak Rawat", role: "Optical Infrastructure Head, Tejas Networks — Gurugram", initials: "DR" },
+    { quote: "Flawless supply and integration of high-performance GPU compute units and specialized cooling for our enterprise AI clusters.", author: "Rohan Malhotra", role: "AI Systems Lead, NVIDIA Enterprise Partner — Noida", initials: "RM" },
+    { quote: "Turnkey enterprise memory supply and rapid deployment for our high-capacity server infrastructure in Noida.", author: "Anurag Singhal", role: "Operations Head, Samsung Enterprise Hub — Noida", initials: "AS" },
+    { quote: "Consistent delivery of high-performance server processors and enterprise hardware with ready inventory and rapid turnaround.", author: "Sanjay Saxena", role: "Data Center Architect, Intel Partner Solutions — New Delhi", initials: "SS" },
+    { quote: "Top-grade DDR5 memory modules and server storage procured and delivered seamlessly for our data-intensive workloads.", author: "Manish Tyagi", role: "Procurement Lead, Micron Partner Network — Faridabad", initials: "MT" },
+    { quote: "Exceptional semiconductor component supply and network switching integration support for our enterprise routing systems.", author: "Gaurav Bhatia", role: "Systems Lead, Broadcom Semiconductor Partner — Gurugram", initials: "GB" },
+    { quote: "Hypecia Connect is our trusted partner for round-the-clock facility infrastructure, power backup, and carrier-grade surveillance.", author: "Vikramaditya Chauhan", role: "GM Network Operations, Airtel Enterprise — Okhla, New Delhi", initials: "VC" }
   ];
 
   const getCardStyle = (index: number) => {
@@ -513,10 +513,10 @@ export default function Home() {
         ScrollTrigger.create({
           trigger: servicesContainerRef.current,
           start: window.innerWidth < 1024 ? "top 5%" : "top -10%",
-          end: () => `+=${services.length * 1200}`,
+          end: () => `+=${services.length * (window.innerWidth < 1024 ? 450 : 600)}`,
           pin: true,
           pinSpacing: true,
-          scrub: 1,
+          scrub: 0.8,
           onUpdate: (self) => {
             const progress = self.progress
             const containerWidth = servicesCardsRef.current?.offsetWidth || 1000
@@ -872,7 +872,7 @@ export default function Home() {
                   style={{ opacity: 0 }}
                 >
                   From carrier-grade security networks to mission-critical hardware.<br />
-                  Powering global enterprises with Tier-1 infrastructure and IT components.
+                  Powering India&apos;s leading enterprises with Tier-1 infrastructure and IT components.
                 </p>
               </div>
             </div>
