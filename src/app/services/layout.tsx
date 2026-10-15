@@ -1,8 +1,8 @@
 import { Metadata } from 'next'
 
 export const metadata: Metadata = {
-  title: 'Our Services — Telecom, Green Energy & Industrial Automation',
-  description: "Explore Hypecia Connect's full service range — solar energy, industrial automation, CCTV surveillance, MEP engineering, ELV systems, and telecom infrastructure.",
+  title: 'Services',
+  description: "Explore our full range of enterprise services across telecom networks, AI surveillance, solar green energy, MEP engineering, and industrial automation.",
   alternates: { canonical: 'https://hypeciaconnect.com/services' },
 }
 

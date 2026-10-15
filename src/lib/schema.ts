@@ -1,25 +1,108 @@
 export const organizationSchema = {
   '@context': 'https://schema.org',
-  '@type': 'Organization',
+  '@type': 'Corporation',
+  '@id': 'https://hypeciaconnect.com/#organization',
   name: 'Hypecia Connect Services Pvt Ltd',
+  legalName: 'Hypecia Connect Services Pvt Ltd',
+  alternateName: [
+    'Hypecia Connect',
+    'Hypecia',
+    'Hypecia Connect Services India Private Limited', // Government MCA registration name on record
+  ],
   url: 'https://hypeciaconnect.com',
-  logo: 'https://hypeciaconnect.com/logo.svg',
+  logo: {
+    '@type': 'ImageObject',
+    '@id': 'https://hypeciaconnect.com/#logo',
+    url: 'https://hypeciaconnect.com/logo.svg',
+    caption: 'Hypecia Connect Logo',
+  },
+  image: 'https://hypeciaconnect.com/logo.webp',
   description:
-    'Carrier-grade telecom infrastructure, AI-powered security systems, green energy solutions, and industrial automation. Trusted by tier-1 operators worldwide.',
-  foundingDate: '2022',
+    'Carrier grade telecom infrastructure, AI powered security systems, enterprise IT hardware supply, and green energy solutions. Trusted by tier 1 operators worldwide.',
   contactPoint: [
     {
       '@type': 'ContactPoint',
       telephone: '+91-9836012349',
       contactType: 'customer service',
+      areaServed: 'IN',
+      availableLanguage: ['English', 'Hindi'],
     },
     {
       '@type': 'ContactPoint',
       telephone: '+91-9870297922',
       contactType: 'sales',
+      areaServed: ['IN', 'AE', 'Global'],
+      availableLanguage: ['English', 'Hindi'],
     },
   ],
-  sameAs: [],
+}
+
+export const websiteSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'WebSite',
+  '@id': 'https://hypeciaconnect.com/#website',
+  url: 'https://hypeciaconnect.com',
+  name: 'Hypecia Connect',
+  alternateName: [
+    'Hypecia',
+    'Hypecia Connect Services',
+    'Hypecia Connect Services India Private Limited',
+  ],
+  publisher: {
+    '@id': 'https://hypeciaconnect.com/#organization',
+  },
+  inLanguage: 'en-IN',
+}
+
+export const siteNavigationSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'ItemList',
+  '@id': 'https://hypeciaconnect.com/#sitenavigation',
+  name: 'Primary Navigation',
+  description: 'Main navigation menu and sitelinks for Hypecia Connect',
+  itemListElement: [
+    {
+      '@type': 'SiteNavigationElement',
+      position: 1,
+      name: 'Services',
+      description:
+        'Comprehensive infrastructure services: Telecom & IT infrastructure, AI surveillance, solar green energy, MEP engineering, and industrial automation.',
+      url: 'https://hypeciaconnect.com/services',
+    },
+    {
+      '@type': 'SiteNavigationElement',
+      position: 2,
+      name: 'Case Studies',
+      description:
+        'Proven deployments across 157+ sites including Airtel MSC & TNG surveillance, solar installations, and enterprise facilities.',
+      url: 'https://hypeciaconnect.com/case-studies',
+    },
+    {
+      '@type': 'SiteNavigationElement',
+      position: 3,
+      name: 'Team & Leadership',
+      description:
+        'Meet the certified engineers, telecom specialists, and operations leaders driving Hypecia Connect.',
+      url: 'https://hypeciaconnect.com/team',
+    },
+    {
+      '@type': 'SiteNavigationElement',
+      position: 4,
+      name: 'Contact Us',
+      description:
+        'Get in touch with Hypecia Connect for project consultations, RFPs, infrastructure audits, and partnerships.',
+      url: 'https://hypeciaconnect.com/contact',
+    },
+  ],
+}
+
+export const rootGraphSchema = {
+  '@context': 'https://schema.org',
+  '@graph': [
+    organizationSchema,
+    websiteSchema,
+    siteNavigationSchema,
+  ],
 }
 
 export const servicesPageSchema = {
@@ -42,9 +125,9 @@ export const servicesPageSchema = {
 export const caseStudySchema = {
   '@context': 'https://schema.org',
   '@type': 'Article',
-  headline: 'Airtel CCTV Infrastructure Deployment — 157 Sites Secured',
+  headline: 'Airtel CCTV Infrastructure Deployment Across 157 Secured Sites',
   description:
-    'Hypecia Connect deployed 2,400+ AI-enabled cameras across 157 Airtel MSC and TNG sites in UP & Bihar, achieving 40% security improvement and 95% uptime.',
+    'Hypecia Connect deployed 2,400+ AI enabled cameras across 157 Airtel MSC and TNG sites in UP & Bihar, achieving 40% security improvement and 95% uptime.',
   author: {
     '@type': 'Organization',
     name: 'Hypecia Connect Services Pvt Ltd',
@@ -70,3 +153,4 @@ export function getBreadcrumbSchema(items: { name: string; url: string }[]) {
     })),
   }
 }
+

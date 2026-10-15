@@ -355,6 +355,7 @@ export default function Navigation({ animate = false, isHomepage = false }: Navi
           {/* Desktop Nav Links */}
           <nav
             ref={navLinksRef}
+            aria-label="Main Navigation"
             className="hidden md:flex items-center relative z-10"
             style={{
               gap: 'clamp(1.5rem, 2.5vw, 2.5rem)'

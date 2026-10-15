@@ -1,8 +1,8 @@
 import { Metadata } from 'next'
 
 export const metadata: Metadata = {
-  title: 'Our Team & Leadership | Hypecia Connect',
-  description: 'Meet the engineering and management experts behind Hypecia Connect, driving innovation in renewable energy and telecom infrastructure.',
+  title: 'Our Team',
+  description: 'Meet the certified engineers, telecom specialists, and executive leadership behind Hypecia Connect Services.',
   alternates: { canonical: 'https://hypeciaconnect.com/team' },
 }
 

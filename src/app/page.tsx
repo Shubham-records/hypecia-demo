@@ -410,10 +410,10 @@ export default function Home() {
           wordsClass: "split-word"
         })
 
-        // Make only the generated word spans visible — ghosts stay hidden
+        // Make only the generated word spans visible; ghosts stay hidden
         leftSplit.words.forEach(w => {
-          w.classList.add("text-gradient")
-          w.style.visibility = 'visible'
+          w.classList.add("text-gradient");
+          (w as HTMLElement).style.visibility = 'visible'
         })
 
         const aboutTl = gsap.timeline({
