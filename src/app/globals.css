@@ -130,7 +130,9 @@
 
   html {
     scroll-behavior: smooth;
+    zoom: 80%;
   }
+
 
   body {
     @apply bg-light-gray text-black antialiased;
@@ -325,10 +327,11 @@
     font-weight: 500;
     line-height: 1;
     font-family: PP Neue Montreal, sans-serif;
-    font-size: 2rem; /* Mobile: smaller size */
+    font-size: 2rem;
+    /* Mobile: smaller size */
     letter-spacing: -.015em;
   }
-  
+
   /* Desktop: restore original size */
   @media (min-width: 1024px) {
     .headline-display {
@@ -415,19 +418,43 @@
   }
 
   @keyframes bubble-float-1 {
-    0%, 100% { transform: translateY(0px) rotate(0deg); }
-    50% { transform: translateY(-12px) rotate(2deg); }
+
+    0%,
+    100% {
+      transform: translateY(0px) rotate(0deg);
+    }
+
+    50% {
+      transform: translateY(-12px) rotate(2deg);
+    }
   }
 
   @keyframes bubble-float-2 {
-    0%, 100% { transform: translateY(0px) rotate(0deg); }
-    50% { transform: translateY(10px) rotate(-2deg); }
+
+    0%,
+    100% {
+      transform: translateY(0px) rotate(0deg);
+    }
+
+    50% {
+      transform: translateY(10px) rotate(-2deg);
+    }
   }
 
   @keyframes bubble-float-3 {
-    0%, 100% { transform: translateY(0px) translateX(0px); }
-    33% { transform: translateY(-8px) translateX(5px); }
-    66% { transform: translateY(6px) translateX(-3px); }
+
+    0%,
+    100% {
+      transform: translateY(0px) translateX(0px);
+    }
+
+    33% {
+      transform: translateY(-8px) translateX(5px);
+    }
+
+    66% {
+      transform: translateY(6px) translateX(-3px);
+    }
   }
 
   /* Blur text word styles */
