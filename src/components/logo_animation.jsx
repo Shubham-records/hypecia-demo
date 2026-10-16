@@ -24,18 +24,18 @@ export default function HypeciaLoader({ onComplete }) {
     }, 0)
 
     setTimeout(() => {
-      shine.style.transition = 'transform 1.1s cubic-bezier(0.4, 0, 0.2, 1)'
+      shine.style.transition = 'transform 1.2s cubic-bezier(0.4, 0, 0.2, 1)'
       shine.style.transform = 'translateX(100vw) skewX(-20deg)'
-    }, 650)
+    }, 750)
 
     setTimeout(() => {
-      loader.style.transition = 'opacity 0.5s cubic-bezier(0.4, 0, 0.2, 1)'
+      loader.style.transition = 'opacity 1s cubic-bezier(0.4, 0, 0.2, 1)'
       loader.style.opacity = '0'
-    }, 1800)
+    }, 2500)
 
     setTimeout(() => {
       onComplete && onComplete()
-    }, 2300)
+    }, 3300)
   }, [onComplete])
 
   return (
@@ -48,10 +48,7 @@ export default function HypeciaLoader({ onComplete }) {
         ref={logoRef}
         src="/logo.svg"
         alt="Hypecia Connect Services"
-        width={1142}
-        height={353}
-        fetchPriority="high"
-        className="w-[62%] sm:w-[50%] md:w-[40%] h-auto"
+        className="w-[40%] h-auto"
         style={{
           filter: 'invert(0.5) brightness(1.4) contrast(0.7)',
           transform: 'scale(1)',

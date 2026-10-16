@@ -91,16 +91,10 @@ export default function RootLayout({
         <link
           rel="preload"
           as="image"
-          href="/logo.svg"
-          type="image/svg+xml"
-          // @ts-ignore
-          fetchPriority="high"
-        />
-        <link
-          rel="preload"
-          as="image"
           href="/video_proster.webp"
           type="image/webp"
+          // @ts-ignore
+          fetchPriority="high"
         />
         <JsonLd data={rootGraphSchema} />
       </head>
