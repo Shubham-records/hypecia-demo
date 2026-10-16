@@ -9,7 +9,7 @@ import { gsap } from 'gsap'
 import { SplitText } from 'gsap/SplitText'
 import { ScrollTrigger } from 'gsap/ScrollTrigger'
 import { Draggable } from 'gsap/Draggable'
-import Hls from 'hls.js'
+import type Hls from 'hls.js'
 import { JsonLd } from '@/components/JsonLd'
 import { organizationSchema } from '@/lib/schema'
 
@@ -169,26 +169,31 @@ export default function Home() {
     let hlsInstance: Hls | null = null;
     let timer: NodeJS.Timeout | null = null;
 
-    const startHls = () => {
-      if (Hls.isSupported()) {
-        const hls = new Hls({
-          maxBufferLength: 30,
-          maxMaxBufferLength: 60,
-          startFragPrefetch: false,
-          fragLoadingTimeOut: 20000,
-          lowLatencyMode: false,
-        });
-        hls.loadSource('/promo_video_hls/playlist.m3u8');
-        hls.attachMedia(video);
+    const startHls = async () => {
+      try {
+        const { default: HlsClass } = await import('hls.js');
+        if (HlsClass.isSupported()) {
+          const hls = new HlsClass({
+            maxBufferLength: 30,
+            maxMaxBufferLength: 60,
+            startFragPrefetch: false,
+            fragLoadingTimeOut: 20000,
+            lowLatencyMode: false,
+          });
+          hls.loadSource('/promo_video_hls/playlist.m3u8');
+          hls.attachMedia(video);
 
-        hls.on(Hls.Events.MANIFEST_PARSED, () => {
+          hls.on(HlsClass.Events.MANIFEST_PARSED, () => {
+            video.play().catch(e => console.log('Autoplay failed:', e));
+          });
+
+          hlsInstance = hls;
+        } else if (video.canPlayType('application/vnd.apple.mpegurl')) {
+          video.src = '/promo_video_hls/playlist.m3u8';
           video.play().catch(e => console.log('Autoplay failed:', e));
-        });
-
-        hlsInstance = hls;
-      } else if (video.canPlayType('application/vnd.apple.mpegurl')) {
-        video.src = '/promo_video_hls/playlist.m3u8';
-        video.play().catch(e => console.log('Autoplay failed:', e));
+        }
+      } catch (err) {
+        console.error('Failed to load Hls:', err);
       }
     };
 
@@ -213,6 +218,9 @@ export default function Home() {
   // UNIFIED GSAP ANIMATION
   useEffect(() => {
     if (!startFadeIn) return
+
+    let frame1: number | null = null
+    let frame2: number | null = null
 
     const ctx = gsap.context(() => {
       // ===== HERO ANIMATION =====
@@ -411,7 +419,10 @@ export default function Home() {
         })
       }
 
-      // ===== ABOUT US SECTION ANIMATION =====
+      // Yield main thread: initialize About Us & Services in next animation frame
+      frame1 = requestAnimationFrame(() => {
+        ctx.add(() => {
+          // ===== ABOUT US SECTION ANIMATION =====
       if (aboutContainerRef.current && aboutLeftRef.current && aboutRightRef.current) {
         const leftText = aboutLeftRef.current.querySelector(".about-text")
         const rightItems = aboutRightRef.current.querySelectorAll(".about-item")
@@ -578,7 +589,13 @@ export default function Home() {
         })
       }
 
-      // ===== CLIENT TRUST SECTION - CIRCLE REVEAL + BLUR TEXT + SCATTERED BUBBLES =====
+          // Close frame1 ctx.add
+        })
+
+        // Yield main thread again: initialize deep below-the-fold sections
+        frame2 = requestAnimationFrame(() => {
+          ctx.add(() => {
+            // ===== CLIENT TRUST SECTION - CIRCLE REVEAL + BLUR TEXT + SCATTERED BUBBLES =====
       if (clientTrustRef.current && circleRevealRef.current && clientContentRef.current) {
         const tl = gsap.timeline({
           scrollTrigger: {
@@ -840,10 +857,17 @@ export default function Home() {
           },
         })
       }
+          })
+        })
+      })
 
     })
 
-    return () => ctx.revert()
+    return () => {
+      if (frame1) cancelAnimationFrame(frame1)
+      if (frame2) cancelAnimationFrame(frame2)
+      ctx.revert()
+    }
   }, [startFadeIn, services.length])
 
 
