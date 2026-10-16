@@ -1,14 +1,15 @@
 import type { Metadata } from "next";
-import { Manrope } from "next/font/google";
+import localFont from "next/font/local";
 import "./globals.css";
 import ErrorReporter from "@/components/ErrorReporter";
 import Script from "next/script";
 import { JsonLd } from "@/components/JsonLd";
 import { rootGraphSchema } from "@/lib/schema";
 
-const manrope = Manrope({
-  subsets: ["latin"],
-  weight: ["300", "400", "500", "600", "700", "800"],
+const manrope = localFont({
+  src: "../../public/fonts/manrope-latin.woff2",
+  weight: "300 800",
+  style: "normal",
   variable: "--font-manrope",
   display: "swap",
 });
