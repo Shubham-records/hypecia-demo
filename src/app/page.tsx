@@ -877,7 +877,7 @@ export default function Home() {
       {showLoader && (
         <HypeciaLoader onComplete={handleLoaderComplete} />
       )}
-      <main id="main-content" className={`min-h-screen transition-opacity duration-700 ${startFadeIn ? 'opacity-100' : 'opacity-0'}`}>
+      <main id="main-content" className={`min-h-screen transition-opacity duration-500 ${startFadeIn ? 'opacity-100' : 'opacity-0'}`}>
         <Navigation animate={true} isHomepage={true} />
 
         {/* VIDEO HERO SECTION */}
