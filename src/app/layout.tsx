@@ -1,9 +1,17 @@
 import type { Metadata } from "next";
+import { Manrope } from "next/font/google";
 import "./globals.css";
 import ErrorReporter from "@/components/ErrorReporter";
 import Script from "next/script";
 import { JsonLd } from "@/components/JsonLd";
 import { rootGraphSchema } from "@/lib/schema";
+
+const manrope = Manrope({
+  subsets: ["latin"],
+  weight: ["300", "400", "500", "600", "700", "800"],
+  variable: "--font-manrope",
+  display: "swap",
+});
 
 export const metadata: Metadata = {
   metadataBase: new URL('https://hypeciaconnect.com'),
@@ -76,12 +84,20 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en">
+    <html lang="en" className={manrope.variable}>
       <head>
         <link rel="preconnect" href="https://hypeciaconnect.com" />
+        <link
+          rel="preload"
+          as="image"
+          href="/video_proster.webp"
+          type="image/webp"
+          // @ts-ignore
+          fetchPriority="high"
+        />
         <JsonLd data={rootGraphSchema} />
       </head>
-      <body className="antialiased">
+      <body className="antialiased font-sans">
         {/* Google Analytics */}
         <Script
           src="https://www.googletagmanager.com/gtag/js?id=G-3FWDBGCV4X"
@@ -98,16 +114,18 @@ export default function RootLayout({
 
         <ErrorReporter />
 
-        <Script
-          src="https://slelguoygbfzlpylpxfs.supabase.co/storage/v1/object/public/scripts//route-messenger.js"
-          strategy="afterInteractive"
-          data-target-origin="*"
-          data-message-type="ROUTE_CHANGE"
-          data-include-search-params="true"
-          data-only-in-iframe="true"
-          data-debug="true"
-          data-custom-data='{"appName": "YourApp", "version": "1.0.0", "greeting": "hi"}'
-        />
+        {process.env.NODE_ENV === "development" && (
+          <Script
+            src="https://slelguoygbfzlpylpxfs.supabase.co/storage/v1/object/public/scripts//route-messenger.js"
+            strategy="lazyOnload"
+            data-target-origin="*"
+            data-message-type="ROUTE_CHANGE"
+            data-include-search-params="true"
+            data-only-in-iframe="true"
+            data-debug="true"
+            data-custom-data='{"appName": "YourApp", "version": "1.0.0", "greeting": "hi"}'
+          />
+        )}
 
         {children}
       </body>

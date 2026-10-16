@@ -1,5 +1,4 @@
-/* Updated: 2025-11-01T18:59:34.545Z */
-@import url('https://fonts.googleapis.com/css2?family=Manrope:wght@300;400;500;600;700;800;900&display=swap');
+/* Updated: 2026-10-16 Next.js Font Optimization */
 @import "tailwindcss";
 @import "tw-animate-css";
 
@@ -8,7 +7,7 @@
 @theme inline {
   --color-background: var(--background);
   --color-foreground: var(--foreground);
-  --font-sans: 'Manrope', var(--font-geist-sans);
+  --font-sans: var(--font-manrope), 'Manrope', system-ui, -apple-system, sans-serif;
   --font-mono: var(--font-geist-mono);
   /* Custom Hypecia Colors */
   --color-white: #FFFFFF;
@@ -324,17 +323,17 @@
 
   .headline-display {
     font-weight: 500;
-    line-height: 1;
+    line-height: 1.08;
     font-family: PP Neue Montreal, sans-serif;
-    font-size: 2rem;
-    /* Mobile: smaller size */
+    font-size: 1.75rem;
+    /* Mobile: scaled ~80% */
     letter-spacing: -.015em;
   }
 
-  /* Desktop: restore original size */
+  /* Desktop: scaled ~80% from 4.2rem */
   @media (min-width: 1024px) {
     .headline-display {
-      font-size: 4.2rem;
+      font-size: 3.35rem;
     }
   }
 

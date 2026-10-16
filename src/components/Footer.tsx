@@ -36,7 +36,7 @@ export default function Footer({ animate = false }: FooterProps) {
           <div className="md:col-span-2"></div>
           {/* Quick Links */}
           <div className="footer-animate flex flex-col items-center md:items-start md:col-span-3">
-            <h4 className="text-sm font-bold mb-6 uppercase tracking-wider text-white">Quick Links</h4>
+            <h3 className="text-sm font-bold mb-6 uppercase tracking-wider text-white">Quick Links</h3>
             <ul className="space-y-4">
               <li><Link href="/" className="text-gray-400 hover:text-white transition-colors text-base">Home</Link></li>
               <li><Link href="/services" className="text-gray-400 hover:text-white transition-colors text-base">Services</Link></li>
@@ -48,7 +48,7 @@ export default function Footer({ animate = false }: FooterProps) {
 
           {/* Legal */}
           <div className="footer-animate flex flex-col items-center md:items-start md:col-span-3">
-            <h4 className="text-sm font-bold mb-6 uppercase tracking-wider text-white">Legal</h4>
+            <h3 className="text-sm font-bold mb-6 uppercase tracking-wider text-white">Legal</h3>
             <ul className="space-y-4">
               <li><Link href="/privacy" className="text-gray-400 hover:text-white transition-colors text-base">Privacy Policy</Link></li>
               <li><Link href="/terms" className="text-gray-400 hover:text-white transition-colors text-base">Terms & Conditions</Link></li>
@@ -57,7 +57,7 @@ export default function Footer({ animate = false }: FooterProps) {
 
           {/* Contact */}
           <div className="footer-animate flex flex-col items-center md:items-start md:col-span-3">
-            <h4 className="text-sm font-bold mb-6 uppercase tracking-wider text-white">Contact</h4>
+            <h3 className="text-sm font-bold mb-6 uppercase tracking-wider text-white">Contact</h3>
             <ul className="space-y-4">
               <li className="flex items-center gap-3 text-gray-400 text-base justify-center md:justify-start">
                 <Mail size={18} />

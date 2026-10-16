@@ -166,29 +166,46 @@ export default function Home() {
     const video = videoRef.current;
     if (!video) return;
 
-    if (Hls.isSupported()) {
-      const hls = new Hls({
-        maxBufferLength: 60,
-        maxMaxBufferLength: 90,
-        startFragPrefetch: true,
-        fragLoadingTimeOut: 20000,
-        lowLatencyMode: false,
-      });
-      hls.loadSource('/promo_video_hls/playlist.m3u8');
-      hls.attachMedia(video);
+    let hlsInstance: Hls | null = null;
+    let timer: NodeJS.Timeout | null = null;
 
-      hls.on(Hls.Events.MANIFEST_PARSED, () => {
-        setTimeout(() => {
+    const startHls = () => {
+      if (Hls.isSupported()) {
+        const hls = new Hls({
+          maxBufferLength: 30,
+          maxMaxBufferLength: 60,
+          startFragPrefetch: false,
+          fragLoadingTimeOut: 20000,
+          lowLatencyMode: false,
+        });
+        hls.loadSource('/promo_video_hls/playlist.m3u8');
+        hls.attachMedia(video);
+
+        hls.on(Hls.Events.MANIFEST_PARSED, () => {
           video.play().catch(e => console.log('Autoplay failed:', e));
-        }, 3300);
-      });
+        });
 
-      return () => hls.destroy();
-    } else if (video.canPlayType('application/vnd.apple.mpegurl')) {
-      video.src = '/promo_video_hls/playlist.m3u8';
-      setTimeout(() => {
+        hlsInstance = hls;
+      } else if (video.canPlayType('application/vnd.apple.mpegurl')) {
+        video.src = '/promo_video_hls/playlist.m3u8';
         video.play().catch(e => console.log('Autoplay failed:', e));
-      }, 3300);
+      }
+    };
+
+    if (typeof window !== 'undefined' && 'requestIdleCallback' in window) {
+      // @ts-ignore
+      const idleId = window.requestIdleCallback(() => startHls(), { timeout: 2000 });
+      return () => {
+        // @ts-ignore
+        if (window.cancelIdleCallback) window.cancelIdleCallback(idleId);
+        if (hlsInstance) hlsInstance.destroy();
+      };
+    } else {
+      timer = setTimeout(startHls, 1200);
+      return () => {
+        if (timer) clearTimeout(timer);
+        if (hlsInstance) hlsInstance.destroy();
+      };
     }
   }, []);
 
@@ -199,55 +216,55 @@ export default function Home() {
 
     const ctx = gsap.context(() => {
       // ===== HERO ANIMATION =====
-      const heroTl = gsap.timeline({ delay: 0.5 })
+      const heroTl = gsap.timeline({ delay: 0.1 })
 
       heroTl.fromTo(
         heroBoxRef.current,
-        { scale: 0.95, opacity: 0 },
-        { scale: 1, opacity: 1, duration: 0.8, ease: 'power2.out' }
+        { scale: 0.98, opacity: 0.9 },
+        { scale: 1, opacity: 1, duration: 0.5, ease: 'power2.out' }
       )
 
       if (heroTitleRef.current) {
-        const titleSplit = new SplitText(heroTitleRef.current, { type: 'words' })
+        const titleSplit = new SplitText(heroTitleRef.current, { type: 'words', aria: 'none' })
         gsap.set(heroTitleRef.current, { opacity: 1 })
 
         heroTl.fromTo(
           titleSplit.words,
-          { y: 80, opacity: 0, rotationX: -90 },
+          { y: 40, opacity: 0, rotationX: -45 },
           {
             y: 0,
             opacity: 1,
             rotationX: 0,
-            duration: 1,
-            ease: 'back.out(1.7)',
+            duration: 0.7,
+            ease: 'power3.out',
             stagger: {
-              each: 0.05,
+              each: 0.04,
               ease: 'sine.inOut'
             }
           },
-          '+=0.2'
+          '+=0.1'
         )
       }
 
       if (heroDescRef.current) {
-        const descSplit = new SplitText(heroDescRef.current, { type: 'words' })
+        const descSplit = new SplitText(heroDescRef.current, { type: 'words', aria: 'none' })
         gsap.set(heroDescRef.current, { opacity: 1 })
 
         heroTl.fromTo(
           descSplit.words,
-          { y: 50, opacity: 0, scale: 0.8 },
+          { y: 30, opacity: 0, scale: 0.9 },
           {
             y: 0,
             opacity: 1,
             scale: 1,
-            duration: 0.8,
-            ease: 'elastic.out(1, 0.6)',
+            duration: 0.6,
+            ease: 'power3.out',
             stagger: {
-              each: 0.05,
+              each: 0.03,
               ease: 'sine.inOut'
             }
           },
-          '-=0.5'
+          '-=0.3'
         )
       }
 
@@ -407,7 +424,8 @@ export default function Home() {
 
         const leftSplit = new SplitText(leftText, {
           type: "words",
-          wordsClass: "split-word"
+          wordsClass: "split-word",
+          aria: "none"
         })
 
         // Make only the generated word spans visible; ghosts stay hidden
@@ -476,8 +494,8 @@ export default function Home() {
         const cards = servicesCardsRef.current.querySelectorAll('.service-card')
 
         const containerWidth = servicesCardsRef.current.offsetWidth
-        const cardWidth = 320
-        const cardGap = 32
+        const cardWidth = 288
+        const cardGap = 28
 
         // Set initial positions with wrapping (to show cards on both sides)
         cards.forEach((card, index) => {
@@ -494,7 +512,7 @@ export default function Home() {
           const distanceFromCenter = Math.abs(cardCenter - centerX)
           const normalizedDistance = distanceFromCenter / (containerWidth / 2)
 
-          const bendAmount = 60
+          const bendAmount = 54
           const y = normalizedDistance * bendAmount * 1.5
           const rotation = ((cardCenter - centerX) / (containerWidth / 2)) * 6
           const scale = 1 - (normalizedDistance * 0.15)
@@ -520,8 +538,8 @@ export default function Home() {
           onUpdate: (self) => {
             const progress = self.progress
             const containerWidth = servicesCardsRef.current?.offsetWidth || 1000
-            const cardWidth = 320
-            const cardGap = 32
+            const cardWidth = 288
+            const cardGap = 28
             const totalScroll = services.length * (cardWidth + cardGap)
             const currentScroll = progress * totalScroll
 
@@ -541,7 +559,7 @@ export default function Home() {
               const distanceFromCenter = Math.abs(cardCenter - centerX)
               const normalizedDistance = distanceFromCenter / (containerWidth / 2)
 
-              const bendAmount = 60
+              const bendAmount = 54
               const y = normalizedDistance * bendAmount * 1.5
               const rotation = ((cardCenter - centerX) / (containerWidth / 2)) * 6
               const scale = 1 - (normalizedDistance * 0.15)
@@ -587,7 +605,7 @@ export default function Home() {
         // Step 2: Blur text animation for the heading (per-CHARACTER)
         const trustTitle = clientContentRef.current.querySelector('.trust-blur-title')
         if (trustTitle) {
-          const trustSplit = new SplitText(trustTitle, { type: 'chars' })
+          const trustSplit = new SplitText(trustTitle, { type: 'chars', aria: 'none' })
 
           // Set initial state: each char is blurred + invisible + slightly offset
           gsap.set(trustSplit.chars, {
@@ -663,7 +681,7 @@ export default function Home() {
 
       // Testimonial title blur animation
       if (testimonialSectionRef.current) {
-        const splitTestimonial = new SplitText(".testimonial-blur-title", { type: "chars" });
+        const splitTestimonial = new SplitText(".testimonial-blur-title", { type: "chars", aria: "none" });
         gsap.set(splitTestimonial.chars, { filter: "blur(14px)", opacity: 0, y: 20 });
         
         gsap.to(splitTestimonial.chars, {
@@ -744,7 +762,7 @@ export default function Home() {
         const titleText = processTitleRef.current.querySelector('.process-title-text');
 
         if (titleText) {
-          const titleSplit = new SplitText(titleText, { type: 'words' });
+          const titleSplit = new SplitText(titleText, { type: 'words', aria: 'none' });
           titleSplit.words.forEach(w => w.classList.add("text-gradient-v2"));
 
           tl.from(titleSplit.words, {
@@ -835,7 +853,7 @@ export default function Home() {
       {showLoader && (
         <HypeciaLoader onComplete={handleLoaderComplete} />
       )}
-      <div className={`min-h-screen transition-opacity duration-700 ${startFadeIn ? 'opacity-100' : 'opacity-0'}`}>
+      <main id="main-content" className={`min-h-screen transition-opacity duration-700 ${startFadeIn ? 'opacity-100' : 'opacity-0'}`}>
         <Navigation animate={true} isHomepage={true} />
 
         {/* VIDEO HERO SECTION */}
@@ -850,26 +868,26 @@ export default function Home() {
                 muted
                 loop
                 playsInline
-                preload="metadata"
+                preload="none"
                 poster="/video_proster.webp"
                 className="w-full h-full object-cover"
-              />
+              >
+                <track kind="captions" src="/captions.vtt" srcLang="en" label="English" default />
+              </video>
               <div className="absolute inset-0 bg-white/15 mix-blend-overlay pointer-events-none" />
 
               <div className="absolute inset-0 bg-black/40" />
               <div className="absolute inset-0 flex flex-col justify-center items-center text-center p-8 md:p-12 text-white">
-                <h2
+                <h1
                   ref={heroTitleRef}
                   className="mb-6 text-5xl md:text-7xl font-bold leading-tight"
-                  style={{ opacity: 0 }}
                 >
                   Next-Gen Infrastructure<br />
                   <span>& Enterprise IT Supply</span>
-                </h2>
+                </h1>
                 <p
                   ref={heroDescRef}
                   className="text-lg md:text-2xl text-white/90 max-w-4xl mx-auto leading-relaxed"
-                  style={{ opacity: 0 }}
                 >
                   From carrier-grade security networks to mission-critical hardware.<br />
                   Powering India&apos;s leading enterprises with Tier-1 infrastructure and IT components.
@@ -929,43 +947,43 @@ export default function Home() {
         {/* SECTION 3: ABOUT US */}
         <section className="section-padding bg-light-gray md:min-h-[220vh] min-h-[auto]">
           <div ref={aboutContainerRef} className="container-custom">
-            <div className="grid lg:grid-cols-[3fr_2fr] gap-8 lg:gap-16 items-center">
+            <div className="grid lg:grid-cols-[3fr_2fr] gap-6 lg:gap-12 items-center">
               <div ref={aboutLeftRef}>
-                <h4 className="about-text headline-display text-balance text-gradient !leading-[1.1]">
+                <h2 className="about-text headline-display text-balance text-gradient !leading-[1.1]">
                   Powering digital transformation globally. Delivering robust carrier-grade
                   networks, <br />
                   <span className="text-gradient opacity-40">AI-driven security, and enterprise IT hardware.
                     Proven at scale. Executed with precision.</span>
-                </h4>
+                </h2>
               </div>
 
-              <div ref={aboutRightRef} className="space-y-6 lg:space-y-10 mt-2 lg:mt-0">
-                <div className="about-item flex items-start gap-3 lg:gap-4">
-                  <CheckCircle className="text-green-500 flex-shrink-0 mt-1 lg:mt-2 w-5 h-5 lg:w-7 lg:h-7" />
+              <div ref={aboutRightRef} className="space-y-4 lg:space-y-6 mt-2 lg:mt-0">
+                <div className="about-item flex items-start gap-3 lg:gap-3.5">
+                  <CheckCircle className="text-green-500 flex-shrink-0 mt-0.5 lg:mt-1 w-5 h-5 lg:w-6 lg:h-6" />
                   <div>
-                    <h3 className="font-bold text-lg lg:text-2xl mb-1 lg:mb-2">Carrier-Grade Infrastructure</h3>
-                    <p className="text-gray-600 text-sm lg:text-lg">Successfully deployed comprehensive network and telecom solutions across Airtel, Tejas, and Nivetti environments.</p>
+                    <h3 className="font-bold text-base lg:text-xl mb-1">Carrier-Grade Infrastructure</h3>
+                    <p className="text-gray-600 text-xs sm:text-sm lg:text-[15px] leading-relaxed">Successfully deployed comprehensive network and telecom solutions across Airtel, Tejas, and Nivetti environments.</p>
                   </div>
                 </div>
-                <div className="about-item flex items-start gap-3 lg:gap-4">
-                  <CheckCircle className="text-green-500 flex-shrink-0 mt-1 lg:mt-2 w-5 h-5 lg:w-7 lg:h-7" />
+                <div className="about-item flex items-start gap-3 lg:gap-3.5">
+                  <CheckCircle className="text-green-500 flex-shrink-0 mt-0.5 lg:mt-1 w-5 h-5 lg:w-6 lg:h-6" />
                   <div>
-                    <h3 className="font-bold text-lg lg:text-2xl mb-1 lg:mb-2">Enterprise IT Hardware Supply</h3>
-                    <p className="text-gray-600 text-sm lg:text-lg">Ready inventory for global technology leaders including NVIDIA, Samsung, Micron, Intel, and Broadcom.</p>
+                    <h3 className="font-bold text-base lg:text-xl mb-1">Enterprise IT Hardware Supply</h3>
+                    <p className="text-gray-600 text-xs sm:text-sm lg:text-[15px] leading-relaxed">Ready inventory for global technology leaders including NVIDIA, Samsung, Micron, Intel, and Broadcom.</p>
                   </div>
                 </div>
-                <div className="about-item flex items-start gap-3 lg:gap-4">
-                  <CheckCircle className="text-green-500 flex-shrink-0 mt-1 lg:mt-2 w-5 h-5 lg:w-7 lg:h-7" />
+                <div className="about-item flex items-start gap-3 lg:gap-3.5">
+                  <CheckCircle className="text-green-500 flex-shrink-0 mt-0.5 lg:mt-1 w-5 h-5 lg:w-6 lg:h-6" />
                   <div>
-                    <h3 className="font-bold text-lg lg:text-2xl mb-1 lg:mb-2">AI-Powered Security</h3>
-                    <p className="text-gray-600 text-sm lg:text-lg">Thousands of intelligent endpoints delivering real-time threat detection and zero-compromise operational continuity.</p>
+                    <h3 className="font-bold text-base lg:text-xl mb-1">AI-Powered Security</h3>
+                    <p className="text-gray-600 text-xs sm:text-sm lg:text-[15px] leading-relaxed">Thousands of intelligent endpoints delivering real-time threat detection and zero-compromise operational continuity.</p>
                   </div>
                 </div>
-                <div className="about-item flex items-start gap-3 lg:gap-4">
-                  <CheckCircle className="text-green-500 flex-shrink-0 mt-1 lg:mt-2 w-5 h-5 lg:w-7 lg:h-7" />
+                <div className="about-item flex items-start gap-3 lg:gap-3.5">
+                  <CheckCircle className="text-green-500 flex-shrink-0 mt-0.5 lg:mt-1 w-5 h-5 lg:w-6 lg:h-6" />
                   <div>
-                    <h3 className="font-bold text-lg lg:text-2xl mb-1 lg:mb-2">Core Processing & Storage</h3>
-                    <p className="text-gray-600 text-sm lg:text-lg">Supplying mission-critical DDR5 memory, advanced GPUs/CPUs, and high-capacity storage systems.</p>
+                    <h3 className="font-bold text-base lg:text-xl mb-1">Core Processing & Storage</h3>
+                    <p className="text-gray-600 text-xs sm:text-sm lg:text-[15px] leading-relaxed">Supplying mission-critical DDR5 memory, advanced GPUs/CPUs, and high-capacity storage systems.</p>
                   </div>
                 </div>
               </div>
@@ -976,16 +994,16 @@ export default function Home() {
         {/* SECTION 4: SERVICES */}
         <section ref={servicesContainerRef} className="section-padding bg-light-gray relative overflow-hidden" style={{ minHeight: '120vh' }}>
           <div className="container-custom">
+            <h2 className="sr-only">Our Core Infrastructure Services</h2>
             <div className="relative">
               <div className="relative flex flex-col w-full items-center items-stretch mb-[-3%]" style={{ mask: 'linear-gradient(black, transparent)' }}>
                 <svg
                   width="100%"
-                  height="auto"
                   viewBox="0 0 1093 325"
                   preserveAspectRatio="xMidYMid meet"
                   fill="none"
                   xmlns="http://www.w3.org/2000/svg"
-                  className="relative md:mb-[-7%] mb-[-5%]"
+                  className="relative w-full h-auto md:mb-[-7%] mb-[-5%]"
                 >
                   <defs>
                     <clipPath id="services-clip">
@@ -1014,20 +1032,20 @@ export default function Home() {
                     key={index}
                     className="service-card absolute left-0 bg-white rounded-2xl border border-gray-200 shadow-xl transition-shadow hover:shadow-2xl"
                     style={{
-                      width: "320px",
-                      height: "350px",
+                      width: "288px",
+                      height: "315px",
                       transformStyle: "preserve-3d",
                       willChange: "transform, opacity",
                     }}
                   >
-                    <div className="p-8 h-full flex flex-col">
+                    <div className="p-6 md:p-7 h-full flex flex-col">
                       <div
-                        className={`w-16 h-16 bg-gradient-to-br ${service.color} rounded-2xl flex items-center justify-center mb-6 p-4 text-3xl`}
+                        className={`w-14 h-14 bg-gradient-to-br ${service.color} rounded-2xl flex items-center justify-center mb-5 p-3 text-2xl`}
                       >
                         {service.icon}
                       </div>
-                      <h3 className="text-2xl font-bold mb-4 text-gray-900">{service.title}</h3>
-                      <p className="text-gray-600 leading-relaxed">{service.description}</p>
+                      <h3 className="text-xl md:text-[21px] font-bold mb-3 text-gray-900 leading-snug">{service.title}</h3>
+                      <p className="text-sm md:text-[14.5px] text-gray-600 leading-relaxed">{service.description}</p>
                     </div>
                   </div>
                 ))}
@@ -1059,59 +1077,59 @@ export default function Home() {
                 {/* Scattered logos — no container, raw images */}
                 {/* Top row */}
                 <div className="client-bubble absolute flex flex-col items-center gap-1 z-50 pointer-events-auto top-[24%] left-[8%] md:top-[20%] md:left-[10%] cursor-grab">
-                  <img src="/Airtel-Logo-PNG-High-Quality-Image.webp" alt="Airtel" className="h-7 sm:h-9 md:h-[clamp(36px,5vh,60px)] w-auto object-contain" />
+                  <img src="/Airtel-Logo-PNG-High-Quality-Image.webp" alt="Airtel" width={132} height={49} loading="lazy" decoding="async" className="h-7 sm:h-9 md:h-[clamp(36px,5vh,60px)] w-auto object-contain" />
                   <p className="text-[7px] md:text-[9px] text-gray-400 text-center select-none">157+ Sites</p>
                 </div>
 
                 <div className="client-bubble absolute flex flex-col items-center gap-1 z-50 pointer-events-auto top-[22%] right-[8%] md:top-[16%] md:left-[32%] md:right-auto cursor-grab">
-                  <img src="/epack-logo.webp" alt="EPACK PREFAB" className="h-7 sm:h-9 md:h-[clamp(36px,5vh,60px)] w-auto object-contain" />
+                  <img src="/epack-logo.webp" alt="EPACK PREFAB" width={104} height={49} loading="lazy" decoding="async" className="h-7 sm:h-9 md:h-[clamp(36px,5vh,60px)] w-auto object-contain" />
                   <p className="text-[7px] md:text-[9px] text-gray-400 text-center select-none">Infrastructure</p>
                 </div>
 
                 <div className="client-bubble absolute flex flex-col items-center gap-1 z-50 pointer-events-auto top-[32%] left-[25%] md:top-[19%] md:right-[29%] md:left-auto cursor-grab">
-                  <img src="/voltas.webp" alt="Voltas" className="h-7 sm:h-9 md:h-[clamp(36px,5vh,60px)] w-auto object-contain" />
+                  <img src="/voltas.webp" alt="Voltas" width={116} height={49} loading="lazy" decoding="async" className="h-7 sm:h-9 md:h-[clamp(36px,5vh,60px)] w-auto object-contain" />
                   <p className="text-[7px] md:text-[9px] text-gray-400 text-center select-none">HVAC</p>
                 </div>
 
                 <div className="client-bubble absolute flex flex-col items-center gap-1 z-50 pointer-events-auto top-[30%] right-[25%] md:top-[19%] md:right-[8%] cursor-grab">
-                  <img src="/vvdn-logo.png" alt="VVDN Technologies" className="h-7 sm:h-9 md:h-[clamp(36px,5vh,60px)] w-auto object-contain" />
+                  <img src="/vvdn-logo.webp" alt="VVDN Technologies" width={141} height={49} loading="lazy" decoding="async" className="h-7 sm:h-9 md:h-[clamp(36px,5vh,60px)] w-auto object-contain" />
                   <p className="text-[7px] md:text-[9px] text-gray-400 text-center select-none">Technology</p>
                 </div>
 
                 {/* Middle row — flanking the title */}
                 <div className="client-bubble absolute flex flex-col items-center gap-1 z-50 pointer-events-auto top-[40%] left-[8%] md:top-[36%] md:left-[7%] cursor-grab">
-                  <img src="/Nivetti.webp" alt="Nivetti" className="h-6 sm:h-8 md:h-[clamp(32px,4.5vh,52px)] w-auto object-contain" />
+                  <img src="/Nivetti.webp" alt="Nivetti" width={109} height={42} loading="lazy" decoding="async" className="h-6 sm:h-8 md:h-[clamp(32px,4.5vh,52px)] w-auto object-contain" />
                   <p className="text-[7px] md:text-[9px] text-gray-400 text-center select-none">Networking</p>
                 </div>
 
                 <div className="client-bubble absolute flex flex-col items-center gap-1 z-50 pointer-events-auto top-[38%] right-[8%] md:top-[39%] md:right-[8%] cursor-grab">
-                  <img src="/tejas-networks.webp" alt="Tejas Networks" className="h-7 sm:h-9 md:h-[clamp(36px,5vh,60px)] w-auto object-contain" />
+                  <img src="/tejas-networks.webp" alt="Tejas Networks" width={110} height={49} loading="lazy" decoding="async" className="h-7 sm:h-9 md:h-[clamp(36px,5vh,60px)] w-auto object-contain" />
                   <p className="text-[7px] md:text-[9px] text-gray-400 text-center select-none">Optical Network</p>
                 </div>
 
                 {/* Bottom row */}
                 <div className="client-bubble absolute flex flex-col items-center gap-1 z-50 pointer-events-auto top-[56%] left-[20%] md:top-[59%] md:left-[11%] cursor-grab">
-                  <img src="/nvidia.webp" alt="NVIDIA" className="h-7 sm:h-9 md:h-[clamp(36px,5vh,60px)] w-auto object-contain" />
+                  <img src="/nvidia.webp" alt="NVIDIA" width={158} height={49} loading="lazy" decoding="async" className="h-7 sm:h-9 md:h-[clamp(36px,5vh,60px)] w-auto object-contain" />
                   <p className="text-[7px] md:text-[9px] text-gray-400 text-center select-none">GPU & AI</p>
                 </div>
 
                 <div className="client-bubble absolute flex flex-col items-center gap-1 z-50 pointer-events-auto top-[58%] right-[20%] md:top-[63%] md:left-[29%] md:right-auto cursor-grab">
-                  <img src="/samsung.webp" alt="Samsung" className="h-7 sm:h-9 md:h-[clamp(36px,5vh,60px)] w-auto object-contain" />
+                  <img src="/samsung.webp" alt="Samsung" width={113} height={49} loading="lazy" decoding="async" className="h-7 sm:h-9 md:h-[clamp(36px,5vh,60px)] w-auto object-contain" />
                   <p className="text-[7px] md:text-[9px] text-gray-400 text-center select-none">Memory</p>
                 </div>
 
                 <div className="client-bubble absolute flex flex-col items-center gap-1 z-50 pointer-events-auto top-[66%] left-[10%] md:top-[65%] md:right-[29%] md:left-auto cursor-grab">
-                  <img src="/intel.webp" alt="Intel" className="h-7 sm:h-9 md:h-[clamp(36px,5vh,60px)] w-auto object-contain" />
+                  <img src="/intel.webp" alt="Intel" width={71} height={49} loading="lazy" decoding="async" className="h-7 sm:h-9 md:h-[clamp(36px,5vh,60px)] w-auto object-contain" />
                   <p className="text-[7px] md:text-[9px] text-gray-400 text-center select-none">Processors</p>
                 </div>
 
                 <div className="client-bubble absolute flex flex-col items-center gap-1 z-50 pointer-events-auto top-[64%] right-[10%] md:top-[59%] md:right-[11%] cursor-grab">
-                  <img src="/Micron.webp" alt="Micron" className="h-7 sm:h-9 md:h-[clamp(36px,5vh,60px)] w-auto object-contain" />
+                  <img src="/Micron.webp" alt="Micron" width={150} height={49} loading="lazy" decoding="async" className="h-7 sm:h-9 md:h-[clamp(36px,5vh,60px)] w-auto object-contain" />
                   <p className="text-[7px] md:text-[9px] text-gray-400 text-center select-none">DDR5</p>
                 </div>
 
                 <div className="client-bubble absolute flex flex-col items-center gap-1 z-50 pointer-events-auto top-[74%] left-[50%] -translate-x-1/2 md:top-[71%] md:left-[45%] md:translate-x-0 cursor-grab">
-                  <img src="/Broadcom.webp" alt="Broadcom" className="h-7 sm:h-9 md:h-[clamp(36px,5vh,60px)] w-auto object-contain" />
+                  <img src="/Broadcom.webp" alt="Broadcom" width={212} height={49} loading="lazy" decoding="async" className="h-7 sm:h-9 md:h-[clamp(36px,5vh,60px)] w-auto object-contain" />
                   <p className="text-[7px] md:text-[9px] text-gray-400 text-center select-none">Semiconductors</p>
                 </div>
 
@@ -1205,6 +1223,7 @@ export default function Home() {
         {/* SECTION 6: PROJECT SHOWCASE */}
         <section ref={projectSectionRef} className="section-padding bg-light-gray relative overflow-hidden" style={{ minHeight: '120vh' }}>
           <div className="container-custom">
+            <h2 className="sr-only">Our Featured Projects and Case Studies</h2>
             {/* Background large text "PROJECTS" */}
             <div
               ref={projectTitleRef}
@@ -1213,12 +1232,11 @@ export default function Home() {
             >
               <svg
                 width="100%"
-                height="auto"
                 viewBox="0 0 1400 400"
                 preserveAspectRatio="xMidYMid meet"
                 fill="none"
                 xmlns="http://www.w3.org/2000/svg"
-                className="relative mb-[-5%] md:mb-[-11%]"
+                className="relative w-full h-auto mb-[-5%] md:mb-[-11%]"
               >
                 <defs>
                   <clipPath id="projects-clip">
@@ -1349,12 +1367,12 @@ export default function Home() {
         <section ref={processSectionRef} className="section-padding bg-light-gray relative overflow-hidden min-h-[160vh] md:min-h-[140vh]">
           <div className="container-custom">
             <div className='mb-28'>
-              <h1 ref={processTitleRef} className="headline-display text-balance">
+              <h2 ref={processTitleRef} className="headline-display text-balance">
                 <span className="process-title-text text-6xl md:text-7xl lg:text-7xl xl:text-7xl mt-[15%]">
                   We keep the process flexible
                   <span className="opacity-40"> and the results <br />extraordinary.</span>
                 </span>
-              </h1>
+              </h2>
             </div>
 
             <div ref={processCardsRef} className="grid md:grid-cols-3 gap-12 mx-auto">
@@ -1430,7 +1448,7 @@ export default function Home() {
 
         {/* SECTION 9: FOOTER */}
         <Footer />
-      </div>
+      </main>
     </>
   )
 }
