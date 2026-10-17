@@ -47,6 +47,5 @@ Allow: /
 User-agent: *
 Allow: /
 Disallow: /api/
-Disallow: /_next/
 
 Sitemap: https://hypeciaconnect.com/sitemap.xml
